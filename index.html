@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Thử thách Insertion Sort - Phòng học trực tuyến</title>
+<style>
+:root{--ink:#19324a;--blue:#2f80ed;--cyan:#58d5ef;--green:#2fbf71;--red:#ef5350;--yellow:#ffd75e;--pink:#ff8fc7;--paper:#fffefb;--panel:rgba(255,255,255,.92)}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:"Times New Roman",Times,serif;color:var(--ink);background:linear-gradient(135deg,#fff5c9 0%,#dff9ff 35%,#eef0ff 70%,#ffe9f6 100%)}
+body:before,body:after{content:"";position:fixed;border-radius:50%;filter:blur(1px);opacity:.55;pointer-events:none}body:before{width:32vw;height:32vw;background:#ffd6e9;right:-8vw;top:-10vw}body:after{width:28vw;height:28vw;background:#c9f7dc;left:-8vw;bottom:-10vw}
+button,input{font:inherit}.hidden{display:none!important}.app{position:relative;width:100%;height:100%;padding:1.6vh 1.5vw;z-index:1}.screen{height:100%;display:flex;flex-direction:column;gap:1.2vh}
+.topbar{height:8.5vh;min-height:62px;background:var(--panel);border:3px solid #fff;border-radius:24px;box-shadow:0 10px 30px #315b8b22;display:flex;align-items:center;justify-content:space-between;padding:0 1.4vw}.brand{display:flex;align-items:center;gap:.8vw;font-weight:800;font-size:clamp(22px,2vw,34px)}.brand .logo{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,#5bd6ee,#5b8df6);color:white;font-size:26px;box-shadow:0 6px 16px #2e6fb733}.pill{padding:.55em 1em;border-radius:999px;background:#eef7ff;border:2px solid #d8ebff;font-weight:700;font-size:clamp(18px,1.4vw,24px)}
+.btn{border:none;border-radius:16px;padding:.72em 1.15em;font-weight:800;font-size:clamp(18px,1.45vw,25px);cursor:pointer;box-shadow:0 6px 0 #0001,0 10px 20px #315b8b22;transition:.15s;white-space:nowrap}.btn:hover{transform:translateY(-2px)}.btn:active{transform:translateY(2px)}.primary{background:linear-gradient(135deg,#2f80ed,#56ccf2);color:#fff}.success{background:linear-gradient(135deg,#29b766,#6dde9c);color:#fff}.danger{background:linear-gradient(135deg,#ef5350,#ff8a80);color:#fff}.soft{background:#fff;color:var(--ink);border:2px solid #dcecff}.xl{font-size:clamp(23px,2vw,34px);padding:.78em 1.4em}
+.center-card{margin:auto;width:min(920px,94vw);background:var(--panel);border:4px solid #fff;border-radius:30px;box-shadow:0 22px 60px #315b8b30;padding:3vh 3vw;text-align:center}.center-card h1{font-size:clamp(34px,4vw,64px);margin:.1em 0 .25em;color:#1d5e9e}.center-card p{font-size:clamp(20px,1.8vw,30px);margin:.4em auto 1.2em;max-width:760px}.choice-row{display:flex;gap:18px;justify-content:center;flex-wrap:wrap}.join-form{display:grid;gap:14px;max-width:600px;margin:0 auto}.field{width:100%;padding:.75em 1em;border-radius:16px;border:3px solid #cfe8ff;background:white;font-size:clamp(22px,1.7vw,30px);outline:none}.field:focus{border-color:#4b9cf7;box-shadow:0 0 0 5px #4b9cf720}.error{color:#c62828;font-weight:700;font-size:20px;min-height:1.2em}
+.teacher-grid{flex:1;min-height:0;display:grid;grid-template-columns:minmax(320px,.8fr) minmax(520px,1.4fr);gap:1.2vw}.panel{background:var(--panel);border:3px solid #fff;border-radius:24px;box-shadow:0 12px 30px #315b8b1c;padding:1.4vh 1.2vw;min-height:0}.qr-panel{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.room-code{font-size:clamp(40px,4vw,68px);font-weight:900;letter-spacing:.14em;color:#2469ac;margin:.05em 0}.qr{width:min(31vh,270px);aspect-ratio:1;border-radius:18px;border:10px solid white;box-shadow:0 10px 25px #315b8b2a;background:white}.join-link{font-size:clamp(16px,1.1vw,20px);word-break:break-all;margin:.7em 0;color:#3a5f7a}.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;width:100%;margin-top:10px}.stat{background:#f6fbff;border-radius:18px;padding:12px;border:2px solid #dff1ff}.stat b{display:block;font-size:clamp(30px,2.5vw,44px);color:#1565c0}.stat span{font-size:clamp(18px,1.2vw,22px)}
+.dash{display:flex;flex-direction:column}.dash-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.dash h2{font-size:clamp(26px,2.2vw,38px);margin:.1em 0}.timer-big{font-size:clamp(32px,3vw,52px);font-weight:900;color:#b23b5a;background:#fff4f7;border:3px solid #ffd4e2;border-radius:18px;padding:.15em .55em}.results{flex:1;min-height:0;overflow:auto;margin-top:10px;border-radius:18px;background:#fbfdff;border:2px solid #e7f2ff}.result-row{display:grid;grid-template-columns:60px 1fr 150px 150px;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid #e6eef6;font-size:clamp(18px,1.25vw,22px)}.result-row.head{position:sticky;top:0;background:#eaf5ff;font-weight:800;z-index:2}.oktag{color:#157a45;font-weight:800}.waittag{color:#8a6d1e;font-weight:800}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.waiting{text-align:center;margin:auto}.waiting .rabbit{font-size:min(18vw,140px);animation:bob 1s ease-in-out infinite alternate}@keyframes bob{to{transform:translateY(-12px) rotate(2deg)}}
+.game-wrap{flex:1;min-height:0;display:grid;grid-template-rows:auto 1fr;gap:1vh}.game-head{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:1vw}.progress{height:34px;border-radius:18px;background:white;border:3px solid #dfefff;position:relative;overflow:visible}.progress-fill{height:100%;border-radius:18px;background:linear-gradient(90deg,#6bdca0,#ffd75e,#ff8c9a);width:100%;transition:width .2s linear}.rabbit-run{position:absolute;top:50%;left:100%;transform:translate(-60%,-58%);font-size:42px;transition:left .2s linear}.game-time{font-weight:900;font-size:clamp(26px,2.2vw,40px);min-width:105px;text-align:center}.game-grid{min-height:0;display:grid;grid-template-columns:1fr 1.12fr;gap:1.1vw}.bank,.code-area{min-height:0;background:var(--panel);border:3px solid #fff;border-radius:24px;box-shadow:0 12px 30px #315b8b1c;padding:1vh 1vw;display:flex;flex-direction:column}.section-title{font-size:clamp(22px,1.7vw,30px);font-weight:900;margin:0 0 .45vh;display:flex;align-items:center;justify-content:space-between}.blocks,.slots{flex:1;min-height:0;display:grid;grid-template-rows:repeat(9,1fr);gap:.45vh}.cmd,.slot{min-height:0;border-radius:13px;display:flex;align-items:center;padding:.15vh .8vw;font-size:clamp(19px,1.45vw,27px);font-weight:700;line-height:1.05;user-select:none;touch-action:none}.cmd{background:linear-gradient(135deg,#fff,#edf7ff);border:2px solid #cfe8ff;box-shadow:0 4px 10px #315b8b12;cursor:grab}.cmd:active{cursor:grabbing}.cmd.selected{outline:4px solid #ffb82e;background:#fff8d8}.cmd.used{opacity:.18;pointer-events:none}.slot{border:2px dashed #9bc8ef;background:#f8fcff;color:#6c8195}.slot[data-indent="1"]{padding-left:2.3vw}.slot[data-indent="2"]{padding-left:3.7vw}.slot.correct{border-style:solid;border-color:#36bf72;background:#dcf9e8;color:#176e42;animation:greenFlash .45s 2}.slot.wrong{border-color:#ef5350;background:#ffe3e3;color:#a42020;animation:redFlash .24s 4}@keyframes redFlash{50%{background:#ff6f6f;color:white;transform:scale(1.015)}}@keyframes greenFlash{50%{background:#65df97;color:white;transform:scale(1.015)}}
+.drag-ghost{position:fixed;z-index:1000;pointer-events:none;transform:translate(-50%,-50%) rotate(-1deg);padding:12px 18px;border-radius:14px;background:white;border:3px solid #3f95e9;box-shadow:0 14px 36px #0003;font-size:22px;font-weight:800;max-width:46vw}.toast{position:fixed;left:50%;top:13%;transform:translateX(-50%);z-index:1001;background:#19324a;color:white;padding:.7em 1.2em;border-radius:999px;font-size:clamp(20px,1.5vw,26px);font-weight:800;box-shadow:0 12px 28px #0003;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;top:11%}
+.overlay{position:fixed;inset:0;z-index:1500;background:linear-gradient(135deg,#dfffe8ee,#fff3cdee,#e8edffee);display:grid;place-items:center;padding:3vh}.finish-card{width:min(1050px,94vw);max-height:92vh;overflow:auto;background:white;border:5px solid #fff;border-radius:30px;box-shadow:0 25px 80px #315b8b42;padding:2vh 2vw;text-align:center}.finish-card h1{font-size:clamp(38px,4.5vw,70px);color:#1c8b51;margin:.1em}.finish-card p{font-size:clamp(21px,1.7vw,28px)}.full-code{text-align:left;background:#10273b;color:#effaff;border-radius:18px;padding:18px 22px;font-family:"Times New Roman",Times,serif;font-size:clamp(21px,1.55vw,29px);line-height:1.22;white-space:pre;overflow:auto;margin:1vh auto;max-width:920px}.confetti{position:fixed;inset:0;z-index:1490;pointer-events:none}
+.summary-card{margin:auto;width:min(1100px,95vw);height:min(82vh,760px);background:var(--panel);border:4px solid white;border-radius:30px;box-shadow:0 20px 70px #315b8b33;padding:2vh 2vw;display:flex;flex-direction:column}.summary-title{text-align:center;font-size:clamp(32px,3vw,54px);margin:.1em;color:#175c99}.summary-numbers{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;font-size:clamp(22px,1.7vw,30px);margin:.3em}.summary-numbers b{font-size:1.35em;color:#17834b}.summary-list{flex:1;min-height:0;overflow:auto;background:white;border:2px solid #e2f0ff;border-radius:18px}
+@media(max-width:850px){html,body{overflow:auto}.app{height:auto;min-height:100%}.topbar{height:auto;padding:10px}.brand{font-size:22px}.teacher-grid,.game-grid{grid-template-columns:1fr}.teacher-grid{overflow:auto}.qr{width:210px}.game-grid{min-height:1200px}.game-head{grid-template-columns:1fr auto}.game-head .pill{display:none}.cmd,.slot{font-size:20px;min-height:54px}.blocks,.slots{gap:7px}.game-wrap{min-height:1450px}.result-row{grid-template-columns:44px 1fr 110px}.result-row>*:nth-child(4){display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <section id="home" class="screen">
+    <div class="center-card">
+      <div style="font-size:72px">💻🌳🤖</div>
+      <h1>THỬ THÁCH INSERTION SORT</h1>
+      <p>Kéo – thả các câu lệnh để hoàn thiện chương trình sắp xếp chèn. Cả lớp có thể chơi cùng nhau qua mã QR, kể cả khi dùng mạng khác nhau.</p>
+      <div class="choice-row">
+        <button class="btn primary xl" id="createRoomBtn">👩‍🏫 TẠO PHÒNG GIÁO VIÊN</button>
+        <button class="btn success xl" id="studentJoinBtn">🎓 HỌC SINH THAM GIA</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="join" class="screen hidden">
+    <div class="center-card">
+      <div style="font-size:64px">🎓</div>
+      <h1>VÀO PHÒNG CHƠI</h1>
+      <div class="join-form">
+        <input id="roomInput" class="field" maxlength="6" placeholder="Mã phòng (6 ký tự)" />
+        <input id="nameInput" class="field" maxlength="50" placeholder="Họ và tên học sinh" />
+        <button class="btn success xl" id="joinBtn">THAM GIA</button>
+        <button class="btn soft" id="backHomeBtn">← Quay lại</button>
+        <div id="joinError" class="error"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="teacher" class="screen hidden">
+    <div class="topbar">
+      <div class="brand"><div class="logo">💻</div><div>PHÒNG HỌC INSERTION SORT</div></div>
+      <div id="teacherStatus" class="pill">Đang chờ học sinh</div>
+      <button class="btn soft" id="soundBtn">🔊 Âm thanh</button>
+    </div>
+    <div class="teacher-grid">
+      <div class="panel qr-panel">
+        <div style="font-size:22px;font-weight:800">MÃ PHÒNG</div>
+        <div id="roomCode" class="room-code">------</div>
+        <img id="qrImg" class="qr" alt="QR tham gia" />
+        <div id="joinLink" class="join-link"></div>
+        <div class="stats">
+          <div class="stat"><b id="joinedCount">0</b><span>Học sinh tham gia</span></div>
+          <div class="stat"><b id="doneCount">0</b><span>Hoàn thành đúng</span></div>
+        </div>
+      </div>
+      <div class="panel dash">
+        <div class="dash-head"><h2>📊 Bảng điều khiển</h2><div id="teacherTimer" class="timer-big">120 s</div></div>
+        <div id="teacherMessage" style="font-size:clamp(19px,1.3vw,24px);margin:.2em 0 .4em">Cho học sinh quét QR và nhập họ tên. Khi sẵn sàng, bấm Bắt đầu 120 giây.</div>
+        <div class="results" id="teacherResults"></div>
+        <div class="actions">
+          <button class="btn success" id="startRoundBtn">▶ BẮT ĐẦU 120 GIÂY</button>
+          <button class="btn danger" id="finishRoundBtn">■ KẾT THÚC NGAY</button>
+          <button class="btn soft" id="resetRoundBtn">↻ LƯỢT MỚI</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="waiting" class="screen hidden">
+    <div class="center-card waiting">
+      <div class="rabbit">🐇</div>
+      <h1 id="waitingTitle">ĐÃ VÀO PHÒNG!</h1>
+      <p id="waitingText">Hãy chờ giáo viên bắt đầu lượt chơi 120 giây.</p>
+      <div class="pill" id="waitingRoom"></div>
+    </div>
+  </section>
+
+  <section id="game" class="screen hidden">
+    <div class="topbar">
+      <div class="brand"><div class="logo">🧩</div><div>GHÉP CHƯƠNG TRÌNH INSERTION SORT</div></div>
+      <div id="studentNamePill" class="pill"></div>
+      <button class="btn soft" id="soundBtn2">🔊</button>
+    </div>
+    <div class="game-wrap">
+      <div class="game-head">
+        <div class="progress"><div id="progressFill" class="progress-fill"></div><div id="rabbitRun" class="rabbit-run">🐇</div></div>
+        <div id="gameTime" class="game-time">120 s</div>
+        <div class="pill">Kéo hoặc chạm câu lệnh → chạm vị trí</div>
+      </div>
+      <div class="game-grid">
+        <div class="bank">
+          <div class="section-title"><span>🧩 CÂU LỆNH ĐANG BỊ XÁO TRỘN</span><span id="leftCount">9</span></div>
+          <div id="blocks" class="blocks"></div>
+        </div>
+        <div class="code-area">
+          <div class="section-title"><span>💻 CHƯƠNG TRÌNH CẦN HOÀN THIỆN</span><span>Python</span></div>
+          <div id="slots" class="slots"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="studentEnd" class="screen hidden">
+    <div class="center-card">
+      <div style="font-size:82px" id="endEmoji">⏰</div>
+      <h1 id="endTitle">HẾT GIỜ!</h1>
+      <p id="endText">Kết quả của bạn đã được ghi nhận trên màn hình giáo viên.</p>
+      <div class="full-code">A = [3, 7, 9, 0, 12, 16, 20]
+
+for i in range(1, len(A)):
+    value = A[i]
+    j = i - 1
+    while j &gt;= 0 and A[j] &gt; value:
+        A[j + 1] = A[j]
+        j = j - 1
+    A[j + 1] = value
+
+print("Dãy sau khi sắp xếp:", A)</div>
+    </div>
+  </section>
+
+  <section id="summary" class="screen hidden">
+    <div class="summary-card">
+      <h1 class="summary-title">🏆 TỔNG KẾT LƯỢT CHƠI</h1>
+      <div class="summary-numbers"><span>👥 Tham gia: <b id="sumJoined">0</b></span><span>✅ Hoàn thành đúng trong 120 giây: <b id="sumDone">0</b></span></div>
+      <div id="summaryList" class="summary-list"></div>
+      <div class="actions" style="justify-content:center"><button class="btn primary" id="backDashboardBtn">← Trở lại bảng điều khiển</button><button class="btn success" id="newRoundFromSummaryBtn">↻ TẠO LƯỢT MỚI</button></div>
+    </div>
+  </section>
+</div>
+<div id="toast" class="toast"></div>
+<canvas id="confetti" class="confetti hidden"></canvas>
+<div id="finishOverlay" class="overlay hidden">
+  <div class="finish-card">
+    <div style="font-size:80px">🎉🏆🎉</div>
+    <h1>CHÍNH XÁC!</h1>
+    <p>Bạn đã hoàn thành chương trình Insertion Sort trong thời gian quy định.</p>
+    <div class="full-code">A = [3, 7, 9, 0, 12, 16, 20]
+
+for i in range(1, len(A)):
+    value = A[i]
+    j = i - 1
+    while j &gt;= 0 and A[j] &gt; value:
+        A[j + 1] = A[j]
+        j = j - 1
+    A[j + 1] = value
+
+print("Dãy sau khi sắp xếp:", A)</div>
+    <button class="btn success" id="closeFinishBtn">XEM MÀN HÌNH KẾT THÚC</button>
+  </div>
+</div>
+<script>
+const screens=['home','join','teacher','waiting','game','studentEnd','summary'];
+const $=id=>document.getElementById(id);
+const state={room:null,teacherKey:null,pid:null,name:null,role:null,roomStatus:null,remaining:120000,selected:null,completed:false,summaryShown:false,teacherPoll:null,studentPoll:null,audio:true,audioCtx:null,musicTimer:null};
+const commands=[
+ {id:'c0',text:'A = [3, 7, 9, 0, 12, 16, 20]',indent:0},
+ {id:'c1',text:'for i in range(1, len(A)):',indent:0},
+ {id:'c2',text:'value = A[i]',indent:1},
+ {id:'c3',text:'j = i - 1',indent:1},
+ {id:'c4',text:'while j >= 0 and A[j] > value:',indent:1},
+ {id:'c5',text:'A[j + 1] = A[j]',indent:2},
+ {id:'c6',text:'j = j - 1',indent:2},
+ {id:'c7',text:'A[j + 1] = value',indent:1},
+ {id:'c8',text:'print("Dãy sau khi sắp xếp:", A)',indent:0}
+];
+function show(id){screens.forEach(s=>$(s).classList.toggle('hidden',s!==id));}
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1500)}
+function qs(){return new URLSearchParams(location.search)}
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+async function api(url,opt={}){const r=await fetch(url,{headers:{'Content-Type':'application/json',...(opt.headers||{})},...opt});const j=await r.json().catch(()=>({ok:false,error:'Lỗi máy chủ'}));if(!r.ok)throw new Error(j.error||'Lỗi');return j}
+
+function ensureAudio(){if(!state.audio)return null;if(!state.audioCtx)state.audioCtx=new (window.AudioContext||window.webkitAudioContext)();if(state.audioCtx.state==='suspended')state.audioCtx.resume();return state.audioCtx}
+function tone(freq,d=.12,type='sine',vol=.04,delay=0){const c=ensureAudio();if(!c)return;const o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(0,c.currentTime+delay);g.gain.linearRampToValueAtTime(vol,c.currentTime+delay+.01);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+delay+d);o.connect(g).connect(c.destination);o.start(c.currentTime+delay);o.stop(c.currentTime+delay+d+.03)}
+function sfxGood(){[523,659,784,1047].forEach((f,i)=>tone(f,.25,'triangle',.055,i*.08))}
+function sfxBad(){tone(180,.18,'sawtooth',.045);tone(135,.24,'square',.03,.08)}
+function startMusic(){stopMusic();if(!state.audio)return;let n=0;state.musicTimer=setInterval(()=>{const seq=[261,329,392,329,294,370,440,370];tone(seq[n++%seq.length],.22,'sine',.014)},420)}
+function stopMusic(){clearInterval(state.musicTimer);state.musicTimer=null}
+function toggleAudio(){state.audio=!state.audio;if(state.audio)startMusic();else stopMusic();$('soundBtn').textContent=state.audio?'🔊 Âm thanh':'🔇 Âm thanh';$('soundBtn2').textContent=state.audio?'🔊':'🔇'}
+$('soundBtn').onclick=$('soundBtn2').onclick=toggleAudio;
+
+$('createRoomBtn').onclick=async()=>{ensureAudio();startMusic();const j=await api('/api/rooms',{method:'POST',body:'{}'});state.room=j.code;state.teacherKey=j.teacher_key;state.role='teacher';localStorage.setItem('ins_teacher_'+j.code,j.teacher_key);history.replaceState(null,'','/?room='+j.code+'&role=teacher');setupTeacher()};
+$('studentJoinBtn').onclick=()=>{show('join');$('roomInput').focus()};
+$('backHomeBtn').onclick=()=>{history.replaceState(null,'','/');show('home')};
+$('joinBtn').onclick=joinStudent;
+async function joinStudent(){try{ensureAudio();startMusic();const code=$('roomInput').value.trim().toUpperCase(),name=$('nameInput').value.trim();const j=await api('/api/rooms/'+encodeURIComponent(code)+'/join',{method:'POST',body:JSON.stringify({name})});state.room=code;state.pid=j.participant_id;state.name=j.name;state.role='student';localStorage.setItem('ins_pid_'+code,j.participant_id);localStorage.setItem('ins_name_'+code,j.name);history.replaceState(null,'','/?room='+code+'&role=student');$('joinError').textContent='';startStudentFlow()}catch(e){$('joinError').textContent=e.message;sfxBad()}}
+
+async function setupTeacher(){show('teacher');$('roomCode').textContent=state.room;$('qrImg').src='/qr/'+state.room+'.png?x='+Date.now();const joinUrl=location.origin+'/?room='+state.room+'&role=student';$('joinLink').textContent=joinUrl;clearInterval(state.teacherPoll);state.teacherPoll=setInterval(pollTeacher,700);await pollTeacher()}
+function fmtMs(ms){if(ms==null)return '—';return (ms/1000).toFixed(1)+' s'}
+async function pollTeacher(){if(!state.room||!state.teacherKey)return;try{const j=await api('/api/rooms/'+state.room+'/results?teacher_key='+encodeURIComponent(state.teacherKey));const st=await api('/api/rooms/'+state.room+'/status');state.roomStatus=st.status;$('joinedCount').textContent=j.participants;$('doneCount').textContent=j.completed;let sec=Math.max(0,Math.ceil(st.remaining_ms/1000));$('teacherTimer').textContent=(st.status==='playing'?sec:120)+' s';$('teacherStatus').textContent=st.status==='lobby'?'Đang chờ học sinh':st.status==='playing'?'Đang chơi':'Đã kết thúc';$('startRoundBtn').disabled=st.status==='playing';$('finishRoundBtn').disabled=st.status!=='playing';renderTeacherRows(j.results);if(st.status==='finished' && !$('teacher').classList.contains('hidden') && !state.summaryShown){state.summaryShown=true;showSummary(j)}}catch(e){console.error(e)}}
+function renderTeacherRows(rows){const box=$('teacherResults');box.innerHTML='<div class="result-row head"><div>#</div><div>Họ và tên</div><div>Trạng thái</div><div>Thời gian</div></div>'+rows.map((r,i)=>`<div class="result-row"><div>${i+1}</div><div>${esc(r.name)}</div><div class="${r.completed?'oktag':'waittag'}">${r.completed?'✅ Đúng':'⏳ Chưa xong'}</div><div>${r.completed?fmtMs(r.elapsed_ms):'—'}</div></div>`).join('')}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+$('startRoundBtn').onclick=async()=>{ensureAudio();startMusic();await api('/api/rooms/'+state.room+'/start',{method:'POST',body:JSON.stringify({teacher_key:state.teacherKey})});toast('Đã bắt đầu 120 giây!');pollTeacher()};
+$('finishRoundBtn').onclick=async()=>{await api('/api/rooms/'+state.room+'/finish',{method:'POST',body:JSON.stringify({teacher_key:state.teacherKey})});pollTeacher()};
+$('resetRoundBtn').onclick=async()=>{state.summaryShown=false;await api('/api/rooms/'+state.room+'/reset',{method:'POST',body:JSON.stringify({teacher_key:state.teacherKey})});show('teacher');toast('Đã tạo lượt mới');pollTeacher()};
+function showSummary(j){show('summary');$('sumJoined').textContent=j.participants;$('sumDone').textContent=j.completed;$('summaryList').innerHTML='<div class="result-row head"><div>#</div><div>Họ và tên</div><div>Kết quả</div><div>Thời gian</div></div>'+j.results.map((r,i)=>`<div class="result-row"><div>${i+1}</div><div>${esc(r.name)}</div><div class="${r.completed?'oktag':'waittag'}">${r.completed?'✅ Hoàn thành':'—'}</div><div>${r.completed?fmtMs(r.elapsed_ms):'—'}</div></div>`).join('')}
+$('backDashboardBtn').onclick=()=>show('teacher');
+$('newRoundFromSummaryBtn').onclick=async()=>{state.summaryShown=false;await api('/api/rooms/'+state.room+'/reset',{method:'POST',body:JSON.stringify({teacher_key:state.teacherKey})});show('teacher');pollTeacher()};
+
+async function startStudentFlow(){show('waiting');$('waitingRoom').textContent='Phòng '+state.room+' • '+state.name;clearInterval(state.studentPoll);state.studentPoll=setInterval(pollStudent,500);await pollStudent()}
+async function pollStudent(){if(!state.room)return;try{const st=await api('/api/rooms/'+state.room+'/status');state.roomStatus=st.status;state.remaining=st.remaining_ms;if(st.status==='lobby'){if($('waiting').classList.contains('hidden')&&!state.completed)show('waiting');$('waitingTitle').textContent='ĐÃ VÀO PHÒNG!';$('waitingText').textContent='Hãy chờ giáo viên bắt đầu lượt chơi 120 giây.'}else if(st.status==='playing'&&!state.completed){if($('game').classList.contains('hidden'))beginGame();updateTimer(st.remaining_ms)}else if(st.status==='finished'&&!state.completed){studentTimeout()}}catch(e){console.error(e)}}
+function beginGame(){state.completed=false;state.selected=null;$('studentNamePill').textContent='🎓 '+state.name;renderGame();show('game');ensureAudio();startMusic()}
+function renderGame(){const blocks=$('blocks'),slots=$('slots');blocks.innerHTML='';slots.innerHTML='';const mixed=shuffle(commands);mixed.forEach(c=>{const d=document.createElement('div');d.className='cmd';d.dataset.id=c.id;d.textContent=c.text;d.addEventListener('pointerdown',startDrag);d.addEventListener('click',()=>selectCmd(d));blocks.appendChild(d)});commands.forEach((c,i)=>{const s=document.createElement('div');s.className='slot';s.dataset.index=i;s.dataset.indent=c.indent;s.innerHTML='<span>'+(i+1)+'. &nbsp; Thả câu lệnh vào đây</span>';s.addEventListener('click',()=>{if(state.selected)tryPlace(state.selected,s)});slots.appendChild(s)});$('leftCount').textContent=commands.length}
+function selectCmd(el){if(el.classList.contains('used'))return;document.querySelectorAll('.cmd.selected').forEach(x=>x.classList.remove('selected'));state.selected=el;el.classList.add('selected');toast('Đã chọn câu lệnh — hãy chạm vị trí cần đặt')}
+let drag={el:null,ghost:null,moved:false,startX:0,startY:0};
+function startDrag(e){if(e.button!=null&&e.button!==0)return;const el=e.currentTarget;if(el.classList.contains('used'))return;drag={el,ghost:null,moved:false,startX:e.clientX,startY:e.clientY};el.setPointerCapture?.(e.pointerId);el.addEventListener('pointermove',moveDrag);el.addEventListener('pointerup',endDrag,{once:true});el.addEventListener('pointercancel',endDrag,{once:true})}
+function moveDrag(e){if(!drag.el)return;const dx=e.clientX-drag.startX,dy=e.clientY-drag.startY;if(!drag.moved&&Math.hypot(dx,dy)>8){drag.moved=true;drag.ghost=document.createElement('div');drag.ghost.className='drag-ghost';drag.ghost.textContent=drag.el.textContent;document.body.appendChild(drag.ghost)}if(drag.ghost){drag.ghost.style.left=e.clientX+'px';drag.ghost.style.top=e.clientY+'px'}}
+function endDrag(e){const el=drag.el;el?.removeEventListener('pointermove',moveDrag);if(drag.ghost){drag.ghost.remove();const target=document.elementFromPoint(e.clientX,e.clientY)?.closest('.slot');if(target)tryPlace(el,target)}drag={el:null,ghost:null,moved:false,startX:0,startY:0}}
+function tryPlace(cmd,slot){if(!cmd||cmd.classList.contains('used')||slot.classList.contains('correct'))return;const expected=commands[Number(slot.dataset.index)].id;if(cmd.dataset.id===expected){slot.textContent=cmd.textContent;slot.classList.add('correct');cmd.classList.add('used');cmd.classList.remove('selected');state.selected=null;sfxGood();const left=document.querySelectorAll('.cmd:not(.used)').length;$('leftCount').textContent=left;if(left===0)completeGame()}else{slot.classList.remove('wrong');void slot.offsetWidth;slot.classList.add('wrong');setTimeout(()=>slot.classList.remove('wrong'),1100);sfxBad();toast('Chưa đúng vị trí — thử lại nhé!')}}
+function updateTimer(ms){const pct=Math.max(0,Math.min(100,ms/120000*100));$('progressFill').style.width=pct+'%';$('rabbitRun').style.left=pct+'%';$('gameTime').textContent=Math.ceil(ms/1000)+' s'}
+async function completeGame(){if(state.completed)return;state.completed=true;try{await api('/api/rooms/'+state.room+'/submit',{method:'POST',body:JSON.stringify({participant_id:state.pid})})}catch(e){console.error(e)}sfxGood();launchConfetti();$('finishOverlay').classList.remove('hidden');setTimeout(()=>{$('finishOverlay').classList.remove('hidden')},0)}
+$('closeFinishBtn').onclick=()=>{$('finishOverlay').classList.add('hidden');$('endEmoji').textContent='🏆';$('endTitle').textContent='HOÀN THÀNH CHÍNH XÁC!';$('endText').textContent='Chương trình hoàn chỉnh đã được gửi lên màn hình giáo viên.';show('studentEnd')}
+function studentTimeout(){if(state.completed)return;state.completed=true;stopMusic();sfxBad();$('endEmoji').textContent='⏰';$('endTitle').textContent='HẾT 120 GIÂY!';$('endText').textContent='Bạn chưa hoàn thành đúng chương trình trong thời gian quy định. Hãy quan sát chương trình hoàn chỉnh bên dưới.';show('studentEnd')}
+function launchConfetti(){const c=$('confetti'),ctx=c.getContext('2d');c.classList.remove('hidden');c.width=innerWidth;c.height=innerHeight;const bits=Array.from({length:170},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.3,vx:(Math.random()-.5)*6,vy:2+Math.random()*6,r:3+Math.random()*6,a:Math.random()*6.28,w:Math.random()*.18+.05}));let f=0;(function loop(){ctx.clearRect(0,0,c.width,c.height);bits.forEach((p,i)=>{p.x+=p.vx;p.y+=p.vy;p.a+=p.w;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.fillStyle=`hsl(${(i*47+f*3)%360} 85% 60%)`;ctx.fillRect(-p.r,-p.r,p.r*2,p.r*1.2);ctx.restore()});if(f++<180)requestAnimationFrame(loop);else{ctx.clearRect(0,0,c.width,c.height);c.classList.add('hidden')}})()}
+
+window.addEventListener('load',async()=>{const p=qs(),room=(p.get('room')||'').toUpperCase(),role=p.get('role');if(room&&role==='teacher'){const key=localStorage.getItem('ins_teacher_'+room);if(key){state.room=room;state.teacherKey=key;state.role='teacher';setupTeacher();return}}if(room&&role==='student'){state.room=room;state.role='student';$('roomInput').value=room;const pid=localStorage.getItem('ins_pid_'+room),name=localStorage.getItem('ins_name_'+room);if(pid&&name){state.pid=pid;state.name=name;startStudentFlow();return}show('join');$('nameInput').focus();return}show('home')});
+</script>
+</body>
+</html>
