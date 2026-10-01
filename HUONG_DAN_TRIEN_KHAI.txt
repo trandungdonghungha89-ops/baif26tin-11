@@ -1,0 +1,42 @@
+TRÒ CHƠI INSERTION SORT - PHIÊN BẢN INTERNET
+============================================
+
+MỤC TIÊU
+- Giáo viên tạo phòng chơi.
+- Hệ thống sinh mã phòng và QR.
+- Học sinh có thể dùng Wi-Fi/4G/5G khác mạng với máy giáo viên.
+- Giáo viên bấm BẮT ĐẦU 120 GIÂY để toàn lớp bắt đầu cùng lúc.
+- Mỗi học sinh kéo/thả hoặc chạm câu lệnh vào đúng vị trí.
+- Hoàn thành đúng: hiệu ứng xanh + âm thanh + tung hoa + hiện chương trình hoàn chỉnh.
+- Màn hình giáo viên cập nhật số người tham gia, số hoàn thành đúng và thời gian.
+- Hết 120 giây: tự chuyển sang màn hình tổng kết lớp.
+
+CÁCH CHẠY THỬ TRÊN MÁY GIÁO VIÊN
+1. Máy cần Python 3.10+.
+2. Nhấp đúp run_local.bat.
+3. Truy cập http://127.0.0.1:5000
+Lưu ý: chạy local chỉ phù hợp để thử. Muốn học sinh ở mạng khác nhau truy cập, cần triển khai lên Internet.
+
+TRIỂN KHAI LÊN INTERNET - GỢI Ý VỚI RENDER
+1. Tạo một kho mã (repository) mới trên GitHub.
+2. Tải toàn bộ các file trong thư mục này lên repository đó.
+3. Trên Render, tạo Web Service mới và kết nối repository.
+4. Build command: pip install -r requirements.txt
+5. Start command: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 8
+6. Sau khi triển khai xong, Render cung cấp một địa chỉ HTTPS công khai.
+7. Giáo viên mở địa chỉ HTTPS đó -> TẠO PHÒNG GIÁO VIÊN.
+8. QR sinh ra sẽ chứa đúng địa chỉ Internet của phòng. Học sinh quét QR bằng bất kỳ mạng nào.
+
+LƯU Ý DỮ LIỆU
+- Phiên bản này dùng SQLite, phù hợp một lớp học/triển khai nhỏ.
+- Nếu dịch vụ hosting khởi động lại và dùng ổ đĩa tạm, dữ liệu cũ có thể mất. Điều này không ảnh hưởng một lượt chơi đang diễn ra nếu máy chủ không bị khởi động lại.
+- Nếu muốn dùng lâu dài cho nhiều lớp/lưu lịch sử, nên đổi sang PostgreSQL.
+
+QUY TRÌNH DẠY HỌC ĐỀ XUẤT
+1. Giáo viên tạo phòng.
+2. Chiếu QR lên màn hình.
+3. Học sinh quét QR và nhập tên.
+4. Khi đủ học sinh, giáo viên bấm BẮT ĐẦU 120 GIÂY.
+5. Học sinh cùng chơi.
+6. Hết thời gian, màn hình giáo viên tự hiện tổng kết.
+7. Bấm LƯỢT MỚI để chơi lại.
