@@ -27,7 +27,7 @@ button{font:inherit}.hidden{display:none!important}.app{min-height:100dvh;positi
 .game-screen{display:flex;flex-direction:column;height:100dvh;overflow:hidden}.game-main{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:14px;padding:14px clamp(12px,2vw,24px)}.stage{min-width:0;display:grid;grid-template-rows:auto auto 1fr;gap:12px}.hud{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.qno{font-weight:900;color:var(--cyan)}.player{color:#cbd4f7}.lifelines{display:flex;gap:8px;flex-wrap:wrap}.life{border:1px solid #6b70b8;background:linear-gradient(180deg,#24295d,#121534);color:#fff;border-radius:999px;padding:9px 13px;font-weight:900;cursor:pointer;white-space:nowrap}.life:hover:not(:disabled){border-color:var(--gold);box-shadow:0 0 18px #ffd54b55}.life:disabled,.life.used{opacity:.35;cursor:not-allowed;text-decoration:line-through}
 .question-card{background:linear-gradient(180deg,#171a4b,#0b0d2b);border:2px solid #4650a0;border-radius:24px;padding:clamp(18px,2.5vw,30px);box-shadow:0 0 30px #111c7d44;min-height:145px;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}.question-card:before{content:"";position:absolute;left:-4%;right:-4%;height:1px;top:50%;background:linear-gradient(90deg,transparent,#51ddff66,transparent)}.question{font-size:clamp(21px,2.3vw,34px);font-weight:900;line-height:1.24;position:relative}.qimage{max-width:min(540px,90%);max-height:180px;border-radius:16px;margin:0 auto 10px;display:block}
 .answers{align-self:stretch;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:12px;min-height:0}.answer{position:relative;border:2px solid #434a93;background:linear-gradient(180deg,#161943,#0c0e2c);color:#fff;border-radius:20px;padding:14px 16px;text-align:left;cursor:pointer;display:flex;align-items:center;gap:13px;font-size:clamp(17px,1.65vw,24px);font-weight:800;line-height:1.25;transition:.22s;overflow:hidden}.answer:before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent,#ffffff10,transparent);transform:translateX(-110%)}.answer:hover:not(:disabled):before{animation:shine .8s}@keyframes shine{to{transform:translateX(110%)}}.letter{flex:0 0 38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#272c68;border:1px solid #747bc7;color:var(--gold);font-weight:1000}.answer:hover:not(:disabled){border-color:#53d9ff;transform:translateY(-1px)}.answer.selected{border-color:var(--gold);background:linear-gradient(180deg,#755b13,#312407);box-shadow:0 0 28px #ffc43b77;animation:pulseGold .75s infinite alternate}.answer.correct{border-color:var(--green);background:linear-gradient(180deg,#10683e,#08331f);box-shadow:0 0 32px #35e98e77}.answer.wrong{border-color:var(--red);background:linear-gradient(180deg,#741e38,#350c19);box-shadow:0 0 32px #ff4d6d66;animation:shake .35s 2}.answer.removed{opacity:.12;visibility:hidden}.answer:disabled{cursor:default}@keyframes pulseGold{to{filter:brightness(1.25)}}@keyframes shake{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
-.ladder{background:linear-gradient(180deg,#12143aee,#090b26ee);border:1px solid #ffffff1f;border-radius:22px;padding:12px;display:flex;flex-direction:column;min-height:0;box-shadow:var(--shadow)}.ladder-title{text-align:center;color:var(--gold);font-weight:1000;letter-spacing:1px;margin:4px 0 9px}.levels{display:flex;flex-direction:column-reverse;gap:5px;min-height:0;flex:1}.level{flex:1;min-height:30px;display:flex;align-items:center;justify-content:space-between;padding:5px 10px;border-radius:10px;color:#aeb6da;font-weight:800;border:1px solid transparent}.level.current{background:linear-gradient(90deg,#ffb11f,#ffe86c);color:#271500;box-shadow:0 0 18px #ffc23d66}.level.passed{color:#5af3a6}.level.safe{border-color:#ffffff22;color:#fff}.level .n{opacity:.8}
+.ladder{background:linear-gradient(180deg,#12143aee,#090b26ee);border:1px solid #ffffff1f;border-radius:22px;padding:12px;display:flex;flex-direction:column;min-height:0;box-shadow:var(--shadow)}.ladder-title{text-align:center;color:var(--gold);font-weight:1000;letter-spacing:1px;margin:4px 0 9px}.levels{display:flex;flex-direction:column-reverse;gap:5px;min-height:0;flex:1}.level{flex:1;min-height:30px;display:flex;align-items:center;justify-content:space-between;padding:5px 10px;border-radius:10px;color:#aeb6da;font-weight:800;border:1px solid transparent}.level.current{background:linear-gradient(90deg,#ffb11f,#ffe86c);color:#271500;box-shadow:0 0 18px #ffc23d66}.level.passed{color:#5af3a6}.level.missed{color:#ff7b93;opacity:.78}.level.safe{border-color:#ffffff22;color:#fff}.level .n{opacity:.8}
 .toast{position:fixed;left:50%;top:90px;transform:translateX(-50%);z-index:80;background:#13163d;border:1px solid #5b61a7;border-radius:14px;padding:12px 18px;box-shadow:var(--shadow);font-weight:800;max-width:min(90vw,700px);text-align:center}.toast.good{border-color:#35e98e}.toast.bad{border-color:#ff4d6d}
 .modal{position:fixed;inset:0;z-index:100;background:#040512dd;backdrop-filter:blur(7px);display:grid;place-items:center;padding:14px}.modal-card{width:min(1000px,96vw);max-height:94dvh;overflow:auto;background:linear-gradient(180deg,#181b50,#0a0c2d);border:1px solid #6268b9;border-radius:26px;box-shadow:0 30px 90px #000c;padding:clamp(18px,3vw,30px)}.modal h2{margin:0 0 12px;text-align:center;font-size:clamp(25px,3vw,40px)}.aud-grid{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:center}.qr-box{background:#fff;border-radius:18px;padding:12px;text-align:center}.qr-box img{width:100%;display:block}.aud-url{color:#1b1c35;font-size:11px;word-break:break-all;margin-top:6px}.aud-info{font-size:18px;line-height:1.5}.countdown{font-size:64px;color:var(--gold);font-weight:1000;text-align:center;margin:8px 0}.result-bars{display:grid;gap:10px}.bar-row{display:grid;grid-template-columns:38px 1fr 70px;gap:10px;align-items:center}.bar-letter{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#2b3070;color:var(--gold);font-weight:1000}.bar-track{height:28px;border-radius:20px;background:#090b27;border:1px solid #3e4381;overflow:hidden}.bar-fill{height:100%;width:0;background:linear-gradient(90deg,#36d6ff,#8e61ff,#ffce4b);transition:width .6s ease}.bar-num{text-align:right;font-weight:900}.modal-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:16px}.friend-card{text-align:center;font-size:22px;line-height:1.5;padding:10px}.friend-choice{font-size:70px;color:var(--gold);font-weight:1000;text-shadow:0 0 30px #ffc73f66}
 .result-card{text-align:center;padding:clamp(28px,5vw,54px)}.result-card h1{font-size:clamp(38px,6vw,74px);margin:0 0 10px;color:var(--gold)}.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}.stat{background:#ffffff0b;border:1px solid #ffffff1f;border-radius:18px;padding:18px}.stat b{display:block;font-size:clamp(26px,4vw,44px);color:#fff}.stat span{color:#aeb7dc}.victory{font-size:72px;animation:float 1.5s ease-in-out infinite alternate}@keyframes float{to{transform:translateY(-9px) rotate(3deg)}}
@@ -47,7 +47,7 @@ button{font:inherit}.hidden{display:none!important}.app{min-height:100dvh;positi
       <div class="hero">
         <div class="kicker">GAMESHOW TƯƠNG TÁC</div>
         <h1>AI LÀ TRIỆU PHÚ?</h1>
-        <p>10 câu hỏi về <b>Phương pháp làm mịn dần</b>. Càng lên cao, câu hỏi càng thử thách. Ba quyền trợ giúp chỉ được dùng một lần.</p>
+        <p>10 câu hỏi về <b>Phương pháp làm mịn dần</b>. Càng lên cao, câu hỏi càng thử thách. <b>Trả lời sai vẫn tiếp tục chơi và chỉ không được cộng điểm ở câu đó.</b> Ba quyền trợ giúp chỉ được dùng một lần.</p>
         <div class="start-row">
           <input id="playerName" class="name-input" maxlength="30" placeholder="Tên người chơi (không bắt buộc)">
           <button id="startBtn" class="btn primary">▶ BẮT ĐẦU GAMESHOW</button>
@@ -147,6 +147,7 @@ const QUESTIONS = {{ questions|tojson }};
 const LETTERS = ['A','B','C','D'];
 const POINTS = [100,200,300,500,1000,2000,4000,8000,16000,32000];
 let current=0, correctCount=0, score=0, locked=false, gameId=null, teacherToken=null;
+let answerResults=[]; // true = đúng, false = sai, undefined = chưa trả lời
 let used={fifty:false,friend:false,audience:false};
 let audPoll=null, audEndTimer=null;
 
@@ -183,7 +184,7 @@ async function createSession(){
 }
 
 async function startGame(){
-  ctx();startBg();current=0;correctCount=0;score=0;locked=false;used={fifty:false,friend:false,audience:false};
+  ctx();startBg();current=0;correctCount=0;score=0;locked=false;answerResults=Array(QUESTIONS.length);used={fifty:false,friend:false,audience:false};
   await createSession();
   $('#playerLabel').textContent=$('#playerName').value.trim()||'Người chơi';
   ['fiftyBtn','friendBtn','audienceBtn'].forEach(id=>{$('#'+id).disabled=false;$('#'+id).classList.remove('used')});
@@ -196,7 +197,13 @@ function buildLadder(){
   updateLadder();
 }
 function updateLadder(){
-  $$('.level').forEach(el=>{const i=+el.dataset.level;el.classList.toggle('current',i===current);el.classList.toggle('passed',i<current);el.classList.toggle('safe',i===4||i===7)});
+  $$('.level').forEach(el=>{
+    const i=+el.dataset.level;
+    el.classList.toggle('current',i===current);
+    el.classList.toggle('passed',answerResults[i]===true);
+    el.classList.toggle('missed',answerResults[i]===false);
+    el.classList.toggle('safe',i===4||i===7);
+  });
 }
 function renderQuestion(){
   locked=false;const q=QUESTIONS[current];$('#qNo').textContent=`Câu ${current+1}/${QUESTIONS.length}`;$('#questionText').textContent=q.q;
@@ -214,18 +221,37 @@ async function chooseAnswer(i){
   const stop=startSuspense();await sleep(2300);stop();btn.classList.remove('selected');
   const correct=q.answer;
   if(i===correct){
-    btn.classList.add('correct');sfxCorrect();correctCount++;score=POINTS[current];
+    btn.classList.add('correct');sfxCorrect();answerResults[current]=true;correctCount++;score=POINTS[current];
     await sleep(1400);
-    if(current===QUESTIONS.length-1){finish(true);return}
+    if(current===QUESTIONS.length-1){finish();return}
     current++;renderQuestion();
   }else{
-    btn.classList.add('wrong');const right=$(`.answer[data-i="${correct}"]`);if(right)right.classList.add('correct');sfxWrong();await sleep(1800);finish(false);
+    // Luật lớp học: trả lời sai không kết thúc trò chơi.
+    // Câu sai không làm thay đổi điểm; sau khi hiện đáp án đúng, game chuyển sang câu tiếp theo.
+    btn.classList.add('wrong');
+    answerResults[current]=false;
+    const right=$(`.answer[data-i="${correct}"]`);
+    if(right)right.classList.add('correct');
+    sfxWrong();
+    showToast('Chưa chính xác! Câu này không được cộng điểm. Trò chơi vẫn tiếp tục.','bad');
+    await sleep(1800);
+    if(current===QUESTIONS.length-1){finish();return}
+    current++;renderQuestion();
   }
 }
-function finish(won){
-  stopBg();if(won)sfxWin();setScreen('resultScreen');$('#resultIcon').textContent=won?'🏆✨':'🎯';$('#resultTitle').textContent=won?'CHINH PHỤC THÀNH CÔNG!':'KẾT THÚC LƯỢT CHƠI';
-  $('#resultMessage').textContent=won?'Bạn đã vượt qua toàn bộ 10 câu hỏi!':'Bạn đã có một lượt chơi rất đáng nhớ. Hãy thử lại để chinh phục mốc cao hơn.';
-  $('#scoreStat').textContent=score.toLocaleString('vi-VN');$('#correctStat').textContent=`${correctCount}/${QUESTIONS.length}`;$('#highStat').textContent=score?score.toLocaleString('vi-VN'):'0';
+function finish(){
+  stopBg();
+  const perfect=correctCount===QUESTIONS.length;
+  if(perfect)sfxWin();
+  setScreen('resultScreen');
+  $('#resultIcon').textContent=perfect?'🏆✨':'🎯✨';
+  $('#resultTitle').textContent=perfect?'CHINH PHỤC HOÀN HẢO!':'HOÀN THÀNH 10 CÂU HỎI';
+  $('#resultMessage').textContent=perfect
+    ?'Xuất sắc! Bạn đã trả lời đúng toàn bộ 10 câu hỏi.'
+    :`Bạn đã hoàn thành đủ 10 câu và trả lời đúng ${correctCount}/${QUESTIONS.length} câu. Câu trả lời sai không làm kết thúc trò chơi và không được cộng điểm.`;
+  $('#scoreStat').textContent=score.toLocaleString('vi-VN');
+  $('#correctStat').textContent=`${correctCount}/${QUESTIONS.length}`;
+  $('#highStat').textContent=score?score.toLocaleString('vi-VN'):'0';
 }
 
 // ---------- 50:50 ----------
