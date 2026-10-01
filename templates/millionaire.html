@@ -30,6 +30,7 @@ button{font:inherit}.hidden{display:none!important}.app{min-height:100dvh;positi
 .ladder{background:linear-gradient(180deg,#12143aee,#090b26ee);border:1px solid #ffffff1f;border-radius:22px;padding:12px;display:flex;flex-direction:column;min-height:0;box-shadow:var(--shadow)}.ladder-title{text-align:center;color:var(--gold);font-weight:1000;letter-spacing:1px;margin:4px 0 9px}.levels{display:flex;flex-direction:column-reverse;gap:5px;min-height:0;flex:1}.level{flex:1;min-height:30px;display:flex;align-items:center;justify-content:space-between;padding:5px 10px;border-radius:10px;color:#aeb6da;font-weight:800;border:1px solid transparent}.level.current{background:linear-gradient(90deg,#ffb11f,#ffe86c);color:#271500;box-shadow:0 0 18px #ffc23d66}.level.passed{color:#5af3a6}.level.missed{color:#ff7b93;opacity:.78}.level.safe{border-color:#ffffff22;color:#fff}.level .n{opacity:.8}
 .toast{position:fixed;left:50%;top:90px;transform:translateX(-50%);z-index:80;background:#13163d;border:1px solid #5b61a7;border-radius:14px;padding:12px 18px;box-shadow:var(--shadow);font-weight:800;max-width:min(90vw,700px);text-align:center}.toast.good{border-color:#35e98e}.toast.bad{border-color:#ff4d6d}
 .modal{position:fixed;inset:0;z-index:100;background:#040512dd;backdrop-filter:blur(7px);display:grid;place-items:center;padding:14px}.modal-card{width:min(1000px,96vw);max-height:94dvh;overflow:auto;background:linear-gradient(180deg,#181b50,#0a0c2d);border:1px solid #6268b9;border-radius:26px;box-shadow:0 30px 90px #000c;padding:clamp(18px,3vw,30px)}.modal h2{margin:0 0 12px;text-align:center;font-size:clamp(25px,3vw,40px)}.aud-grid{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:center}.qr-box{background:#fff;border-radius:18px;padding:12px;text-align:center}.qr-box img{width:100%;display:block}.aud-url{color:#1b1c35;font-size:11px;word-break:break-all;margin-top:6px}.aud-info{font-size:18px;line-height:1.5}.countdown{font-size:64px;color:var(--gold);font-weight:1000;text-align:center;margin:8px 0}.result-bars{display:grid;gap:10px}.bar-row{display:grid;grid-template-columns:38px 1fr 70px;gap:10px;align-items:center}.bar-letter{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#2b3070;color:var(--gold);font-weight:1000}.bar-track{height:28px;border-radius:20px;background:#090b27;border:1px solid #3e4381;overflow:hidden}.bar-fill{height:100%;width:0;background:linear-gradient(90deg,#36d6ff,#8e61ff,#ffce4b);transition:width .6s ease}.bar-num{text-align:right;font-weight:900}.modal-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:16px}.friend-card{text-align:center;font-size:22px;line-height:1.5;padding:10px}.friend-choice{font-size:70px;color:var(--gold);font-weight:1000;text-shadow:0 0 30px #ffc73f66}
+.friend-message{font-size:clamp(22px,3vw,34px);font-weight:1000;line-height:1.3;color:#fff4b0;text-transform:uppercase;letter-spacing:.6px;margin:10px auto 18px;max-width:780px;text-shadow:0 0 22px #ffcf4a33}.friend-sub{color:#cbd4ef;font-size:18px;line-height:1.5;max-width:700px;margin:0 auto 12px}.friend-timer-wrap{text-align:center;padding:8px 0 2px}.friend-timer{font-size:clamp(72px,10vw,120px);line-height:1;color:var(--gold);font-weight:1000;text-shadow:0 0 36px #ffc73f66}.friend-timer-label{color:#cbd4ef;font-size:18px;margin-top:8px}.friend-live{animation:friendGlow 1s ease-in-out infinite alternate}@keyframes friendGlow{to{filter:brightness(1.18);transform:scale(1.02)}}
 .result-card{text-align:center;padding:clamp(28px,5vw,54px)}.result-card h1{font-size:clamp(38px,6vw,74px);margin:0 0 10px;color:var(--gold)}.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}.stat{background:#ffffff0b;border:1px solid #ffffff1f;border-radius:18px;padding:18px}.stat b{display:block;font-size:clamp(26px,4vw,44px);color:#fff}.stat span{color:#aeb7dc}.victory{font-size:72px;animation:float 1.5s ease-in-out infinite alternate}@keyframes float{to{transform:translateY(-9px) rotate(3deg)}}
 @media(max-width:900px){.game-screen{height:auto;min-height:100dvh;overflow:visible}.game-main{display:flex;flex-direction:column;padding:10px}.ladder{order:-1}.levels{display:grid;grid-template-columns:repeat(5,1fr);flex-direction:initial}.level{min-height:30px;font-size:12px;padding:4px 7px}.answers{min-height:440px}.aud-grid{grid-template-columns:1fr}.qr-box{width:min(320px,80vw);margin:auto}.start-meta{grid-template-columns:1fr}}
 @media(max-width:620px){.topbar{height:62px}.brand-mark{width:40px;height:40px}.brand div:last-child{font-size:14px}.brand small{font-size:10px}.game-main{padding:8px}.hud{font-size:13px}.life{padding:8px 9px;font-size:12px}.question-card{min-height:130px}.answers{grid-template-columns:1fr;grid-template-rows:repeat(4,minmax(86px,auto));min-height:0}.answer{font-size:17px;padding:12px}.letter{flex-basis:34px;height:34px}.levels{grid-template-columns:repeat(5,1fr)}.level{font-size:10px}.result-grid{grid-template-columns:1fr}.start-meta{display:none}}
@@ -105,14 +106,22 @@ button{font:inherit}.hidden{display:none!important}.app{min-height:100dvh;positi
 <div id="toast" class="toast hidden"></div>
 
 <div id="friendModal" class="modal hidden">
-  <div class="modal-card" style="max-width:650px">
+  <div class="modal-card" style="max-width:820px">
     <h2>🤝 Hỏi ý kiến bạn đồng hành</h2>
-    <div class="friend-card">
-      <div>Mình suy nghĩ một chút...</div>
-      <div id="friendChoice" class="friend-choice">?</div>
-      <div id="friendText"></div>
+    <div id="friendBefore" class="friend-card">
+      <div class="friend-message">BẠN CÓ THỂ HỎI MỘT NGƯỜI BẠN TIN TƯỞNG NHẤT</div>
+      <div class="friend-sub">Hãy mời một bạn trong lớp hỗ trợ suy nghĩ. Khi sẵn sàng, bấm <b>Bắt đầu</b> để có 15 giây trao đổi.</div>
+      <div class="modal-actions"><button id="friendStart" class="btn primary">▶ BẮT ĐẦU 15 GIÂY</button></div>
     </div>
-    <div class="modal-actions"><button id="friendClose" class="btn secondary">Quay lại câu hỏi</button></div>
+    <div id="friendLive" class="friend-card hidden">
+      <div class="friend-message">TRAO ĐỔI VỚI BẠN ĐỒNG HÀNH</div>
+      <div class="friend-timer-wrap friend-live">
+        <div id="friendCountdown" class="friend-timer">15</div>
+        <div class="friend-timer-label">giây còn lại</div>
+      </div>
+      <div class="friend-sub">Bạn đồng hành hãy đưa ra lời khuyên trực tiếp cho người chơi.</div>
+      <div class="modal-actions"><button id="friendEnd" class="btn secondary">■ KẾT THÚC TRỢ GIÚP</button></div>
+    </div>
   </div>
 </div>
 
@@ -150,6 +159,7 @@ let current=0, correctCount=0, score=0, locked=false, gameId=null, teacherToken=
 let answerResults=[]; // true = đúng, false = sai, undefined = chưa trả lời
 let used={fifty:false,friend:false,audience:false};
 let audPoll=null, audEndTimer=null;
+let friendTimer=null, friendTimeLeft=15;
 
 const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
@@ -158,15 +168,39 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 
 // ---------- Web Audio ----------
 let audioCtx=null,bgTimer=null,soundOn=true;
+let bgStep=0;
 function ctx(){ if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)(); if(audioCtx.state==='suspended') audioCtx.resume(); return audioCtx; }
 function tone(freq=440,dur=.14,type='sine',vol=.08,delay=0){ if(!soundOn)return; const c=ctx(),o=c.createOscillator(),g=c.createGain(); o.type=type;o.frequency.value=freq;g.gain.value=0;o.connect(g);g.connect(c.destination);let t=c.currentTime+delay;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.015);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.start(t);o.stop(t+dur+.03); }
 function sfxSelect(){tone(320,.12,'triangle',.08);tone(520,.12,'triangle',.06,.08)}
 function sfxCorrect(){[523,659,784,1047].forEach((f,i)=>tone(f,.18,'sine',.08,i*.08))}
 function sfxWrong(){tone(190,.28,'sawtooth',.08);tone(130,.35,'square',.05,.18)}
 function sfxWin(){[523,659,784,1047,1319].forEach((f,i)=>tone(f,.28,'triangle',.075,i*.1))}
-function startBg(){stopBg(); if(!soundOn)return; const seq=[130.81,164.81,196,246.94];let i=0;bgTimer=setInterval(()=>{tone(seq[i++%seq.length],.65,'sine',.018)},720)}
+function playBgStep(){
+  if(!soundOn)return;
+  const bass=[110,123.47,130.81,98];
+  const top=[220,246.94,261.63,196];
+  const i=bgStep++%4;
+  // Nhạc nền cố ý để nhỏ: tạo không khí nhưng không lấn tiếng nói trên lớp.
+  tone(bass[i],1.05,'sine',.009);
+  tone(top[i],.48,'triangle',.006,.08);
+}
+function startBg(){
+  stopBg(); if(!soundOn)return; bgStep=0; playBgStep();
+  bgTimer=setInterval(playBgStep,900);
+}
 function stopBg(){if(bgTimer){clearInterval(bgTimer);bgTimer=null}}
-function startSuspense(ms=2300){if(!soundOn)return ()=>{};let n=0;const id=setInterval(()=>tone(210+(n++%5)*25,.09,'square',.035),170);return()=>clearInterval(id)}
+function startSuspense(ms=2300){
+  if(!soundOn)return ()=>{};
+  let n=0;
+  // Nhạc hồi hộp lớn hơn rõ rệt so với nhạc nền nhưng vẫn ở mức an toàn.
+  const id=setInterval(()=>{
+    tone(185+(n%6)*28,.105,n%2?'square':'sawtooth',.065);
+    if(n%3===0)tone(92.5,.16,'sine',.045,.02);
+    n++;
+  },155);
+  const timeout=setTimeout(()=>clearInterval(id),ms+120);
+  return()=>{clearInterval(id);clearTimeout(timeout)};
+}
 $('#soundBtn').onclick=()=>{soundOn=!soundOn;$('#soundBtn').textContent=soundOn?'🔊 Âm thanh':'🔇 Tắt âm';if(soundOn){ctx();startBg()}else stopBg()};
 
 function showToast(msg,type=''){const t=$('#toast');t.textContent=msg;t.className='toast '+type;setTimeout(()=>t.classList.add('hidden'),2100)}
@@ -190,7 +224,7 @@ async function startGame(){
   ['fiftyBtn','friendBtn','audienceBtn'].forEach(id=>{$('#'+id).disabled=false;$('#'+id).classList.remove('used')});
   buildLadder();setScreen('gameScreen');renderQuestion();
 }
-$('#startBtn').onclick=startGame;$('#replayBtn').onclick=()=>{setScreen('startScreen');stopBg()};
+$('#startBtn').onclick=startGame;$('#replayBtn').onclick=()=>{if(friendTimer){clearInterval(friendTimer);friendTimer=null}setScreen('startScreen');stopBg()};
 
 function buildLadder(){
   $('#levels').innerHTML=POINTS.map((p,i)=>`<div class="level" data-level="${i}"><span class="n">${i+1}</span><span>${p.toLocaleString('vi-VN')} điểm</span></div>`).join('');
@@ -260,16 +294,51 @@ $('#fiftyBtn').onclick=()=>{
   wrong.slice(0,2).forEach(i=>$(`.answer[data-i="${i}"]`).classList.add('removed'));sfxSelect();showToast('50:50 đã loại 2 phương án sai.','good');syncLifeButtons();
 };
 
-// ---------- Friend ----------
+// ---------- Friend: hỏi một bạn thật trong lớp ----------
+function resetFriendModal(){
+  if(friendTimer){clearInterval(friendTimer);friendTimer=null}
+  friendTimeLeft=15;
+  $('#friendCountdown').textContent='15';
+  $('#friendBefore').classList.remove('hidden');
+  $('#friendLive').classList.add('hidden');
+  $('#friendStart').disabled=false;
+}
+function closeFriendHelp(){
+  if(friendTimer){clearInterval(friendTimer);friendTimer=null}
+  $('#friendModal').classList.add('hidden');
+  // Trở lại câu hỏi hiện tại; không gợi ý hay tự chọn đáp án thay người chơi.
+  tone(520,.12,'triangle',.035);
+}
 $('#friendBtn').onclick=()=>{
-  if(locked||used.friend)return;used.friend=true;syncLifeButtons();const q=QUESTIONS[current];
-  // Companion is usually helpful but not guaranteed; later questions are less certain.
-  const confidence=Math.max(.58,.86-current*.025);let pick=q.answer;if(Math.random()>confidence){const wrong=[0,1,2,3].filter(i=>i!==q.answer);pick=wrong[Math.floor(Math.random()*wrong.length)]}
-  const pct=Math.round(confidence*100-Math.random()*8);
-  $('#friendChoice').textContent=LETTERS[pick];$('#friendText').textContent=`Mình nghiêng về phương án ${LETTERS[pick]}. Mức tự tin khoảng ${pct}%. Bạn vẫn nên cân nhắc trước khi chốt.`;
-  $('#friendModal').classList.remove('hidden');tone(660,.18,'triangle',.06);tone(880,.18,'triangle',.05,.12);
+  if(locked||used.friend)return;
+  used.friend=true;syncLifeButtons();
+  resetFriendModal();
+  $('#friendModal').classList.remove('hidden');
+  tone(660,.16,'triangle',.045);tone(880,.16,'triangle',.04,.1);
 };
-$('#friendClose').onclick=()=>$('#friendModal').classList.add('hidden');
+$('#friendStart').onclick=()=>{
+  $('#friendStart').disabled=true;
+  $('#friendBefore').classList.add('hidden');
+  $('#friendLive').classList.remove('hidden');
+  friendTimeLeft=15;$('#friendCountdown').textContent=friendTimeLeft;
+  tone(784,.16,'triangle',.05);
+  if(friendTimer)clearInterval(friendTimer);
+  friendTimer=setInterval(()=>{
+    friendTimeLeft--;
+    $('#friendCountdown').textContent=Math.max(0,friendTimeLeft);
+    if(friendTimeLeft>0 && friendTimeLeft<=5)tone(520,.055,'sine',.025);
+    if(friendTimeLeft<=0){
+      clearInterval(friendTimer);friendTimer=null;
+      tone(392,.12,'triangle',.04);tone(523,.16,'triangle',.04,.08);
+      closeFriendHelp();
+      showToast('Hết 15 giây trợ giúp. Tiếp tục trả lời câu hỏi nhé!','good');
+    }
+  },1000);
+};
+$('#friendEnd').onclick=()=>{
+  closeFriendHelp();
+  showToast('Đã kết thúc trợ giúp bạn đồng hành.','good');
+};
 
 // ---------- Audience QR ----------
 async function teacherFetch(url,opts={}){opts.headers={...(opts.headers||{}),'Content-Type':'application/json','X-Teacher-Token':teacherToken};return fetch(url,opts)}
