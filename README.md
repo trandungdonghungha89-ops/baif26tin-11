@@ -1,13 +1,17 @@
-# Insertion Sort Classroom Game
+# Kho trò chơi Tin học
 
-Trò chơi kéo-thả Insertion Sort dành cho lớp học, hỗ trợ phòng chơi, mã QR, đồng bộ 120 giây và bảng tổng hợp kết quả.
+Website Flask dùng chung một Render Web Service cho nhiều trò chơi.
 
-## Chạy local
-```bash
-pip install -r requirements.txt
-python app.py
-```
-Mở `http://127.0.0.1:5000`.
+## Trò chơi hiện có
+1. `/insertion-sort` – Ghép chương trình Insertion Sort, phòng QR 120 giây, bảng kết quả, học sinh lên bảng chơi.
+2. `/millionaire` – Ai Là Triệu Phú Bài 26, 10 câu hỏi, 3 quyền trợ giúp, QR khán giả 15 giây.
 
-## Deploy
-Ứng dụng là Flask + SQLite. Có `Procfile` và `render.yaml` để triển khai web service.
+## Trang chủ
+`/` – Kho trò chơi Tin học.
+
+## Triển khai
+Render dùng:
+- Build: `pip install -r requirements.txt`
+- Start: `gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 8`
+
+Giữ `--workers 1` vì phần bình chọn khán giả của game Triệu Phú dùng bộ nhớ tiến trình trong một phiên lớp học.

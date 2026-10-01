@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#08061b">
+<title>Khán giả trợ giúp - Ai Là Triệu Phú</title>
+<style>
+:root{--bg:#07051a;--panel:#14163f;--gold:#ffcf4a;--cyan:#47e7ff;--green:#35e98e;--red:#ff4d6d;--muted:#b6bfdc}*{box-sizing:border-box}body{margin:0;min-height:100dvh;background:radial-gradient(circle at 50% -10%,#392575,#08061b 45%,#050412 100%);color:#fff;font-family:Inter,Segoe UI,Arial,sans-serif;padding:14px}.wrap{width:min(720px,100%);margin:auto}.head{text-align:center;padding:10px}.logo{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;margin:auto;background:radial-gradient(circle,#ffe986,#ffb52b 40%,#7646e5 70%,#101144 72%);font-weight:1000;color:#1b1240}.head h1{font-size:26px;margin:10px 0 4px}.head p{color:var(--muted);margin:0}.card{background:#111338e8;border:1px solid #5b60a7;border-radius:24px;padding:18px;box-shadow:0 20px 55px #0009}.status{text-align:center;color:var(--gold);font-weight:900;margin-bottom:10px}.timer{text-align:center;font-size:52px;font-weight:1000;color:var(--gold)}.question{font-size:clamp(20px,5vw,29px);font-weight:900;line-height:1.3;text-align:center;padding:14px 0}.answers{display:grid;gap:10px}.ans{border:2px solid #454b93;background:linear-gradient(180deg,#191c4a,#0c0e2c);color:#fff;border-radius:18px;padding:14px;display:flex;gap:12px;align-items:center;text-align:left;font-size:18px;font-weight:800;cursor:pointer}.ans:disabled{opacity:.55;cursor:default}.ans.selected{border-color:var(--green);background:#0d5033}.letter{width:36px;height:36px;flex:0 0 36px;border-radius:50%;display:grid;place-items:center;background:#292f6d;color:var(--gold);font-weight:1000}.note{text-align:center;color:var(--muted);margin-top:12px}.bad{color:#ff899e}.good{color:#5df5ab}.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head"><div class="logo">◆</div><h1>HỎI Ý KIẾN KHÁN GIẢ</h1><p>Phiên trợ giúp trực tiếp · Mã {{ game_id }}</p></div>
+  {% if missing %}
+  <div class="card"><div class="status bad">Phiên trợ giúp không còn tồn tại.</div><p class="note">Hãy quét lại QR mới trên màn hình giáo viên.</p></div>
+  {% else %}
+  <div class="card">
+    <div id="status" class="status">Đang kết nối với giáo viên...</div>
+    <div id="timer" class="timer hidden">15</div>
+    <div id="question" class="question">Vui lòng chờ giáo viên mở quyền trợ giúp.</div>
+    <div id="answers" class="answers"></div>
+    <div id="note" class="note">Bạn chỉ được gửi 1 lựa chọn cho mỗi lần trợ giúp.</div>
+  </div>
+  {% endif %}
+</div>
+{% if not missing %}
+<script>
+const GAME_ID={{ game_id|tojson }};const QUESTIONS={{ questions|tojson }};const LETTERS=['A','B','C','D'];let activeQ=null,voted=false,lastState='';
+let voterId=localStorage.getItem('millionaire_voter_id');if(!voterId){voterId=(crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random());localStorage.setItem('millionaire_voter_id',voterId)}
+const $=s=>document.querySelector(s);const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function renderQuestion(qi,enabled){activeQ=qi;const q=QUESTIONS[qi];$('#question').textContent=q.q;$('#answers').innerHTML=q.options.map((o,i)=>`<button class="ans" data-i="${i}" ${enabled&&!voted?'':'disabled'}><span class="letter">${LETTERS[i]}</span><span>${esc(o)}</span></button>`).join('');document.querySelectorAll('.ans').forEach(b=>b.onclick=()=>vote(+b.dataset.i));}
+async function vote(choice){if(voted||activeQ===null)return;document.querySelectorAll('.ans').forEach(b=>b.disabled=true);const b=document.querySelector(`.ans[data-i="${choice}"]`);if(b)b.classList.add('selected');try{const r=await fetch(`/api/millionaire/${GAME_ID}/audience/vote`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({voter_id:voterId,choice,question_index:activeQ})});const d=await r.json();if(d.ok){voted=true;$('#status').textContent='✅ Đã ghi nhận lựa chọn của bạn';$('#status').className='status good';$('#note').textContent='Cảm ơn bạn! Hãy chờ giáo viên hiển thị kết quả.'}else{throw new Error(d.error)}}catch(e){$('#status').textContent=e.message==='already_voted'?'Bạn đã bình chọn ở lượt này.':'Không gửi được lựa chọn. Có thể thời gian đã hết.';$('#status').className='status bad'}}
+async function poll(){try{const r=await fetch(`/api/millionaire/${GAME_ID}/audience/status`,{cache:'no-store'});const d=await r.json();if(!d.ok)return;if(d.question_index!==activeQ){voted=false;activeQ=d.question_index}
+ if(d.state==='idle'){ $('#status').textContent='Chờ giáo viên sử dụng quyền trợ giúp...';$('#timer').classList.add('hidden');$('#question').textContent='Vui lòng nhìn lên màn hình giáo viên.';$('#answers').innerHTML=''; }
+ else if(d.state==='waiting'){ $('#status').textContent='QR đã sẵn sàng · Chờ giáo viên bấm BẮT ĐẦU';$('#timer').classList.add('hidden');renderQuestion(d.question_index,false);$('#note').textContent='Khi đồng hồ 15 giây chạy, các đáp án sẽ được mở.'; }
+ else if(d.state==='open'){ const left=Math.max(0,Math.ceil(d.ends_at-Date.now()/1000));$('#timer').classList.remove('hidden');$('#timer').textContent=left;$('#status').textContent=voted?'✅ Đã ghi nhận lựa chọn':'⏱ Hãy chọn đáp án ngay!';renderQuestion(d.question_index,!voted); }
+ else if(d.state==='closed'){ $('#timer').classList.remove('hidden');$('#timer').textContent='0';if(d.question_index!==null)renderQuestion(d.question_index,false);$('#status').textContent=voted?'✅ Bình chọn đã kết thúc':'⛔ Đã hết 15 giây';$('#note').textContent='Hãy chờ giáo viên tiếp tục trò chơi.'; }
+}catch(e){$('#status').textContent='Mất kết nối tạm thời...'}}
+setInterval(poll,700);poll();
+</script>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,19 @@
+CẬP NHẬT REPOSITORY baif26tin-11 ĐANG DÙNG TRÊN RENDER
+
+1) Giữ nguyên repository GitHub hiện tại: baif26tin-11.
+2) Tải toàn bộ CÁC FILE BÊN TRONG gói này lên repository hiện tại.
+3) Ghi đè các file cùng tên: app.py, requirements.txt, Procfile, render.yaml.
+4) Trong thư mục templates phải có 4 file:
+   - index.html        (trang chủ Kho trò chơi Tin học)
+   - insertion.html    (game Insertion Sort hiện tại)
+   - millionaire.html  (game Ai Là Triệu Phú)
+   - audience.html     (màn hình khán giả quét QR)
+5) Thêm questions.json ở thư mục gốc.
+6) Commit changes.
+7) Render sẽ tự deploy lại. Chờ trạng thái Live.
+8) Mở URL Render hiện tại và nhấn Ctrl+F5.
+
+Sau cập nhật:
+/                -> Kho trò chơi Tin học
+/insertion-sort  -> Game Insertion Sort
+/millionaire     -> Game Ai Là Triệu Phú

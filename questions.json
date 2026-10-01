@@ -1,0 +1,112 @@
+[
+  {
+    "q": "Phương pháp làm mịn dần trong thiết kế chương trình là quá trình nào?",
+    "options": [
+      "Viết ngay toàn bộ chương trình từ đầu.",
+      "Chi tiết hóa từng bước thiết kế qua nhiều mức.",
+      "Chạy thử chương trình với nhiều bộ dữ liệu.",
+      "Thay thế thuật toán bằng một thuật toán khác."
+    ],
+    "answer": 1,
+    "image": null
+  },
+  {
+    "q": "Trong ví dụ sắp xếp chèn, bước đầu tiên của thiết kế là gì?",
+    "options": [
+      "Viết câu lệnh dịch các phần tử sang phải.",
+      "Tạo ngay biến value để lưu phần tử cần chèn.",
+      "Thiết lập ý tưởng thiết kế ban đầu của thuật toán.",
+      "Viết đầy đủ hàm InsertionSort(A) hoàn chỉnh."
+    ],
+    "answer": 2,
+    "image": null
+  },
+  {
+    "q": "Ở bước thiết kế ban đầu, nhiệm vụ chính của mỗi lượt xử lí là gì?",
+    "options": [
+      "Đưa A[i] vào đúng vị trí trong phần đã sắp xếp.",
+      "Đổi chỗ A[i] với phần tử cuối cùng của dãy.",
+      "Tìm phần tử nhỏ nhất trong toàn bộ dãy A.",
+      "So sánh A[i] với mọi phần tử còn lại của dãy."
+    ],
+    "answer": 0,
+    "image": null
+  },
+  {
+    "q": "Vì sao bước “Chèn A[i] vào đúng vị trí” cần được làm mịn tiếp?",
+    "options": [
+      "Vì bước này chưa thể hiện rõ các thao tác cụ thể.",
+      "Vì bước này không liên quan đến sắp xếp chèn.",
+      "Vì bước này luôn cho kết quả sai với mọi dãy.",
+      "Vì bước này chỉ dùng được cho dãy có hai phần tử."
+    ],
+    "answer": 0,
+    "image": null
+  },
+  {
+    "q": "Khi làm mịn thao tác chèn A[i], việc đầu tiên cần làm là gì?",
+    "options": [
+      "Gán j = i + 1 để xét phần tử bên phải.",
+      "Lưu A[i] vào một biến tạm để không mất giá trị.",
+      "Đưa A[i] thẳng vào vị trí đầu tiên của dãy.",
+      "Sắp xếp lại toàn bộ phần tử từ A[0] đến A[i]."
+    ],
+    "answer": 1,
+    "image": null
+  },
+  {
+    "q": "Trong đoạn làm mịn bước chuyển phần tử, biến j được gán i - 1 nhằm mục đích gì?",
+    "options": [
+      "Bắt đầu xét từ phần tử đứng ngay bên trái A[i].",
+      "Bắt đầu xét từ phần tử đứng ngay bên phải A[i].",
+      "Bắt đầu xét từ phần tử đầu tiên của toàn bộ dãy.",
+      "Bắt đầu xét từ phần tử cuối cùng của toàn bộ dãy."
+    ],
+    "answer": 0,
+    "image": null
+  },
+  {
+    "q": "Điều kiện A[j] > value trong vòng lặp có ý nghĩa gì?",
+    "options": [
+      "A[j] nhỏ hơn phần tử cần chèn nên giữ nguyên vị trí.",
+      "A[j] lớn hơn phần tử cần chèn nên phải dịch sang phải.",
+      "A[j] bằng phần tử cần chèn nên phải xóa khỏi dãy.",
+      "A[j] khác phần tử cần chèn nên phải đổi chỗ ngay."
+    ],
+    "answer": 1,
+    "image": null
+  },
+  {
+    "q": "Sau khi các phần tử lớn hơn value đã được dịch sang phải, value được đặt vào đâu?",
+    "options": [
+      "Vị trí i - 1.",
+      "Vị trí i.",
+      "Vị trí j.",
+      "Vị trí j + 1."
+    ],
+    "answer": 3,
+    "image": null
+  },
+  {
+    "q": "Đặc điểm nào cho thấy một bước thiết kế đã được làm mịn hơn bước trước?",
+    "options": [
+      "Bước mới mô tả ít thao tác hơn và khái quát hơn.",
+      "Bước mới mô tả rõ hơn các thao tác cần thực hiện.",
+      "Bước mới bỏ bớt điều kiện để chương trình ngắn hơn.",
+      "Bước mới thay đổi mục tiêu ban đầu của bài toán."
+    ],
+    "answer": 1,
+    "image": null
+  },
+  {
+    "q": "Khi nào quá trình làm mịn dần trong thiết kế chương trình có thể kết thúc?",
+    "options": [
+      "Khi mỗi thao tác đã đủ cụ thể để viết thành câu lệnh.",
+      "Khi số bước thiết kế giảm xuống còn đúng một bước.",
+      "Khi chương trình chưa cần dùng bất kì biến trung gian nào.",
+      "Khi thuật toán không còn phải xử lí dữ liệu đầu vào."
+    ],
+    "answer": 0,
+    "image": null
+  }
+]

@@ -1,9 +1,10 @@
 services:
   - type: web
-    name: insertion-sort-class-game
+    name: baif26tin-11
     runtime: python
     plan: free
     region: singapore
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 8
     healthCheckPath: /health
+    autoDeploy: true

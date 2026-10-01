@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07051a">
+<title>Ai Là Triệu Phú - Thử thách Bài 26</title>
+<style>
+:root{
+  --bg:#060414;--panel:#0f1030;--panel2:#15184a;--gold:#ffcf4a;--gold2:#ff9b25;
+  --cyan:#42e7ff;--violet:#8b5cf6;--green:#35e98e;--red:#ff4d6d;--white:#f9fbff;
+  --muted:#aab3d3;--line:#373b80;--shadow:0 20px 60px #0009;
+}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--white);font-family:Inter,Segoe UI,Arial,sans-serif;overflow-x:hidden}
+body{min-height:100dvh;background:
+ radial-gradient(circle at 15% 10%,#43207d66 0 7%,transparent 24%),
+ radial-gradient(circle at 85% 5%,#006d8d66 0 6%,transparent 22%),
+ radial-gradient(circle at 50% 110%,#5a2e7c88 0 18%,transparent 45%),#060414}
+body:before,body:after{content:"";position:fixed;top:-20vh;width:34vw;height:120vh;filter:blur(20px);opacity:.22;pointer-events:none;transform-origin:top}
+body:before{left:2vw;background:linear-gradient(180deg,#56e8ff,transparent 65%);clip-path:polygon(45% 0,58% 0,90% 100%,5% 100%);animation:sweep 8s ease-in-out infinite alternate}
+body:after{right:2vw;background:linear-gradient(180deg,#ad61ff,transparent 65%);clip-path:polygon(42% 0,55% 0,95% 100%,7% 100%);animation:sweep2 10s ease-in-out infinite alternate}
+@keyframes sweep{to{transform:rotate(8deg) translateX(6vw)}}@keyframes sweep2{to{transform:rotate(-8deg) translateX(-6vw)}}
+button{font:inherit}.hidden{display:none!important}.app{min-height:100dvh;position:relative;z-index:1}.screen{min-height:100dvh}
+.topbar{height:72px;padding:10px clamp(14px,2vw,28px);display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid #ffffff18;background:#08071acc;backdrop-filter:blur(12px);position:relative;z-index:5}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:.5px}.brand-mark{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 35%,#fff4a0,#ffbe2e 35%,#8b4cf6 69%,#10134a 70%);box-shadow:0 0 24px #ffe26e88}.brand small{display:block;color:var(--cyan);font-size:12px;letter-spacing:2px}.sound-btn{border:1px solid #ffffff30;background:#ffffff12;color:#fff;border-radius:14px;padding:10px 14px;cursor:pointer;font-weight:800}
+.center{min-height:calc(100dvh - 72px);display:grid;place-items:center;padding:20px}.start-card,.result-card{width:min(900px,95vw);background:linear-gradient(180deg,#161744ee,#0b0c27ee);border:1px solid #ffffff28;border-radius:28px;box-shadow:var(--shadow),0 0 40px #6d5dff2b;overflow:hidden}.hero{padding:clamp(24px,4vw,46px);text-align:center;position:relative}.hero:before{content:"";position:absolute;inset:0;background:repeating-radial-gradient(circle at 50% 46%,transparent 0 38px,#ffffff08 39px 40px)}.hero>*{position:relative}.kicker{color:var(--cyan);font-weight:900;letter-spacing:3px;font-size:13px}.hero h1{font-size:clamp(34px,6vw,72px);line-height:.95;margin:12px 0 18px;background:linear-gradient(180deg,#fff,#ffe576 52%,#ff9e2b);-webkit-background-clip:text;color:transparent;text-shadow:0 0 35px #ffbe3c33}.hero p{color:#d5daf0;max-width:700px;margin:0 auto 20px;font-size:clamp(16px,2vw,20px);line-height:1.5}.start-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.name-input{min-width:min(360px,80vw);padding:15px 18px;border-radius:15px;border:1px solid #6570b8;background:#090b29;color:#fff;font-size:18px;outline:none}.btn{border:0;border-radius:16px;padding:14px 20px;font-weight:900;cursor:pointer;transition:.2s;box-shadow:0 8px 22px #0005}.btn:hover{transform:translateY(-2px)}.btn.primary{background:linear-gradient(180deg,#ffe96b,#ffb322);color:#261500}.btn.secondary{background:#24275d;color:#fff;border:1px solid #6167ac}.start-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 24px 24px}.meta{background:#ffffff09;border:1px solid #ffffff18;border-radius:18px;padding:14px;text-align:center;color:#cbd2ef}.meta b{display:block;color:#fff;font-size:24px}
+.game-screen{display:flex;flex-direction:column;height:100dvh;overflow:hidden}.game-main{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:14px;padding:14px clamp(12px,2vw,24px)}.stage{min-width:0;display:grid;grid-template-rows:auto auto 1fr;gap:12px}.hud{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.qno{font-weight:900;color:var(--cyan)}.player{color:#cbd4f7}.lifelines{display:flex;gap:8px;flex-wrap:wrap}.life{border:1px solid #6b70b8;background:linear-gradient(180deg,#24295d,#121534);color:#fff;border-radius:999px;padding:9px 13px;font-weight:900;cursor:pointer;white-space:nowrap}.life:hover:not(:disabled){border-color:var(--gold);box-shadow:0 0 18px #ffd54b55}.life:disabled,.life.used{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+.question-card{background:linear-gradient(180deg,#171a4b,#0b0d2b);border:2px solid #4650a0;border-radius:24px;padding:clamp(18px,2.5vw,30px);box-shadow:0 0 30px #111c7d44;min-height:145px;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}.question-card:before{content:"";position:absolute;left:-4%;right:-4%;height:1px;top:50%;background:linear-gradient(90deg,transparent,#51ddff66,transparent)}.question{font-size:clamp(21px,2.3vw,34px);font-weight:900;line-height:1.24;position:relative}.qimage{max-width:min(540px,90%);max-height:180px;border-radius:16px;margin:0 auto 10px;display:block}
+.answers{align-self:stretch;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:12px;min-height:0}.answer{position:relative;border:2px solid #434a93;background:linear-gradient(180deg,#161943,#0c0e2c);color:#fff;border-radius:20px;padding:14px 16px;text-align:left;cursor:pointer;display:flex;align-items:center;gap:13px;font-size:clamp(17px,1.65vw,24px);font-weight:800;line-height:1.25;transition:.22s;overflow:hidden}.answer:before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent,#ffffff10,transparent);transform:translateX(-110%)}.answer:hover:not(:disabled):before{animation:shine .8s}@keyframes shine{to{transform:translateX(110%)}}.letter{flex:0 0 38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#272c68;border:1px solid #747bc7;color:var(--gold);font-weight:1000}.answer:hover:not(:disabled){border-color:#53d9ff;transform:translateY(-1px)}.answer.selected{border-color:var(--gold);background:linear-gradient(180deg,#755b13,#312407);box-shadow:0 0 28px #ffc43b77;animation:pulseGold .75s infinite alternate}.answer.correct{border-color:var(--green);background:linear-gradient(180deg,#10683e,#08331f);box-shadow:0 0 32px #35e98e77}.answer.wrong{border-color:var(--red);background:linear-gradient(180deg,#741e38,#350c19);box-shadow:0 0 32px #ff4d6d66;animation:shake .35s 2}.answer.removed{opacity:.12;visibility:hidden}.answer:disabled{cursor:default}@keyframes pulseGold{to{filter:brightness(1.25)}}@keyframes shake{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.ladder{background:linear-gradient(180deg,#12143aee,#090b26ee);border:1px solid #ffffff1f;border-radius:22px;padding:12px;display:flex;flex-direction:column;min-height:0;box-shadow:var(--shadow)}.ladder-title{text-align:center;color:var(--gold);font-weight:1000;letter-spacing:1px;margin:4px 0 9px}.levels{display:flex;flex-direction:column-reverse;gap:5px;min-height:0;flex:1}.level{flex:1;min-height:30px;display:flex;align-items:center;justify-content:space-between;padding:5px 10px;border-radius:10px;color:#aeb6da;font-weight:800;border:1px solid transparent}.level.current{background:linear-gradient(90deg,#ffb11f,#ffe86c);color:#271500;box-shadow:0 0 18px #ffc23d66}.level.passed{color:#5af3a6}.level.safe{border-color:#ffffff22;color:#fff}.level .n{opacity:.8}
+.toast{position:fixed;left:50%;top:90px;transform:translateX(-50%);z-index:80;background:#13163d;border:1px solid #5b61a7;border-radius:14px;padding:12px 18px;box-shadow:var(--shadow);font-weight:800;max-width:min(90vw,700px);text-align:center}.toast.good{border-color:#35e98e}.toast.bad{border-color:#ff4d6d}
+.modal{position:fixed;inset:0;z-index:100;background:#040512dd;backdrop-filter:blur(7px);display:grid;place-items:center;padding:14px}.modal-card{width:min(1000px,96vw);max-height:94dvh;overflow:auto;background:linear-gradient(180deg,#181b50,#0a0c2d);border:1px solid #6268b9;border-radius:26px;box-shadow:0 30px 90px #000c;padding:clamp(18px,3vw,30px)}.modal h2{margin:0 0 12px;text-align:center;font-size:clamp(25px,3vw,40px)}.aud-grid{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:center}.qr-box{background:#fff;border-radius:18px;padding:12px;text-align:center}.qr-box img{width:100%;display:block}.aud-url{color:#1b1c35;font-size:11px;word-break:break-all;margin-top:6px}.aud-info{font-size:18px;line-height:1.5}.countdown{font-size:64px;color:var(--gold);font-weight:1000;text-align:center;margin:8px 0}.result-bars{display:grid;gap:10px}.bar-row{display:grid;grid-template-columns:38px 1fr 70px;gap:10px;align-items:center}.bar-letter{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#2b3070;color:var(--gold);font-weight:1000}.bar-track{height:28px;border-radius:20px;background:#090b27;border:1px solid #3e4381;overflow:hidden}.bar-fill{height:100%;width:0;background:linear-gradient(90deg,#36d6ff,#8e61ff,#ffce4b);transition:width .6s ease}.bar-num{text-align:right;font-weight:900}.modal-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:16px}.friend-card{text-align:center;font-size:22px;line-height:1.5;padding:10px}.friend-choice{font-size:70px;color:var(--gold);font-weight:1000;text-shadow:0 0 30px #ffc73f66}
+.result-card{text-align:center;padding:clamp(28px,5vw,54px)}.result-card h1{font-size:clamp(38px,6vw,74px);margin:0 0 10px;color:var(--gold)}.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}.stat{background:#ffffff0b;border:1px solid #ffffff1f;border-radius:18px;padding:18px}.stat b{display:block;font-size:clamp(26px,4vw,44px);color:#fff}.stat span{color:#aeb7dc}.victory{font-size:72px;animation:float 1.5s ease-in-out infinite alternate}@keyframes float{to{transform:translateY(-9px) rotate(3deg)}}
+@media(max-width:900px){.game-screen{height:auto;min-height:100dvh;overflow:visible}.game-main{display:flex;flex-direction:column;padding:10px}.ladder{order:-1}.levels{display:grid;grid-template-columns:repeat(5,1fr);flex-direction:initial}.level{min-height:30px;font-size:12px;padding:4px 7px}.answers{min-height:440px}.aud-grid{grid-template-columns:1fr}.qr-box{width:min(320px,80vw);margin:auto}.start-meta{grid-template-columns:1fr}}
+@media(max-width:620px){.topbar{height:62px}.brand-mark{width:40px;height:40px}.brand div:last-child{font-size:14px}.brand small{font-size:10px}.game-main{padding:8px}.hud{font-size:13px}.life{padding:8px 9px;font-size:12px}.question-card{min-height:130px}.answers{grid-template-columns:1fr;grid-template-rows:repeat(4,minmax(86px,auto));min-height:0}.answer{font-size:17px;padding:12px}.letter{flex-basis:34px;height:34px}.levels{grid-template-columns:repeat(5,1fr)}.level{font-size:10px}.result-grid{grid-template-columns:1fr}.start-meta{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><div class="brand-mark">◆</div><div><small>THỬ THÁCH KIẾN THỨC</small><div>AI LÀ TRIỆU PHÚ · BÀI 26</div></div></div>
+    <div style="display:flex;gap:8px;align-items:center"><a href="/" class="sound-btn" style="text-decoration:none">← Kho trò chơi</a><button id="soundBtn" class="sound-btn">🔊 Âm thanh</button></div>
+  </header>
+
+  <section id="startScreen" class="screen center">
+    <div class="start-card">
+      <div class="hero">
+        <div class="kicker">GAMESHOW TƯƠNG TÁC</div>
+        <h1>AI LÀ TRIỆU PHÚ?</h1>
+        <p>10 câu hỏi về <b>Phương pháp làm mịn dần</b>. Càng lên cao, câu hỏi càng thử thách. Ba quyền trợ giúp chỉ được dùng một lần.</p>
+        <div class="start-row">
+          <input id="playerName" class="name-input" maxlength="30" placeholder="Tên người chơi (không bắt buộc)">
+          <button id="startBtn" class="btn primary">▶ BẮT ĐẦU GAMESHOW</button>
+        </div>
+      </div>
+      <div class="start-meta">
+        <div class="meta"><b>10</b>câu hỏi</div>
+        <div class="meta"><b>3</b>quyền trợ giúp</div>
+        <div class="meta"><b>15s</b>khán giả bình chọn</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gameScreen" class="screen game-screen hidden">
+    <main class="game-main">
+      <section class="stage">
+        <div class="hud">
+          <div><span id="qNo" class="qno">Câu 1/10</span> · <span id="playerLabel" class="player">Người chơi</span></div>
+          <div class="lifelines">
+            <button id="fiftyBtn" class="life">50:50</button>
+            <button id="friendBtn" class="life">🤝 Bạn đồng hành</button>
+            <button id="audienceBtn" class="life">📱 Khán giả QR</button>
+          </div>
+        </div>
+        <div class="question-card">
+          <div>
+            <img id="qImage" class="qimage hidden" alt="Hình minh họa câu hỏi">
+            <div id="questionText" class="question"></div>
+          </div>
+        </div>
+        <div id="answers" class="answers"></div>
+      </section>
+      <aside class="ladder">
+        <div class="ladder-title">🏆 MỐC ĐIỂM</div>
+        <div id="levels" class="levels"></div>
+      </aside>
+    </main>
+  </section>
+
+  <section id="resultScreen" class="screen center hidden">
+    <div class="result-card">
+      <div id="resultIcon" class="victory">🏆</div>
+      <h1 id="resultTitle">KẾT QUẢ</h1>
+      <p id="resultMessage" style="color:#cbd4f2;font-size:20px"></p>
+      <div class="result-grid">
+        <div class="stat"><b id="scoreStat">0</b><span>Điểm</span></div>
+        <div class="stat"><b id="correctStat">0/10</b><span>Câu đúng</span></div>
+        <div class="stat"><b id="highStat">0</b><span>Mốc cao nhất</span></div>
+      </div>
+      <button id="replayBtn" class="btn primary">🔁 CHƠI LẠI</button>
+    </div>
+  </section>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<div id="friendModal" class="modal hidden">
+  <div class="modal-card" style="max-width:650px">
+    <h2>🤝 Hỏi ý kiến bạn đồng hành</h2>
+    <div class="friend-card">
+      <div>Mình suy nghĩ một chút...</div>
+      <div id="friendChoice" class="friend-choice">?</div>
+      <div id="friendText"></div>
+    </div>
+    <div class="modal-actions"><button id="friendClose" class="btn secondary">Quay lại câu hỏi</button></div>
+  </div>
+</div>
+
+<div id="audienceModal" class="modal hidden">
+  <div class="modal-card">
+    <h2>📱 Hỏi ý kiến khán giả</h2>
+    <div id="audienceBefore" class="aud-grid">
+      <div class="qr-box"><img id="qrImg" alt="QR cho khán giả"><div id="audUrl" class="aud-url"></div></div>
+      <div class="aud-info">
+        <b>Học sinh bên dưới quét QR để tham gia trợ giúp.</b>
+        <p>QR có thể quét trước. Khi giáo viên bấm <b>Bắt đầu trợ giúp</b>, khán giả có đúng <b>15 giây</b> để chọn A/B/C/D.</p>
+        <div class="modal-actions"><button id="audStartBtn" class="btn primary">▶ BẮT ĐẦU TRỢ GIÚP 15 GIÂY</button></div>
+      </div>
+    </div>
+    <div id="audienceLive" class="hidden">
+      <div class="countdown"><span id="audCountdown">15</span>s</div>
+      <p style="text-align:center;color:#cbd4ef">Khán giả đang bình chọn... <b id="liveVoteCount">0</b> lượt đã ghi nhận</p>
+      <div class="result-bars">
+        <div class="bar-row"><div class="bar-letter">A</div><div class="bar-track"><div id="bar0" class="bar-fill"></div></div><div id="num0" class="bar-num">0</div></div>
+        <div class="bar-row"><div class="bar-letter">B</div><div class="bar-track"><div id="bar1" class="bar-fill"></div></div><div id="num1" class="bar-num">0</div></div>
+        <div class="bar-row"><div class="bar-letter">C</div><div class="bar-track"><div id="bar2" class="bar-fill"></div></div><div id="num2" class="bar-num">0</div></div>
+        <div class="bar-row"><div class="bar-letter">D</div><div class="bar-track"><div id="bar3" class="bar-fill"></div></div><div id="num3" class="bar-num">0</div></div>
+      </div>
+      <div id="audResultNote" class="hidden" style="text-align:center;margin-top:12px;color:var(--gold);font-weight:900">Đã hết 15 giây. Người chơi có thể tham khảo kết quả trên.</div>
+      <div class="modal-actions"><button id="audCloseBtn" class="btn secondary" disabled>✕ TẮT BẢNG TỔNG HỢP</button></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = {{ questions|tojson }};
+const LETTERS = ['A','B','C','D'];
+const POINTS = [100,200,300,500,1000,2000,4000,8000,16000,32000];
+let current=0, correctCount=0, score=0, locked=false, gameId=null, teacherToken=null;
+let used={fifty:false,friend:false,audience:false};
+let audPoll=null, audEndTimer=null;
+
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+// ---------- Web Audio ----------
+let audioCtx=null,bgTimer=null,soundOn=true;
+function ctx(){ if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)(); if(audioCtx.state==='suspended') audioCtx.resume(); return audioCtx; }
+function tone(freq=440,dur=.14,type='sine',vol=.08,delay=0){ if(!soundOn)return; const c=ctx(),o=c.createOscillator(),g=c.createGain(); o.type=type;o.frequency.value=freq;g.gain.value=0;o.connect(g);g.connect(c.destination);let t=c.currentTime+delay;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.015);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.start(t);o.stop(t+dur+.03); }
+function sfxSelect(){tone(320,.12,'triangle',.08);tone(520,.12,'triangle',.06,.08)}
+function sfxCorrect(){[523,659,784,1047].forEach((f,i)=>tone(f,.18,'sine',.08,i*.08))}
+function sfxWrong(){tone(190,.28,'sawtooth',.08);tone(130,.35,'square',.05,.18)}
+function sfxWin(){[523,659,784,1047,1319].forEach((f,i)=>tone(f,.28,'triangle',.075,i*.1))}
+function startBg(){stopBg(); if(!soundOn)return; const seq=[130.81,164.81,196,246.94];let i=0;bgTimer=setInterval(()=>{tone(seq[i++%seq.length],.65,'sine',.018)},720)}
+function stopBg(){if(bgTimer){clearInterval(bgTimer);bgTimer=null}}
+function startSuspense(ms=2300){if(!soundOn)return ()=>{};let n=0;const id=setInterval(()=>tone(210+(n++%5)*25,.09,'square',.035),170);return()=>clearInterval(id)}
+$('#soundBtn').onclick=()=>{soundOn=!soundOn;$('#soundBtn').textContent=soundOn?'🔊 Âm thanh':'🔇 Tắt âm';if(soundOn){ctx();startBg()}else stopBg()};
+
+function showToast(msg,type=''){const t=$('#toast');t.textContent=msg;t.className='toast '+type;setTimeout(()=>t.classList.add('hidden'),2100)}
+function setScreen(id){['startScreen','gameScreen','resultScreen'].forEach(x=>$('#'+x).classList.toggle('hidden',x!==id))}
+
+async function createSession(){
+  try{
+    const r=await fetch('/api/millionaire/new',{method:'POST'});const d=await r.json();
+    if(!d.ok) throw new Error('new session failed');
+    gameId=d.game_id;teacherToken=d.teacher_token;
+    sessionStorage.setItem('millionaire_gid',gameId);sessionStorage.setItem('millionaire_token',teacherToken);
+  }catch(e){
+    console.error(e);showToast('Không tạo được phiên QR. Game vẫn chơi được, nhưng quyền Khán giả QR sẽ tạm không dùng được.','bad');
+  }
+}
+
+async function startGame(){
+  ctx();startBg();current=0;correctCount=0;score=0;locked=false;used={fifty:false,friend:false,audience:false};
+  await createSession();
+  $('#playerLabel').textContent=$('#playerName').value.trim()||'Người chơi';
+  ['fiftyBtn','friendBtn','audienceBtn'].forEach(id=>{$('#'+id).disabled=false;$('#'+id).classList.remove('used')});
+  buildLadder();setScreen('gameScreen');renderQuestion();
+}
+$('#startBtn').onclick=startGame;$('#replayBtn').onclick=()=>{setScreen('startScreen');stopBg()};
+
+function buildLadder(){
+  $('#levels').innerHTML=POINTS.map((p,i)=>`<div class="level" data-level="${i}"><span class="n">${i+1}</span><span>${p.toLocaleString('vi-VN')} điểm</span></div>`).join('');
+  updateLadder();
+}
+function updateLadder(){
+  $$('.level').forEach(el=>{const i=+el.dataset.level;el.classList.toggle('current',i===current);el.classList.toggle('passed',i<current);el.classList.toggle('safe',i===4||i===7)});
+}
+function renderQuestion(){
+  locked=false;const q=QUESTIONS[current];$('#qNo').textContent=`Câu ${current+1}/${QUESTIONS.length}`;$('#questionText').textContent=q.q;
+  const img=$('#qImage');if(q.image){img.src=q.image;img.classList.remove('hidden')}else{img.src='';img.classList.add('hidden')}
+  $('#answers').innerHTML=q.options.map((o,i)=>`<button class="answer" data-i="${i}"><span class="letter">${LETTERS[i]}</span><span>${esc(o)}</span></button>`).join('');
+  $$('.answer').forEach(b=>b.onclick=()=>chooseAnswer(+b.dataset.i));
+  updateLadder();syncLifeButtons();
+}
+function syncLifeButtons(){
+  $('#fiftyBtn').disabled=locked||used.fifty;$('#friendBtn').disabled=locked||used.friend;$('#audienceBtn').disabled=locked||used.audience||!gameId;
+  $('#fiftyBtn').classList.toggle('used',used.fifty);$('#friendBtn').classList.toggle('used',used.friend);$('#audienceBtn').classList.toggle('used',used.audience);
+}
+async function chooseAnswer(i){
+  if(locked)return;locked=true;syncLifeButtons();$$('.answer').forEach(b=>b.disabled=true);const q=QUESTIONS[current],btn=$(`.answer[data-i="${i}"]`);btn.classList.add('selected');sfxSelect();
+  const stop=startSuspense();await sleep(2300);stop();btn.classList.remove('selected');
+  const correct=q.answer;
+  if(i===correct){
+    btn.classList.add('correct');sfxCorrect();correctCount++;score=POINTS[current];
+    await sleep(1400);
+    if(current===QUESTIONS.length-1){finish(true);return}
+    current++;renderQuestion();
+  }else{
+    btn.classList.add('wrong');const right=$(`.answer[data-i="${correct}"]`);if(right)right.classList.add('correct');sfxWrong();await sleep(1800);finish(false);
+  }
+}
+function finish(won){
+  stopBg();if(won)sfxWin();setScreen('resultScreen');$('#resultIcon').textContent=won?'🏆✨':'🎯';$('#resultTitle').textContent=won?'CHINH PHỤC THÀNH CÔNG!':'KẾT THÚC LƯỢT CHƠI';
+  $('#resultMessage').textContent=won?'Bạn đã vượt qua toàn bộ 10 câu hỏi!':'Bạn đã có một lượt chơi rất đáng nhớ. Hãy thử lại để chinh phục mốc cao hơn.';
+  $('#scoreStat').textContent=score.toLocaleString('vi-VN');$('#correctStat').textContent=`${correctCount}/${QUESTIONS.length}`;$('#highStat').textContent=score?score.toLocaleString('vi-VN'):'0';
+}
+
+// ---------- 50:50 ----------
+$('#fiftyBtn').onclick=()=>{
+  if(locked||used.fifty)return;used.fifty=true;const q=QUESTIONS[current];const wrong=[0,1,2,3].filter(i=>i!==q.answer);for(let i=wrong.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[wrong[i],wrong[j]]=[wrong[j],wrong[i]]}
+  wrong.slice(0,2).forEach(i=>$(`.answer[data-i="${i}"]`).classList.add('removed'));sfxSelect();showToast('50:50 đã loại 2 phương án sai.','good');syncLifeButtons();
+};
+
+// ---------- Friend ----------
+$('#friendBtn').onclick=()=>{
+  if(locked||used.friend)return;used.friend=true;syncLifeButtons();const q=QUESTIONS[current];
+  // Companion is usually helpful but not guaranteed; later questions are less certain.
+  const confidence=Math.max(.58,.86-current*.025);let pick=q.answer;if(Math.random()>confidence){const wrong=[0,1,2,3].filter(i=>i!==q.answer);pick=wrong[Math.floor(Math.random()*wrong.length)]}
+  const pct=Math.round(confidence*100-Math.random()*8);
+  $('#friendChoice').textContent=LETTERS[pick];$('#friendText').textContent=`Mình nghiêng về phương án ${LETTERS[pick]}. Mức tự tin khoảng ${pct}%. Bạn vẫn nên cân nhắc trước khi chốt.`;
+  $('#friendModal').classList.remove('hidden');tone(660,.18,'triangle',.06);tone(880,.18,'triangle',.05,.12);
+};
+$('#friendClose').onclick=()=>$('#friendModal').classList.add('hidden');
+
+// ---------- Audience QR ----------
+async function teacherFetch(url,opts={}){opts.headers={...(opts.headers||{}),'Content-Type':'application/json','X-Teacher-Token':teacherToken};return fetch(url,opts)}
+$('#audienceBtn').onclick=async()=>{
+  if(locked||used.audience||!gameId)return;used.audience=true;syncLifeButtons();
+  try{
+    const r=await teacherFetch(`/api/millionaire/${gameId}/audience/prepare`,{method:'POST',body:JSON.stringify({question_index:current})});const d=await r.json();if(!d.ok)throw new Error(d.error);
+    $('#qrImg').src=`/millionaire/qr/${gameId}.svg?t=${Date.now()}`;$('#audUrl').textContent=`${location.origin}/millionaire/audience/${gameId}`;
+    $('#audienceBefore').classList.remove('hidden');$('#audienceLive').classList.add('hidden');$('#audStartBtn').disabled=false;$('#audienceModal').classList.remove('hidden');
+  }catch(e){console.error(e);used.audience=false;syncLifeButtons();showToast('Không mở được quyền trợ giúp QR. Hãy kiểm tra kết nối mạng.','bad')}
+};
+$('#audStartBtn').onclick=async()=>{
+  $('#audStartBtn').disabled=true;try{const r=await teacherFetch(`/api/millionaire/${gameId}/audience/start`,{method:'POST',body:'{}'});const d=await r.json();if(!d.ok)throw new Error(d.error);$('#audienceBefore').classList.add('hidden');$('#audienceLive').classList.remove('hidden');$('#audCloseBtn').disabled=true;$('#audResultNote').classList.add('hidden');startAudiencePolling(d.ends_at)}catch(e){console.error(e);$('#audStartBtn').disabled=false;showToast('Chưa bắt đầu được phiên bình chọn.','bad')}
+};
+function drawAudience(counts){const total=counts.reduce((a,b)=>a+b,0);$('#liveVoteCount').textContent=total;counts.forEach((n,i)=>{const pct=total?Math.round(n*100/total):0;$('#bar'+i).style.width=pct+'%';$('#num'+i).textContent=`${n} (${pct}%)`})}
+function startAudiencePolling(endsAt){
+  if(audPoll)clearInterval(audPoll);if(audEndTimer)clearInterval(audEndTimer);
+  const poll=async()=>{try{const r=await fetch(`/api/millionaire/${gameId}/audience/status`);const d=await r.json();if(d.ok){drawAudience(d.counts);if(d.state==='closed')finishAudiencePanel()}}catch(e){console.error(e)}};
+  audPoll=setInterval(poll,650);poll();
+  audEndTimer=setInterval(()=>{const left=Math.max(0,Math.ceil(endsAt-Date.now()/1000));$('#audCountdown').textContent=left;if(left<=0){clearInterval(audEndTimer);finishAudiencePanel()}},200);
+}
+function finishAudiencePanel(){if(audPoll){clearInterval(audPoll);audPoll=null}if(audEndTimer){clearInterval(audEndTimer);audEndTimer=null}$('#audCountdown').textContent='0';$('#audResultNote').classList.remove('hidden');$('#audCloseBtn').disabled=false;sfxCorrect()}
+$('#audCloseBtn').onclick=async()=>{try{await teacherFetch(`/api/millionaire/${gameId}/audience/close`,{method:'POST',body:'{}'})}catch(e){}$('#audienceModal').classList.add('hidden')};
+</script>
+</body>
+</html>
