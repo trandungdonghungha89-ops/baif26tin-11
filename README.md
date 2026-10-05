@@ -15,3 +15,8 @@ Render dùng:
 - Start: `gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 8`
 
 Giữ `--workers 1` vì phần bình chọn khán giả của game Triệu Phú dùng bộ nhớ tiến trình trong một phiên lớp học.
+
+
+## Bổ sung mới
+- Thêm game **Escape Room – Phòng thoát hiểm Tin học (Bài 29 Tin học 10)** vào cùng website.
+- Đường dẫn: `/escape-bai29` (giáo viên) và `/escape-bai29/join` (học sinh).

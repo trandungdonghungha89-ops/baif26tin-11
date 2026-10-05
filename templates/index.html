@@ -10,7 +10,7 @@
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:"Times New Roman",Times,serif;color:var(--ink)}
 body{min-height:100dvh;background:radial-gradient(circle at 12% 18%,#dff7ff 0 12%,transparent 28%),radial-gradient(circle at 88% 8%,#efe3ff 0 10%,transparent 26%),linear-gradient(145deg,#f8fdff,#eef3ff 55%,#fff8e7);overflow-x:hidden}
 body:before,body:after{content:"";position:fixed;width:240px;height:240px;border-radius:50%;filter:blur(4px);opacity:.38;pointer-events:none}body:before{left:-70px;bottom:-80px;background:#9be7c4}body:after{right:-80px;top:100px;background:#f6d77b}
-.wrap{width:min(1180px,94vw);margin:auto;padding:28px 0 36px;position:relative;z-index:1}.hero{text-align:center;padding:20px 16px 10px}.badge{display:inline-flex;gap:8px;align-items:center;background:#ffffffc7;border:1px solid #d7e7f7;border-radius:999px;padding:8px 16px;font-weight:700;box-shadow:0 8px 25px #5b86aa16}.hero h1{font-size:clamp(34px,5.5vw,64px);margin:16px 0 10px;line-height:1;background:linear-gradient(90deg,#2355ad,#7b4acb,#d98f20);-webkit-background-clip:text;color:transparent}.hero p{font-size:clamp(18px,2vw,24px);margin:0 auto;max-width:850px;line-height:1.45;color:#405b74}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:28px}.card{position:relative;overflow:hidden;background:#ffffffdd;border:1px solid #dce8f4;border-radius:28px;padding:26px;box-shadow:var(--shadow);min-height:365px;display:flex;flex-direction:column;transition:.22s}.card:hover{transform:translateY(-4px);box-shadow:0 24px 60px rgba(39,71,122,.22)}.card:before{content:"";position:absolute;inset:auto -50px -80px auto;width:190px;height:190px;border-radius:50%;background:var(--accent);opacity:.16}.icon{width:74px;height:74px;border-radius:22px;display:grid;place-items:center;font-size:42px;background:linear-gradient(145deg,#fff,#f4f7ff);border:1px solid #dbe4f2;box-shadow:0 10px 25px #59799f1a}.card h2{font-size:clamp(27px,3vw,38px);margin:18px 0 8px}.card p{font-size:20px;line-height:1.45;color:#49627a;margin:0 0 14px}.features{display:grid;gap:8px;font-size:18px;color:#294760;margin:8px 0 22px}.features span{display:flex;gap:9px;align-items:flex-start}.actions{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:0;border-radius:16px;padding:13px 20px;font:700 19px "Times New Roman",Times,serif;cursor:pointer;transition:.2s}.btn:hover{transform:translateY(-2px)}.btn.primary{background:linear-gradient(180deg,#4b91f7,#2569d8);color:#fff;box-shadow:0 10px 24px #2f80ed3a}.btn.gold{background:linear-gradient(180deg,#ffe36d,#ffad25);color:#3a2500;box-shadow:0 10px 24px #ffb22d44}.footer{text-align:center;margin-top:24px;color:#61758a;font-size:17px}.tag{position:absolute;right:18px;top:18px;padding:7px 11px;border-radius:999px;background:#eff6ff;color:#2d66ae;font-weight:700;font-size:15px;border:1px solid #d8e6f6}
+.wrap{width:min(1180px,94vw);margin:auto;padding:28px 0 36px;position:relative;z-index:1}.hero{text-align:center;padding:20px 16px 10px}.badge{display:inline-flex;gap:8px;align-items:center;background:#ffffffc7;border:1px solid #d7e7f7;border-radius:999px;padding:8px 16px;font-weight:700;box-shadow:0 8px 25px #5b86aa16}.hero h1{font-size:clamp(34px,5.5vw,64px);margin:16px 0 10px;line-height:1;background:linear-gradient(90deg,#2355ad,#7b4acb,#d98f20);-webkit-background-clip:text;color:transparent}.hero p{font-size:clamp(18px,2vw,24px);margin:0 auto;max-width:850px;line-height:1.45;color:#405b74}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px;margin-top:28px}.card{position:relative;overflow:hidden;background:#ffffffdd;border:1px solid #dce8f4;border-radius:28px;padding:26px;box-shadow:var(--shadow);min-height:365px;display:flex;flex-direction:column;transition:.22s}.card:hover{transform:translateY(-4px);box-shadow:0 24px 60px rgba(39,71,122,.22)}.card:before{content:"";position:absolute;inset:auto -50px -80px auto;width:190px;height:190px;border-radius:50%;background:var(--accent);opacity:.16}.icon{width:74px;height:74px;border-radius:22px;display:grid;place-items:center;font-size:42px;background:linear-gradient(145deg,#fff,#f4f7ff);border:1px solid #dbe4f2;box-shadow:0 10px 25px #59799f1a}.card h2{font-size:clamp(27px,3vw,38px);margin:18px 0 8px}.card p{font-size:20px;line-height:1.45;color:#49627a;margin:0 0 14px}.features{display:grid;gap:8px;font-size:18px;color:#294760;margin:8px 0 22px}.features span{display:flex;gap:9px;align-items:flex-start}.actions{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:0;border-radius:16px;padding:13px 20px;font:700 19px "Times New Roman",Times,serif;cursor:pointer;transition:.2s}.btn:hover{transform:translateY(-2px)}.btn.primary{background:linear-gradient(180deg,#4b91f7,#2569d8);color:#fff;box-shadow:0 10px 24px #2f80ed3a}.btn.gold{background:linear-gradient(180deg,#ffe36d,#ffad25);color:#3a2500;box-shadow:0 10px 24px #ffb22d44}.footer{text-align:center;margin-top:24px;color:#61758a;font-size:17px}.tag{position:absolute;right:18px;top:18px;padding:7px 11px;border-radius:999px;background:#eff6ff;color:#2d66ae;font-weight:700;font-size:15px;border:1px solid #d8e6f6}
 @media(max-width:820px){.grid{grid-template-columns:1fr}.card{min-height:auto}.wrap{padding-top:18px}.hero p{font-size:18px}}
 </style>
 </head>
@@ -36,6 +36,22 @@ body:before,body:after{content:"";position:fixed;width:240px;height:240px;border
       <div class="actions"><a class="btn primary" href="/insertion-sort">▶ MỞ TRÒ CHƠI</a></div>
     </article>
 
+
+
+    <article class="card" style="--accent:#9be7c4">
+      <div class="tag">Bài 29 · Nhận biết lỗi chương trình</div>
+      <div class="icon">🔐</div>
+      <h2>Escape Room – Phòng thoát hiểm Tin học</h2>
+      <p>Học sinh quét mã vào phòng, trả lời lần lượt từng câu trong 20 giây và chỉ những bạn trả lời đúng mới được đi tiếp.</p>
+      <div class="features">
+        <span>⏱️ 20 giây cho mỗi câu hỏi</span>
+        <span>📱 Màn hình giáo viên đồng bộ với điện thoại học sinh</span>
+        <span>✅ Hết giờ hiện đáp án đúng và số học sinh trả lời đúng</span>
+        <span>🚪 Luật loại trực tiếp theo từng câu</span>
+      </div>
+      <div class="actions"><a class="btn primary" href="/escape-bai29">▶ MỞ ESCAPE ROOM</a></div>
+    </article>
+
     <article class="card" style="--accent:#ffbf3f">
       <div class="tag">Bài 26 · Trắc nghiệm</div>
       <div class="icon">🏆</div>
@@ -50,7 +66,7 @@ body:before,body:after{content:"";position:fixed;width:240px;height:240px;border
       <div class="actions"><a class="btn gold" href="/millionaire">▶ MỞ GAMESHOW</a></div>
     </article>
   </main>
-  <div class="footer">Kho trò chơi Tin học · Có thể bổ sung thêm game mới vào cùng website.</div>
+  <div class="footer">Kho trò chơi Tin học · Hiện có 3 trò chơi và có thể tiếp tục bổ sung thêm game mới.</div>
 </div>
 </body>
 </html>

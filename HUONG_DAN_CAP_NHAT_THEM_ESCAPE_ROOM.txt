@@ -1,0 +1,21 @@
+CÁCH CẬP NHẬT KHO GAME VỚI GAME ESCAPE ROOM BÀI 29
+
+1. Mở repo GitHub đang dùng cho website Kho trò chơi Tin học.
+2. Xóa hoặc thay thế toàn bộ file cũ bằng bộ file mới trong thư mục này.
+3. Bảo đảm có đủ các file:
+   - app.py
+   - questions.json
+   - escape_questions.json
+   - requirements.txt
+   - Procfile
+   - render.yaml
+   - templates/index.html
+   - templates/insertion.html
+   - templates/millionaire.html
+   - templates/audience.html
+   - templates/escape_teacher.html
+   - templates/escape_student.html
+   - static/escape_visual.png
+4. Commit thay đổi lên nhánh main.
+5. Vào Render -> service kho game -> Manual Deploy -> Deploy latest commit.
+6. Khi deploy xong, vào trang chủ sẽ thấy game Escape Room mới.

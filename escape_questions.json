@@ -1,0 +1,132 @@
+[
+  {
+    "room": 1,
+    "room_name": "Cổng phân loại lỗi",
+    "icon": "🧩",
+    "prompt": "Đoạn chương trình sau thuộc loại lỗi nào?",
+    "code": "x = 8\nif x > 5\n    print(x)",
+    "choices": ["Lỗi cú pháp", "Lỗi ngoại lệ khi chạy", "Lỗi logic", "Chương trình không có lỗi"],
+    "answer": 0,
+    "explain": "Câu lệnh if thiếu dấu hai chấm nên cấu trúc Python không hợp lệ."
+  },
+  {
+    "room": 1,
+    "room_name": "Cổng phân loại lỗi",
+    "icon": "🧠",
+    "prompt": "Chương trình chạy bình thường nhưng kết quả sai so với yêu cầu. Đây là loại lỗi nào?",
+    "code": "dai = 5\nrong = 3\nchu_vi = dai * rong\nprint(chu_vi)",
+    "choices": ["Lỗi cú pháp", "Lỗi logic", "ValueError", "NameError"],
+    "answer": 1,
+    "explain": "Chương trình vẫn chạy nhưng công thức tính chu vi bị viết sai nên kết quả không đúng."
+  },
+  {
+    "room": 2,
+    "room_name": "Hành lang ngoại lệ",
+    "icon": "🔢",
+    "prompt": "Lệnh nào sau đây sẽ gây ValueError?",
+    "code": "Chọn một phương án phù hợp.",
+    "choices": ["int(\"42\")", "int(\"7b\")", "str(42)", "float(\"3.5\")"],
+    "answer": 1,
+    "explain": "Chuỗi \"7b\" không thể chuyển trực tiếp thành số nguyên bằng int()."
+  },
+  {
+    "room": 2,
+    "room_name": "Hành lang ngoại lệ",
+    "icon": "📚",
+    "prompt": "Đoạn chương trình sau sinh mã lỗi nào?",
+    "code": "mau = [\"đỏ\", \"xanh\"]\nprint(mau[3])",
+    "choices": ["IndexError", "NameError", "TypeError", "SyntaxError"],
+    "answer": 0,
+    "explain": "Danh sách chỉ có hai phần tử nhưng chương trình truy cập chỉ số vượt giới hạn."
+  },
+  {
+    "room": 2,
+    "room_name": "Hành lang ngoại lệ",
+    "icon": "🏷️",
+    "prompt": "Đoạn chương trình sau sinh mã lỗi nào?",
+    "code": "diem = 8\nprint(diem_tb)",
+    "choices": ["ValueError", "NameError", "IndexError", "IndentationError"],
+    "answer": 1,
+    "explain": "Tên diem_tb chưa được khai báo nên Python không tìm thấy tên này."
+  },
+  {
+    "room": 3,
+    "room_name": "Phòng mã lỗi",
+    "icon": "🧪",
+    "prompt": "Lệnh nào sau đây gây TypeError?",
+    "code": "Chọn một phương án phù hợp.",
+    "choices": ["3 + 4", "\"3\" + \"4\"", "3 + \"4\"", "float(3)"],
+    "answer": 2,
+    "explain": "Phép cộng giữa số nguyên và chuỗi là phép toán không phù hợp về kiểu dữ liệu."
+  },
+  {
+    "room": 3,
+    "room_name": "Phòng mã lỗi",
+    "icon": "➗",
+    "prompt": "Với n = 2, đoạn lệnh sau sinh mã lỗi nào?",
+    "code": "n = 2\nkq = 25 / (n - 2)",
+    "choices": ["ZeroDivisionError", "ValueError", "NameError", "SyntaxError"],
+    "answer": 0,
+    "explain": "Khi n = 2 thì mẫu số bằng 0 nên xảy ra phép chia cho 0."
+  },
+  {
+    "room": 3,
+    "room_name": "Phòng mã lỗi",
+    "icon": "📐",
+    "prompt": "Đoạn chương trình sau chủ yếu mắc lỗi nào?",
+    "code": "x = 6\nif x > 0:\nprint(\"Số dương\")",
+    "choices": ["IndentationError", "IndexError", "NameError", "Lỗi logic"],
+    "answer": 0,
+    "explain": "Lệnh bên trong khối if không được thụt vào đúng vị trí."
+  },
+  {
+    "room": 4,
+    "room_name": "Phòng điều tra lỗi",
+    "icon": "🕵️",
+    "prompt": "Phát biểu nào mô tả đúng nhất lỗi ngoại lệ khi chương trình đang chạy?",
+    "code": "",
+    "choices": [
+      "Chương trình không thể thực hiện một lệnh, dừng lại và báo mã lỗi",
+      "Chương trình luôn chạy hết nhưng cho kết quả sai",
+      "Chương trình chỉ sai màu sắc giao diện",
+      "Chương trình luôn dừng trước khi bắt đầu chạy"
+    ],
+    "answer": 0,
+    "explain": "Lỗi ngoại lệ xảy ra khi một lệnh không thể thực hiện trong lúc chương trình đang chạy."
+  },
+  {
+    "room": 4,
+    "room_name": "Phòng điều tra lỗi",
+    "icon": "🔎",
+    "prompt": "Dấu hiệu nào giúp nhận biết lỗi logic?",
+    "code": "",
+    "choices": [
+      "Python luôn báo SyntaxError",
+      "Chương trình chạy được nhưng kết quả không đúng yêu cầu",
+      "Chương trình luôn báo IndexError",
+      "Chương trình không thể khởi động"
+    ],
+    "answer": 1,
+    "explain": "Lỗi logic thường không làm chương trình dừng, nhưng kết quả xử lí không đúng."
+  },
+  {
+    "room": 5,
+    "room_name": "Két sắt cuối cùng",
+    "icon": "🔐",
+    "prompt": "Đoạn chương trình sau sinh mã lỗi nào?",
+    "code": "ten = \"Lan\"\nprint(tuoi)",
+    "choices": ["NameError", "TypeError", "ValueError", "IndexError"],
+    "answer": 0,
+    "explain": "Biến tuoi chưa được tạo nên Python không tìm thấy tên cần dùng."
+  },
+  {
+    "room": 5,
+    "room_name": "Két sắt cuối cùng",
+    "icon": "🏁",
+    "prompt": "Một chương trình có câu lệnh đúng cú pháp, không phát sinh ngoại lệ nhưng đáp án cuối cùng sai. Kết luận phù hợp nhất là gì?",
+    "code": "",
+    "choices": ["Có lỗi logic", "Chắc chắn có IndexError", "Chắc chắn có ValueError", "Không thể có lỗi"],
+    "answer": 0,
+    "explain": "Khi cú pháp hợp lệ và không có ngoại lệ nhưng kết quả sai, cần kiểm tra logic xử lí của chương trình."
+  }
+]

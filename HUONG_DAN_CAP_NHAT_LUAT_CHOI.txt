@@ -1,0 +1,9 @@
+CẬP NHẬT LUẬT CHƠI AI LÀ TRIỆU PHÚ
+
+- Trả lời sai KHÔNG kết thúc trò chơi.
+- Câu trả lời sai không được cộng điểm.
+- Sau hiệu ứng sai và hiển thị đáp án đúng, trò chơi tự chuyển sang câu tiếp theo.
+- Chơi đủ 10 câu rồi mới hiện màn hình kết quả.
+- Bảng mốc điểm đánh dấu câu đúng màu xanh và câu sai màu đỏ.
+
+Để cập nhật website hiện tại: thay file templates/millionaire.html trên GitHub rồi Commit changes. Render sẽ tự deploy lại.
