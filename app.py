@@ -513,13 +513,20 @@ def escape_refresh(room) -> None:
         elapsed = time.time() - room["started_at"]
         if elapsed >= 20:
             qidx = room["qidx"]
+            correct_answer = ESCAPE_QUESTIONS[qidx]["answer"]
+            # Chốt kết quả sau đúng 20 giây. Không trả lời cũng tính là sai và bị loại.
             for sid, stu in room["students"].items():
                 if not stu["active"]:
                     continue
                 ans = room["answers"].get(sid)
-                if ans is None or ans != ESCAPE_QUESTIONS[qidx]["answer"]:
+                if ans is None:
                     stu["active"] = False
                     stu["eliminated_at"] = qidx
+                    stu["eliminated_reason"] = "no_answer"
+                elif ans != correct_answer:
+                    stu["active"] = False
+                    stu["eliminated_at"] = qidx
+                    stu["eliminated_reason"] = "wrong"
             room["phase"] = "review"
             room["ended_at"] = time.time()
 
@@ -531,8 +538,13 @@ def escape_public_state(room, sid: str | None = None, teacher: bool = False):
     joined = len(room["students"])
     answered = len(room["answers"]) if room["phase"] in ("question", "review") else 0
     correct = 0
+    wrong = 0
     if q is not None:
         correct = sum(1 for a in room["answers"].values() if a == q["answer"])
+        wrong = sum(1 for a in room["answers"].values() if a != q["answer"])
+    start_active = int(room.get("start_active", active))
+    unanswered = max(0, start_active - answered) if room["phase"] in ("question", "review") else 0
+    eliminated_this_question = wrong + (unanswered if room["phase"] == "review" else 0)
     data = {
         "ok": True,
         "code": room["code"],
@@ -543,7 +555,12 @@ def escape_public_state(room, sid: str | None = None, teacher: bool = False):
         "joined": joined,
         "answered": answered,
         "correct": correct,
-        "start_active": room.get("start_active", active),
+        "wrong": wrong,
+        "unanswered": unanswered,
+        "eliminated_this_question": eliminated_this_question,
+        "start_active": start_active,
+        "next_eligible": active,
+        "finished_reason": room.get("finished_reason"),
         "room_no": q["room"] if q else None,
         "room_name": q["room_name"] if q else None,
     }
@@ -571,12 +588,15 @@ def escape_public_state(room, sid: str | None = None, teacher: bool = False):
                 "name": stu["name"],
                 "active": stu["active"],
                 "eliminated_at": stu.get("eliminated_at"),
+                "eliminated_reason": stu.get("eliminated_reason"),
             }
             if sid in room["answers"]:
                 data["my_answer"] = room["answers"][sid]
                 data["my_correct"] = room["answers"][sid] == q["answer"] if q else False
     if teacher:
-        data["students"] = [{"name": s["name"], "active": s["active"]} for s in room["students"].values()]
+        data["students"] = [
+            {"name": s["name"], "active": s["active"]} for s in room["students"].values()
+        ]
     return data
 
 @app.get("/escape-bai29")
@@ -612,11 +632,19 @@ def api_escape_join():
     room = escape_room_or_none(body.get("room"))
     if not room:
         return jsonify({"ok": False, "error": "Không tìm thấy phòng"}), 404
+    # Khóa danh sách khi Câu 1 bắt đầu để tổng số học sinh đủ quyền chơi luôn chính xác.
+    if room["phase"] != "lobby":
+        return jsonify({"ok": False, "error": "Phòng đã bắt đầu. Em hãy tham gia ở lượt chơi mới."}), 409
     name = str(body.get("name") or "").strip()[:40]
     if not name:
         return jsonify({"ok": False, "error": "Hãy nhập họ tên"}), 400
     sid = secrets.token_urlsafe(12)
-    room["students"][sid] = {"name": name, "active": True, "eliminated_at": None}
+    room["students"][sid] = {
+        "name": name,
+        "active": True,
+        "eliminated_at": None,
+        "eliminated_reason": None,
+    }
     return jsonify({"ok": True, "sid": sid})
 
 @app.get("/api/escape/state")
@@ -637,10 +665,18 @@ def api_escape_start():
     escape_refresh(room)
     if room["phase"] not in ("lobby", "review"):
         return jsonify({"ok": False, "error": "Không thể bắt đầu lúc này"}), 400
+    active_count = sum(1 for s in room["students"].values() if s["active"])
+    if room["phase"] == "lobby" and active_count == 0:
+        return jsonify({"ok": False, "error": "Chưa có học sinh nào tham gia phòng."}), 400
     if room["phase"] == "review":
+        if active_count == 0:
+            room["phase"] = "finished"
+            room["finished_reason"] = "no_survivors"
+            return jsonify({"ok": True, "finished": True})
         room["qidx"] += 1
     if room["qidx"] >= len(ESCAPE_QUESTIONS):
         room["phase"] = "finished"
+        room["finished_reason"] = "completed"
         return jsonify({"ok": True, "finished": True})
     room["answers"] = {}
     room["start_active"] = sum(1 for s in room["students"].values() if s["active"])
@@ -672,6 +708,7 @@ def api_escape_answer():
     if not correct:
         stu["active"] = False
         stu["eliminated_at"] = room["qidx"]
+        stu["eliminated_reason"] = "wrong"
     return jsonify({"ok": True, "correct": correct})
 
 @app.get("/escape-bai29/qr.png")
