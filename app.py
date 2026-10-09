@@ -29,6 +29,10 @@ app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
 app.config["JSON_AS_ASCII"] = False
 
+# Game 4: Code Race – Bài 24
+from code_race import code_race_bp
+app.register_blueprint(code_race_bp)
+
 # -------------------- INSERTION SORT CLASSROOM --------------------
 def now_ms() -> int:
     return int(time.time() * 1000)
@@ -725,7 +729,7 @@ def escape_bai29_qr():
 
 @app.get("/health")
 def health():
-    return jsonify({"ok": True, "games": 3, "questions": len(QUESTIONS), "escape_questions": len(ESCAPE_QUESTIONS)})
+    return jsonify({"ok": True, "games": 4, "questions": len(QUESTIONS), "escape_questions": len(ESCAPE_QUESTIONS)})
 
 
 if __name__ == "__main__":
