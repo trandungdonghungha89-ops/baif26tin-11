@@ -1,0 +1,102 @@
+[
+  {
+    "source_question": 1,
+    "difficulty": "CƠ BẢN",
+    "zone": "VẠCH XUẤT PHÁT",
+    "seconds": 15,
+    "prompt": "Theo khung đánh giá thời gian thực hiện chương trình trong bài học, một phép toán đơn giản như cộng, trừ, nhân, chia hoặc so sánh thường được tính là bao nhiêu đơn vị thời gian?",
+    "choices": ["1 đơn vị thời gian", "2 đơn vị thời gian", "n đơn vị thời gian", "n² đơn vị thời gian"],
+    "answer": 0,
+    "explain": "Theo quy ước trong bài học, mỗi phép toán đơn giản được tính là 1 đơn vị thời gian."
+  },
+  {
+    "source_question": 3,
+    "difficulty": "CƠ BẢN",
+    "zone": "VẠCH XUẤT PHÁT",
+    "seconds": 15,
+    "prompt": "Kí hiệu O-lớn (Big-O) trong bài học chủ yếu được dùng để làm gì?",
+    "choices": ["Đếm chính xác số lệnh của mọi chương trình", "Biểu diễn giá trị đầu vào của thuật toán", "Đánh giá và phân loại độ phức tạp thời gian", "Đo thời gian chạy thực tế bằng giây"],
+    "answer": 2,
+    "explain": "Big-O được dùng để đánh giá và phân loại độ phức tạp thời gian của thuật toán."
+  },
+  {
+    "source_question": 2,
+    "difficulty": "CƠ BẢN",
+    "zone": "VẠCH XUẤT PHÁT",
+    "seconds": 15,
+    "prompt": "Trong phân tích thời gian chạy, “phép toán tích cực” được hiểu phù hợp nhất là phép toán nào?",
+    "choices": ["Xuất hiện đầu tiên trong chương trình", "Được thực hiện nhiều nhất và chi phối thời gian", "Chỉ nằm trong câu lệnh điều kiện", "Luôn là phép nhân số học"],
+    "answer": 1,
+    "explain": "Phép toán tích cực là phép toán được thực hiện nhiều nhất và chi phối thời gian thực hiện."
+  },
+  {
+    "source_question": 4,
+    "difficulty": "THỬ THÁCH",
+    "zone": "THÀNH PHỐ CODE",
+    "seconds": 20,
+    "prompt": "Một đoạn chương trình có một vòng lặp chạy n lần; mỗi lần lặp chỉ thực hiện một số cố định các phép toán đơn giản. Độ phức tạp thời gian phù hợp nhất là:",
+    "choices": ["O(1)", "O(log n)", "O(n)", "O(n²)"],
+    "answer": 2,
+    "explain": "Vòng lặp chạy n lần và mỗi lần chỉ có lượng công việc cố định nên độ phức tạp là O(n)."
+  },
+  {
+    "source_question": 6,
+    "difficulty": "THỬ THÁCH",
+    "zone": "THÀNH PHỐ CODE",
+    "seconds": 20,
+    "prompt": "Khi ước lượng thời gian của câu lệnh if ... else, bài học quy ước thời gian của câu lệnh rẽ nhánh được xác định theo:",
+    "choices": ["Tổng thời gian của tất cả các nhánh", "Thời gian lớn nhất trong các nhánh", "Thời gian nhỏ nhất trong các nhánh", "Số lượng điều kiện xuất hiện"],
+    "answer": 1,
+    "explain": "Khi đánh giá rẽ nhánh, ta lấy thời gian lớn nhất trong các nhánh."
+  },
+  {
+    "source_question": 7,
+    "difficulty": "THỬ THÁCH",
+    "zone": "THÀNH PHỐ CODE",
+    "seconds": 20,
+    "prompt": "Cho hàm thời gian T(n) = 7n + 20. Theo các quy tắc thực hành trong bài học, độ phức tạp thời gian của hàm là:",
+    "choices": ["O(1)", "O(n)", "O(n log n)", "O(n²)"],
+    "answer": 1,
+    "explain": "Khi n tăng lớn, số hạng 7n chi phối; hệ số và hằng số được bỏ qua nên độ phức tạp là O(n)."
+  },
+  {
+    "source_question": 5,
+    "difficulty": "NÂNG CAO",
+    "zone": "CẦU THUẬT TOÁN",
+    "seconds": 25,
+    "prompt": "Một chương trình có hai vòng lặp lồng nhau. Vòng ngoài chạy n lần và với mỗi lần của vòng ngoài, vòng trong cũng chạy n lần. Nếu phép toán tích cực nằm trong vòng trong, số lần thực hiện phép toán này tăng theo:",
+    "choices": ["n", "2n", "n log n", "n²"],
+    "answer": 3,
+    "explain": "Hai vòng lặp lồng nhau, mỗi vòng chạy n lần, nên phép toán trong cùng được thực hiện xấp xỉ n × n = n² lần."
+  },
+  {
+    "source_question": 8,
+    "difficulty": "NÂNG CAO",
+    "zone": "CẦU THUẬT TOÁN",
+    "seconds": 25,
+    "prompt": "Cho T(n) = 5n² + n log n + 9. Khi n tăng lớn, độ phức tạp thời gian của T(n) là:",
+    "choices": ["O(n log n)", "O(n²)", "O(n³)", "O(log n)"],
+    "answer": 1,
+    "explain": "Số hạng n² tăng nhanh hơn n log n và hằng số, nên số hạng chi phối cho độ phức tạp O(n²)."
+  },
+  {
+    "source_question": 9,
+    "difficulty": "NƯỚC RÚT",
+    "zone": "VÒNG NƯỚC RÚT",
+    "seconds": 30,
+    "prompt": "Xét đoạn lệnh: vòng ngoài chạy n lần; bên trong có một vòng lặp chạy xấp xỉ n/2 lần và mỗi lần chỉ tăng biến đếm một lần. Độ phức tạp thời gian của đoạn lệnh là:",
+    "choices": ["O(n)", "O(n log n)", "O(n²)", "O(2ⁿ)"],
+    "answer": 2,
+    "explain": "Số phép toán xấp xỉ n × (n/2) = n²/2. Bỏ hệ số hằng nên độ phức tạp là O(n²)."
+  },
+  {
+    "source_question": 10,
+    "difficulty": "NƯỚC RÚT",
+    "zone": "VÒNG NƯỚC RÚT",
+    "seconds": 30,
+    "prompt": "Một thuật toán gồm hai phần thực hiện nối tiếp: phần thứ nhất có độ phức tạp O(n log n), phần thứ hai có độ phức tạp O(n²). Theo quy tắc cộng, độ phức tạp chung là:",
+    "choices": ["O(n)", "O(n log n)", "O(n²)", "O(n³ log n)"],
+    "answer": 2,
+    "explain": "Hai phần nối tiếp được cộng thời gian; khi n lớn, O(n²) chi phối O(n log n), nên độ phức tạp chung là O(n²)."
+  }
+]
