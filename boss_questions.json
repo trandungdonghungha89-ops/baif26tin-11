@@ -1,0 +1,112 @@
+[
+    {
+        "id": 1,
+        "question": "Để định nghĩa một hàm do người dùng tự tạo trong Python, ta bắt buộc phải sử dụng từ khóa nào sau đây?",
+        "options": [
+            "A. function",
+            "B. define",
+            "C. def",
+            "D. fun"
+        ],
+        "correct": 2
+    },
+    {
+        "id": 2,
+        "question": "Cú pháp gọi một hàm đã được thiết kế sẵn hoặc tự định nghĩa trong Python có dạng tổng quát nào?",
+        "options": [
+            "A. <tên hàm>[danh sách tham số]",
+            "B. <tên hàm>(danh sách tham số)",
+            "C. <danh sách tham số>(tên hàm)",
+            "D. call <tên hàm>"
+        ],
+        "correct": 1
+    },
+    {
+        "id": 3,
+        "question": "Phát biểu nào sau đây là ĐÚNG khi nói về tham số của hàm trong Python?",
+        "options": [
+            "A. Một hàm luôn luôn phải có ít nhất một tham số.",
+            "B. Tham số của hàm được đặt trong cặp dấu ngoặc vuông [ ].",
+            "C. Hàm có thể có một, nhiều tham số hoặc không có tham số nào.",
+            "D. Chỉ những hàm do Python thiết kế sẵn mới có tham số."
+        ],
+        "correct": 2
+    },
+    {
+        "id": 4,
+        "question": "Khi đang thực thi một hàm, nếu chương trình gặp lệnh 'return' thì điều gì sẽ xảy ra?",
+        "options": [
+            "A. Hàm sẽ tiếp tục chạy các lệnh bên dưới lệnh return cho đến hết.",
+            "B. Hàm sẽ ngay lập tức kết thúc và trả về giá trị (nếu có) cho nơi gọi hàm.",
+            "C. Chương trình sẽ báo lỗi cú pháp vì lệnh return chỉ được dùng ở cuối chương trình chính.",
+            "D. Hàm sẽ khởi động lại từ đầu."
+        ],
+        "correct": 1
+    },
+    {
+        "id": 5,
+        "question": "Cho hàm: def xinchao(ten): print('Chào mừng', ten). Hàm này thuộc loại nào và giá trị trả lại là gì nếu gọi xinchao('Minh')?",
+        "options": [
+            "A. Là hàm có trả lại giá trị, giá trị trả lại là xâu 'Chào mừng Minh'.",
+            "B. Là hàm không trả lại giá trị, chỉ thực hiện in ra màn hình.",
+            "C. Là hàm có trả lại giá trị, giá trị trả lại là biến 'ten'.",
+            "D. Báo lỗi vì thiếu lệnh return ở cuối hàm."
+        ],
+        "correct": 1
+    },
+    {
+        "id": 6,
+        "question": "Mục đích chính yếu nhất của việc gom các khối lệnh thành các chương trình con (hàm) là gì?",
+        "options": [
+            "A. Để máy tính thực thi chương trình với tốc độ phần cứng nhanh hơn.",
+            "B. Để mã hóa mã nguồn, ngăn người khác đọc được cấu trúc chương trình.",
+            "C. Để tự động phát hiện mọi lỗi cú pháp trong Python.",
+            "D. Tránh viết đi viết lại nhiều lần một khối lệnh, giúp chương trình gọn và dễ quản lý."
+        ],
+        "correct": 3
+    },
+    {
+        "id": 7,
+        "question": "Trong hàm có lệnh return x * y, ngay dưới đó là lệnh print('Đã tính xong'). Điều gì xảy ra khi gọi hàm?",
+        "options": [
+            "A. Hàm trả về tích và in ra chữ 'Đã tính xong'.",
+            "B. Hàm trả về tích, KHÔNG in ra gì vì lệnh print nằm sau return.",
+            "C. Báo lỗi vì không được đặt lệnh print bên trong hàm.",
+            "D. In ra 'Đã tính xong' nhưng không trả về giá trị."
+        ],
+        "correct": 1
+    },
+    {
+        "id": 8,
+        "question": "Nếu muốn viết một hàm nhận vào số nguyên x và trả về lập phương của số đó, cách viết lệnh return nào là đúng?",
+        "options": [
+            "A. print(x * x * x)",
+            "B. return x * x * x",
+            "C. output(x ** 3)",
+            "D. return"
+        ],
+        "correct": 1
+    },
+    {
+        "id": 9,
+        "question": "Hàm có 2 lệnh return (một trong if, một ngoài if). Chuyện gì xảy ra nếu điều kiện if SAI?",
+        "options": [
+            "A. Hàm bị lỗi do có hai lệnh return.",
+            "B. Lệnh return trong if bị bỏ qua, hàm chạy đến lệnh return thứ hai và trả về giá trị đó.",
+            "C. Hàm trả về cả hai giá trị cùng lúc.",
+            "D. Hàm chạy hợp lệ nhưng trả về None vì thiếu khối else."
+        ],
+        "correct": 1
+    },
+    {
+        "id": 10,
+        "question": "Hàm đếm số lượng chữ 'h' trong xâu: 'hoc sinh hoc tin hoc'. Giá trị trả về là bao nhiêu?",
+        "options": [
+            "A. 1",
+            "B. 2",
+            "C. 3",
+            "D. 4"
+        ],
+        "correct": 2
+    }
+]
