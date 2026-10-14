@@ -731,6 +731,35 @@ def escape_bai29_qr():
 def health():
     return jsonify({"ok": True, "games": 4, "questions": len(QUESTIONS), "escape_questions": len(ESCAPE_QUESTIONS)})
 
+# ----- COPY ĐOẠN CODE NÀY VÀ DÁN VÀO CUỐI FILE app.py (Ngay phía trên dòng "if __name__ == '__main__':") -----
+
+@app.route('/boss-teacher')
+def boss_teacher():
+    import json, os
+    file_path = os.path.join(os.path.dirname(__file__), 'boss_questions.json')
+    with open(file_path, 'r', encoding='utf-8') as f:
+        questions = json.load(f)
+    return render_template('boss_teacher.html', questions=questions)
+
+@app.route('/boss-student')
+def boss_student():
+    return render_template('boss_student.html')
+
+@socketio.on('student_join')
+def handle_student_join(data):
+    socketio.emit('player_joined', {'name': data['name']}, broadcast=True)
+
+@socketio.on('teacher_start_game')
+def handle_start_game():
+    socketio.emit('game_started', broadcast=True)
+
+@socketio.on('boss_next_question')
+def handle_next_question(data):
+    socketio.emit('sync_boss_question', data, broadcast=True)
+
+@socketio.on('student_answer')
+def handle_student_answer(data):
+    socketio.emit('boss_take_damage', data, broadcast=True)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", "5000"))
