@@ -743,9 +743,18 @@ def boss_teacher():
         questions = json.load(f)
     return render_template('boss_teacher.html', questions=questions)
 
-@app.route('/boss-student')
+@app.route('/boss_student')
 def boss_student():
     return render_template('boss_student.html')
+
+@app.route('/api/boss_questions')
+def get_boss_questions():
+    import json, os
+    file_path = os.path.join(os.path.dirname(__file__), 'boss_questions.json')
+    with open(file_path, 'r', encoding='utf-8') as f:
+        questions = json.load(f)
+    from flask import jsonify
+    return jsonify(questions)
 
 # ==========================================
 # CÁC SỰ KIỆN SOCKET.IO CHO CHIẾN DỊCH DIỆT BUG
