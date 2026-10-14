@@ -6,7 +6,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: white; overflow: hidden; text-align: center; }
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: white; overflow-y: auto; text-align: center; }
         .header { padding: 10px; background: #1e293b; border-bottom: 2px solid #334155; }
         
         /* LOBBY AREA */
@@ -28,7 +28,7 @@
         .hp-bar { height: 40px; background: linear-gradient(90deg, #ef4444, #f97316); width: 100%; transition: width 0.3s ease-out; }
         .hp-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: bold; font-size: 20px; text-shadow: 1px 1px 2px black; }
         
-        .question-area { padding: 20px; background: #1e293b; height: 50vh; display: flex; flex-direction: column; align-items: center; }
+        .question-area { padding: 20px; background: #1e293b; min-height: 50vh; display: flex; flex-direction: column; align-items: center; }
         .question-text { font-size: 28px; text-align: center; margin-bottom: 20px; max-width: 900px; line-height: 1.4; color: #38bdf8; }
         .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 80%; max-width: 900px; }
         .option { background: #334155; padding: 15px 20px; border-radius: 10px; font-size: 22px; border: 2px solid #475569; text-align: left; }
