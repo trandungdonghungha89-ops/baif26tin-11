@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Chiến Dịch Diệt Bug - Màn hình Giáo viên</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: white; overflow: hidden; text-align: center; }
+        .header { padding: 10px; background: #1e293b; border-bottom: 2px solid #334155; }
+        
+        /* LOBBY AREA */
+        .lobby-container { display: flex; justify-content: center; gap: 50px; margin-top: 50px; }
+        .qr-section { background: white; padding: 20px; border-radius: 15px; color: black; }
+        .player-list { width: 400px; background: #1e293b; padding: 20px; border-radius: 15px; text-align: left; height: 300px; overflow-y: auto; border: 2px solid #334155; }
+        .player-tag { display: inline-block; background: #3b82f6; padding: 8px 15px; margin: 5px; border-radius: 20px; font-weight: bold; }
+        .start-btn { padding: 15px 40px; font-size: 24px; background: #10b981; color: white; border: none; border-radius: 10px; cursor: pointer; margin-top: 30px; font-weight: bold; }
+        .start-btn:hover { background: #059669; }
+
+        /* GAME AREA */
+        #game-area { display: none; }
+        .boss-area { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 40vh; position: relative; }
+        .boss-sprite { font-size: 100px; transition: transform 0.1s; user-select: none; }
+        .shake { animation: shake 0.5s; }
+        @keyframes shake { 0% { transform: translate(1px, 1px) rotate(0deg); } 10% { transform: translate(-1px, -2px) rotate(-1deg); } 20% { transform: translate(-3px, 0px) rotate(1deg); } 30% { transform: translate(3px, 2px) rotate(0deg); } 40% { transform: translate(1px, -1px) rotate(1deg); } 50% { transform: translate(-1px, 2px) rotate(-1deg); } 60% { transform: translate(-3px, 1px) rotate(0deg); } 70% { transform: translate(3px, 1px) rotate(-1deg); } 80% { transform: translate(-1px, -1px) rotate(1deg); } 90% { transform: translate(1px, 2px) rotate(0deg); } 100% { transform: translate(1px, -2px) rotate(-1deg); } }
+        
+        .hp-container { width: 60%; background: #334155; border-radius: 20px; margin-top: 10px; border: 3px solid #475569; overflow: hidden; position: relative; }
+        .hp-bar { height: 40px; background: linear-gradient(90deg, #ef4444, #f97316); width: 100%; transition: width 0.3s ease-out; }
+        .hp-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: bold; font-size: 20px; text-shadow: 1px 1px 2px black; }
+        
+        .question-area { padding: 20px; background: #1e293b; height: 50vh; display: flex; flex-direction: column; align-items: center; }
+        .question-text { font-size: 28px; text-align: center; margin-bottom: 20px; max-width: 900px; line-height: 1.4; color: #38bdf8; }
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 80%; max-width: 900px; }
+        .option { background: #334155; padding: 15px 20px; border-radius: 10px; font-size: 22px; border: 2px solid #475569; text-align: left; }
+        
+        .controls { margin-top: 20px; }
+        .next-btn { padding: 15px 30px; font-size: 20px; cursor: pointer; background: #3b82f6; color: white; border: none; border-radius: 8px; font-weight: bold; }
+        
+        .laser { position: absolute; color: #10b981; font-weight: bold; font-size: 24px; animation: flyUp 1s forwards; opacity: 0; pointer-events: none; }
+        @keyframes flyUp { 0% { top: 100%; opacity: 1; transform: scale(1); } 100% { top: 20%; opacity: 0; transform: scale(1.5); } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>👾 CHIẾN DỊCH DIỆT BUG 👾</h2>
+    </div>
+
+    <!-- LOBBY AREA -->
+    <div id="lobby-area">
+        <div class="lobby-container">
+            <div class="qr-section">
+                <div id="qrcode"></div>
+                <h3 style="margin-top: 10px;">Quét mã để tham gia</h3>
+            </div>
+            <div class="player-list">
+                <h3>Học sinh đã vào phòng (<span id="player-count">0</span>):</h3>
+                <div id="players"></div>
+            </div>
+        </div>
+        <button class="start-btn" onclick="startGame()">BẮT ĐẦU TRÒ CHƠI 🚀</button>
+    </div>
+
+    <!-- GAME AREA -->
+    <div id="game-area">
+        <div class="boss-area">
+            <div class="boss-sprite" id="boss">🐛</div>
+            <div class="hp-container">
+                <div class="hp-bar" id="hp-bar"></div>
+                <div class="hp-text" id="hp-text">1000 / 1000 HP</div>
+            </div>
+        </div>
+
+        <div class="question-area">
+            <div class="question-text" id="question-text">Học sinh đã sẵn sàng? Nhấn "Nạp câu hỏi đầu tiên"!</div>
+            <div class="options-grid" id="options-grid"></div>
+            <div class="controls">
+                <button class="next-btn" id="next-btn" onclick="nextQuestion()">Nạp câu hỏi đầu tiên 🚀</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const studentUrl = window.location.origin + "/boss-student";
+        new QRCode(document.getElementById("qrcode"), {
+            text: studentUrl, width: 200, height: 200, colorDark : "#000000", colorLight : "#ffffff"
+        });
+
+        const socket = io();
+        let questions = [];
+        try {
+            questions = {{ questions | tojson | safe }};
+        } catch(e) {
+            console.log("Sử dụng dữ liệu tĩnh hoặc lỗi template Jinja2");
+        }
+        
+        let currentQuestionIndex = -1;
+        let maxHP = 1000;
+        let currentHP = maxHP;
+
+        socket.on('player_joined', function(data) {
+            const playerDiv = document.createElement('div');
+            playerDiv.className = 'player-tag';
+            playerDiv.innerText = data.name;
+            document.getElementById('players').appendChild(playerDiv);
+            document.getElementById('player-count').innerText = document.querySelectorAll('.player-tag').length;
+        });
+
+        function startGame() {
+            document.getElementById('lobby-area').style.display = 'none';
+            document.getElementById('game-area').style.display = 'block';
+            socket.emit('teacher_start_game');
+        }
+
+        function updateHP(damage) {
+            currentHP = Math.max(0, currentHP - damage);
+            const percent = (currentHP / maxHP) * 100;
+            document.getElementById('hp-bar').style.width = percent + '%';
+            document.getElementById('hp-text').innerText = `${currentHP} / ${maxHP} HP`;
+            
+            const boss = document.getElementById('boss');
+            boss.classList.add('shake');
+            boss.innerText = '💥';
+            setTimeout(() => { 
+                boss.classList.remove('shake'); 
+                boss.innerText = currentHP > 0 ? '🐛' : '💀'; 
+            }, 500);
+
+            if (currentHP === 0) {
+                document.getElementById('question-text').innerText = "🎉 CẢ LỚP ĐÃ TIÊU DIỆT THÀNH CÔNG BUG! 🎉";
+                document.getElementById('options-grid').innerHTML = "";
+                document.getElementById('next-btn').style.display = 'none';
+            }
+        }
+
+        socket.on('boss_take_damage', function(data) {
+            if(data.is_correct) {
+                updateHP(10); 
+                const laser = document.createElement('div');
+                laser.className = 'laser';
+                laser.innerText = `+ TIA LASER TỪ ${data.student_name.toUpperCase()}!`;
+                laser.style.left = Math.random() * 60 + 20 + '%';
+                document.querySelector('.boss-area').appendChild(laser);
+                setTimeout(() => laser.remove(), 1000);
+            }
+        });
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length && currentHP > 0) {
+                const q = questions[currentQuestionIndex];
+                document.getElementById('question-text').innerText = `Câu ${currentQuestionIndex + 1}: ${q.question}`;
+                
+                let optionsHtml = '';
+                q.options.forEach((opt) => {
+                    optionsHtml += `<div class="option">${opt}</div>`;
+                });
+                document.getElementById('options-grid').innerHTML = optionsHtml;
+                document.getElementById('next-btn').innerText = "Câu tiếp theo ⏭️";
+
+                socket.emit('boss_next_question', {
+                    question_id: q.id,
+                    options: q.options,
+                    correct_index: q.correct
+                });
+            } else if (currentHP > 0) {
+                document.getElementById('question-text').innerText = "⚠️ HẾT CÂU HỎI MÀ BOSS VẪN CHƯA CHẾT! LỚP THẤT BẠI! ⚠️";
+                document.getElementById('options-grid').innerHTML = "";
+                document.getElementById('next-btn').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

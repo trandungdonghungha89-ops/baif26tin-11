@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vũ Khí - Học Sinh</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <style>
+        body { margin: 0; font-family: sans-serif; background: #0f172a; color: white; display: flex; flex-direction: column; height: 100vh; text-align: center; }
+        #login-screen, #waiting-screen { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; padding: 20px; }
+        input { padding: 15px; font-size: 18px; width: 80%; border-radius: 8px; border: none; text-align: center; margin-bottom: 20px; }
+        .btn-primary { padding: 15px 40px; font-size: 18px; background: #3b82f6; color: white; border: none; border-radius: 8px; width: 80%; font-weight: bold; }
+        
+        #waiting-screen { display: none; }
+        
+        #game-screen { display: none; flex-direction: column; height: 100%; position: relative; }
+        .status-bar { padding: 15px; background: #1e293b; font-size: 18px; font-weight: bold; }
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; flex-grow: 1; gap: 10px; padding: 10px; }
+        .answer-btn { border: none; border-radius: 12px; font-size: 40px; font-weight: bold; color: white; cursor: pointer; box-shadow: 0 8px 0 rgba(0,0,0,0.2); transition: transform 0.1s; }
+        .answer-btn:active { transform: translateY(8px); box-shadow: 0 0 0 rgba(0,0,0,0.2); }
+        
+        #overlay { display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.95); justify-content: center; align-items: center; flex-direction: column; z-index: 10; padding: 20px;}
+    </style>
+</head>
+<body>
+    <div id="login-screen">
+        <h2>🔥 VŨ KHÍ SẴN SÀNG 🔥</h2>
+        <input type="text" id="studentName" placeholder="Nhập tên của em..." autocomplete="off">
+        <button class="btn-primary" onclick="joinRoom()">Vào phòng chiến đấu</button>
+    </div>
+
+    <div id="waiting-screen">
+        <h2>Đã vào phòng! ✅</h2>
+        <p>Hãy nhìn lên bảng và chờ giáo viên ấn "Bắt đầu"...</p>
+    </div>
+
+    <div id="game-screen">
+        <div class="status-bar" id="status">Chờ giáo viên nạp câu hỏi...</div>
+        <div class="btn-grid">
+            <button class="answer-btn" style="background: #ef4444;" onclick="submitAnswer(0)">A</button>
+            <button class="answer-btn" style="background: #3b82f6;" onclick="submitAnswer(1)">B</button>
+            <button class="answer-btn" style="background: #eab308;" onclick="submitAnswer(2)">C</button>
+            <button class="answer-btn" style="background: #22c55e;" onclick="submitAnswer(3)">D</button>
+        </div>
+        
+        <div id="overlay">
+            <h2 id="overlay-msg">Hãy nhìn lên bảng! 👀</h2>
+            <p>Đợi câu hỏi tiếp theo...</p>
+        </div>
+    </div>
+
+    <script>
+        const socket = io();
+        let myName = "";
+        let currentCorrectIndex = -1;
+        let hasAnswered = false;
+
+        function joinRoom() {
+            const nameInput = document.getElementById('studentName').value.trim();
+            if (nameInput === "") { alert("Vui lòng nhập tên!"); return; }
+            myName = nameInput;
+            socket.emit('student_join', { name: myName });
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('waiting-screen').style.display = 'flex';
+        }
+
+        socket.on('game_started', function() {
+            document.getElementById('waiting-screen').style.display = 'none';
+            document.getElementById('game-screen').style.display = 'flex';
+            document.getElementById('overlay').style.display = 'flex'; 
+        });
+
+        socket.on('sync_boss_question', function(data) {
+            currentCorrectIndex = data.correct_index;
+            hasAnswered = false;
+            document.getElementById('status').innerText = "Đã nạp đạn! Bắn ngay!";
+            document.getElementById('overlay').style.display = 'none'; 
+        });
+
+        function submitAnswer(selectedIndex) {
+            if (hasAnswered) return;
+            hasAnswered = true;
+
+            const isCorrect = (selectedIndex === currentCorrectIndex);
+            
+            socket.emit('student_answer', {
+                student_name: myName,
+                answer: selectedIndex,
+                is_correct: isCorrect
+            });
+
+            document.getElementById('overlay').style.display = 'flex';
+            if (isCorrect) {
+                document.getElementById('overlay-msg').innerText = "🎯 BẮN TRÚNG ĐÍCH! 🎯";
+                document.getElementById('overlay-msg').style.color = "#22c55e";
+            } else {
+                document.getElementById('overlay-msg').innerText = "❌ TRƯỢT RỒI! ❌";
+                document.getElementById('overlay-msg').style.color = "#ef4444";
+            }
+        }
+    </script>
+</body>
+</html>
