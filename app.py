@@ -27,6 +27,8 @@ with open(BASE_DIR / "escape_questions.json", "r", encoding="utf-8") as f:
 
 app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
+from flask_socketio import SocketIO
+socketio = SocketIO(app, cors_allowed_origins="*")
 app.config["JSON_AS_ASCII"] = False
 
 # Game 4: Code Race – Bài 24
