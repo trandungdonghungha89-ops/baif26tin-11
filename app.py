@@ -747,22 +747,26 @@ def boss_teacher():
 def boss_student():
     return render_template('boss_student.html')
 
+# ==========================================
+# CÁC SỰ KIỆN SOCKET.IO CHO CHIẾN DỊCH DIỆT BUG
+# ==========================================
+
 @socketio.on('student_join')
 def handle_student_join(data):
-    socketio.emit('player_joined', {'name': data['name']}, broadcast=True)
+    # Học sinh vào phòng -> Phát thanh cho giáo viên biết để cập nhật sĩ số
+    emit('new_student', data, broadcast=True)
 
 @socketio.on('teacher_start_game')
 def handle_start_game():
-    socketio.emit('game_started', broadcast=True)
+    # Giáo viên bấm Bắt đầu -> Báo cho tất cả điện thoại học sinh đổi màn hình
+    emit('game_started', broadcast=True)
 
-@socketio.on('boss_next_question')
-def handle_next_question(data):
-    socketio.emit('sync_boss_question', data, broadcast=True)
+@socketio.on('teacher_sync_question')
+def handle_sync_question(data):
+    # Giáo viên chuyển câu hỏi -> Gửi nội dung câu hỏi về màn hình học sinh
+    emit('sync_boss_question', data, broadcast=True)
 
 @socketio.on('student_answer')
 def handle_student_answer(data):
-    socketio.emit('boss_take_damage', data, broadcast=True)
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", "5000"))
-    socketio.run(app, host="0.0.0.0", port=port, debug=False, allow_unsafe_werkzeug=True)
+    # Học sinh bấm đáp án -> Bắn tia laser lên màn hình giáo viên
+    emit('boss_damaged', data, broadcast=True)
