@@ -64,8 +64,8 @@
     </div>
 
     <script>
-        // KẾT NỐI VÀO NAMESPACE /boss ĐỂ KHÔNG XUNG ĐỘT VỚI GAME KHÁC
-        const socket = io('/boss');
+        // SỬ DỤNG KẾT NỐI CHUẨN, ƯU TIÊN WEBSOCKET ĐỂ VÀO GAME NHANH CHÓNG
+        const socket = io({transports: ['websocket', 'polling']});
         let myName = "";
         let currentCorrectIndex = -1;
         let hasAnswered = false;
@@ -77,30 +77,35 @@
             myName = nameInput;
             document.getElementById('my-name-display').innerText = myName;
             
-            socket.emit('student_join', { name: myName });
+            // Báo cho Server biết học sinh đã vào (sự kiện đã đổi tên)
+            socket.emit('bug_student_join', { name: myName });
             
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('waiting-screen').style.display = 'flex';
         }
 
-        socket.on('game_started', function() {
+        // Khi giáo viên bấm Bắt đầu
+        socket.on('bug_game_started', function() {
             document.getElementById('waiting-screen').style.display = 'none';
             document.getElementById('game-screen').style.display = 'flex';
             document.getElementById('overlay').style.display = 'flex'; 
         });
 
-        socket.on('sync_boss_question', function(data) {
+        // Khi giáo viên bấm Câu tiếp theo (đồng bộ câu hỏi về máy học sinh)
+        socket.on('bug_sync_boss_question', function(data) {
             currentCorrectIndex = data.correct_index;
             hasAnswered = false;
             
             document.getElementById('overlay').style.display = 'none'; 
             
+            // Cập nhật giao diện điện thoại
             document.getElementById('student-q-text').innerText = data.question;
             document.getElementById('btn-0').innerText = "A. " + data.options[0];
             document.getElementById('btn-1').innerText = "B. " + data.options[1];
             document.getElementById('btn-2').innerText = "C. " + data.options[2];
             document.getElementById('btn-3').innerText = "D. " + data.options[3];
 
+            // Bắt đầu đếm ngược trên điện thoại
             startStudentTimer();
         });
 
@@ -115,7 +120,7 @@
                 if (time <= 0) {
                     clearInterval(timerInterval);
                     if (!hasAnswered) {
-                        submitAnswer(-1);
+                        submitAnswer(-1); // Hết giờ -> Báo sai (-1)
                     }
                 }
             }, 1000);
@@ -128,7 +133,8 @@
 
             const isCorrect = (selectedIndex === currentCorrectIndex);
             
-            socket.emit('student_answer', {
+            // Gửi đáp án lên Server
+            socket.emit('bug_student_answer', {
                 student_name: myName,
                 answer: selectedIndex,
                 is_correct: isCorrect
