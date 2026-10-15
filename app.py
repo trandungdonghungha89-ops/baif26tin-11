@@ -756,20 +756,20 @@ def get_boss_questions():
     return jsonify(questions)
 
 # ==========================================
-# CÁC SỰ KIỆN SOCKET.IO (ĐÃ CÁCH LY KÊNH /boss)
+# CÁC SỰ KIỆN SOCKET.IO (CHUẨN CODE RACE)
 # ==========================================
-@socketio.on('student_join', namespace='/boss')
-def handle_student_join(data):
-    emit('new_student', data, broadcast=True, namespace='/boss')
+@socketio.on('bug_student_join')
+def handle_bug_student_join(data):
+    emit('bug_new_student', data, broadcast=True)
 
-@socketio.on('teacher_start_game', namespace='/boss')
-def handle_start_game():
-    emit('game_started', broadcast=True, namespace='/boss')
+@socketio.on('bug_teacher_start')
+def handle_bug_start_game():
+    emit('bug_game_started', broadcast=True)
 
-@socketio.on('teacher_sync_question', namespace='/boss')
-def handle_sync_question(data):
-    emit('sync_boss_question', data, broadcast=True, namespace='/boss')
+@socketio.on('bug_sync_question')
+def handle_bug_sync_question(data):
+    emit('bug_sync_boss_question', data, broadcast=True)
 
-@socketio.on('student_answer', namespace='/boss')
-def handle_student_answer(data):
-    emit('boss_damaged', data, broadcast=True, namespace='/boss')
+@socketio.on('bug_student_answer')
+def handle_bug_student_answer(data):
+    emit('bug_boss_damaged', data, broadcast=True)
