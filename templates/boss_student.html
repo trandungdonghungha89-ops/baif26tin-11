@@ -64,7 +64,8 @@
     </div>
 
     <script>
-        const socket = io();
+        // KẾT NỐI VÀO NAMESPACE /boss ĐỂ KHÔNG XUNG ĐỘT VỚI GAME KHÁC
+        const socket = io('/boss');
         let myName = "";
         let currentCorrectIndex = -1;
         let hasAnswered = false;
@@ -76,35 +77,30 @@
             myName = nameInput;
             document.getElementById('my-name-display').innerText = myName;
             
-            // Báo cho Server biết học sinh đã vào
             socket.emit('student_join', { name: myName });
             
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('waiting-screen').style.display = 'flex';
         }
 
-        // Khi giáo viên bấm Bắt đầu
         socket.on('game_started', function() {
             document.getElementById('waiting-screen').style.display = 'none';
             document.getElementById('game-screen').style.display = 'flex';
             document.getElementById('overlay').style.display = 'flex'; 
         });
 
-        // Khi giáo viên bấm Câu tiếp theo (đồng bộ câu hỏi về máy học sinh)
         socket.on('sync_boss_question', function(data) {
             currentCorrectIndex = data.correct_index;
             hasAnswered = false;
             
             document.getElementById('overlay').style.display = 'none'; 
             
-            // Cập nhật giao diện điện thoại
             document.getElementById('student-q-text').innerText = data.question;
             document.getElementById('btn-0').innerText = "A. " + data.options[0];
             document.getElementById('btn-1').innerText = "B. " + data.options[1];
             document.getElementById('btn-2').innerText = "C. " + data.options[2];
             document.getElementById('btn-3').innerText = "D. " + data.options[3];
 
-            // Bắt đầu đếm ngược trên điện thoại
             startStudentTimer();
         });
 
@@ -119,7 +115,7 @@
                 if (time <= 0) {
                     clearInterval(timerInterval);
                     if (!hasAnswered) {
-                        submitAnswer(-1); // Hết giờ -> Báo sai (-1)
+                        submitAnswer(-1);
                     }
                 }
             }, 1000);
@@ -132,7 +128,6 @@
 
             const isCorrect = (selectedIndex === currentCorrectIndex);
             
-            // Gửi đáp án lên Server
             socket.emit('student_answer', {
                 student_name: myName,
                 answer: selectedIndex,
