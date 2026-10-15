@@ -1,6 +1,4 @@
 from __future__ import annotations
-import eventlet
-eventlet.monkey_patch()
 import io
 import json
 import os
