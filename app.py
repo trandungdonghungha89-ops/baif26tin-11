@@ -755,21 +755,28 @@ def get_boss_questions():
     from flask import jsonify
     return jsonify(questions)
 
+from flask_socketio import emit, join_room
+
 # ==========================================
-# CÁC SỰ KIỆN SOCKET.IO (CHUẨN CODE RACE)
+# CÁC SỰ KIỆN SOCKET.IO (CƠ CHẾ CHUẨN CODE RACE)
 # ==========================================
+@socketio.on('bug_teacher_join')
+def handle_bug_teacher_join():
+    join_room('bug_room') # Giáo viên tạo phòng chung
+
 @socketio.on('bug_student_join')
 def handle_bug_student_join(data):
-    emit('bug_new_student', data, broadcast=True)
+    join_room('bug_room') # Học sinh vào chung phòng
+    emit('bug_new_student', data, room='bug_room')
 
 @socketio.on('bug_teacher_start')
 def handle_bug_start_game():
-    emit('bug_game_started', broadcast=True)
+    emit('bug_game_started', room='bug_room')
 
 @socketio.on('bug_sync_question')
 def handle_bug_sync_question(data):
-    emit('bug_sync_boss_question', data, broadcast=True)
+    emit('bug_sync_boss_question', data, room='bug_room')
 
 @socketio.on('bug_student_answer')
 def handle_bug_student_answer(data):
-    emit('bug_boss_damaged', data, broadcast=True)
+    emit('bug_boss_damaged', data, room='bug_room')
