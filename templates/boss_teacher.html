@@ -51,6 +51,7 @@
         <h2>👾 CHIẾN DỊCH DIỆT BUG 👾</h2>
     </div>
 
+    <!-- LOBBY SCREEN -->
     <div id="lobby-area">
         <div class="qr-section">
             <div id="qrcode"></div>
@@ -65,6 +66,7 @@
     </div>
     <button class="start-btn" id="btn-start" onclick="startGame()">BẮT ĐẦU TRÒ CHƠI 🚀</button>
 
+    <!-- GAME SCREEN -->
     <div id="game-area">
         <div class="boss-area">
             <div class="boss-sprite" id="boss">🐛</div>
@@ -96,8 +98,8 @@
     </div>
 
     <script>
-        // KẾT NỐI VÀO NAMESPACE /boss ĐỂ KHÔNG XUNG ĐỘT VỚI GAME KHÁC
-        const socket = io('/boss');
+        // SỬ DỤNG KẾT NỐI CHUẨN, ƯU TIÊN WEBSOCKET ĐỂ VÀO GAME NHANH CHÓNG
+        const socket = io({transports: ['websocket', 'polling']});
         let questions = [];
         let currentQIndex = -1;
         let maxHP = 1000;
@@ -105,30 +107,35 @@
         let studentCount = 0;
         let timerInterval;
 
+        // Sinh mã QR
         const gameUrl = window.location.origin + "/boss_student";
         new QRCode(document.getElementById("qrcode"), { text: gameUrl, width: 200, height: 200 });
 
+        // Tải danh sách câu hỏi
         fetch('/api/boss_questions')
             .then(res => res.json())
             .then(data => { questions = data; })
             .catch(err => console.error("Lỗi tải câu hỏi:", err));
 
-        socket.on('new_student', function(data) {
+        // Nhận tín hiệu học sinh vào phòng
+        socket.on('bug_new_student', function(data) {
             studentCount++;
             document.getElementById('student-count').innerText = studentCount;
             let list = document.getElementById('player-list');
             list.innerHTML += `<div class="player-tag">${data.name}</div>`;
         });
 
+        // Bắt đầu game
         function startGame() {
             document.getElementById('lobby-area').style.display = 'none';
             document.getElementById('btn-start').style.display = 'none';
             document.getElementById('game-area').style.display = 'flex';
             
-            socket.emit('teacher_start_game');
+            socket.emit('bug_teacher_start'); // Báo cho học sinh
             nextQuestion();
         }
 
+        // Chuyển câu hỏi
         function nextQuestion() {
             currentQIndex++;
             if (currentQIndex >= questions.length || currentHP <= 0) {
@@ -146,7 +153,8 @@
                 optDiv.classList.remove('correct-opt');
             }
 
-            socket.emit('teacher_sync_question', {
+            // Đồng bộ câu hỏi sang màn hình học sinh
+            socket.emit('bug_sync_question', {
                 question: q.question,
                 options: q.options,
                 correct_index: q.correct_index
@@ -174,15 +182,20 @@
             document.getElementById(`opt-${q.correct_index}`).classList.add('correct-opt');
         }
 
-        socket.on('boss_damaged', function(data) {
+        // Nhận tín hiệu học sinh trả lời
+        socket.on('bug_boss_damaged', function(data) {
             if (data.is_correct) {
+                // Tạo hiệu ứng laser bay lên
                 let laser = document.createElement('div');
                 laser.className = 'laser';
                 laser.innerText = "⚡ " + data.student_name;
+                
+                // Random vị trí bắn
                 laser.style.left = (20 + Math.random() * 60) + "%";
                 document.querySelector('.boss-area').appendChild(laser);
                 setTimeout(() => laser.remove(), 800);
 
+                // Trừ máu boss
                 let damage = Math.floor(maxHP / questions.length);
                 currentHP -= damage;
                 if(currentHP < 0) currentHP = 0;
@@ -190,9 +203,10 @@
                 document.getElementById('current-hp').innerText = currentHP;
                 document.getElementById('hp-bar').style.width = (currentHP / maxHP * 100) + "%";
 
+                // Rung Boss
                 let boss = document.getElementById('boss');
                 boss.classList.remove('shake');
-                void boss.offsetWidth;
+                void boss.offsetWidth; // reset animation
                 boss.classList.add('shake');
             }
         });
