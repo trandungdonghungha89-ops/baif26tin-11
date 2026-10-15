@@ -758,25 +758,20 @@ def get_boss_questions():
     return jsonify(questions)
 
 # ==========================================
-# CÁC SỰ KIỆN SOCKET.IO CHO CHIẾN DỊCH DIỆT BUG
+# CÁC SỰ KIỆN SOCKET.IO (ĐÃ CÁCH LY KÊNH /boss)
 # ==========================================
-
-@socketio.on('student_join')
+@socketio.on('student_join', namespace='/boss')
 def handle_student_join(data):
-    # Học sinh vào phòng -> Phát thanh cho giáo viên biết để cập nhật sĩ số
-    emit('new_student', data, broadcast=True)
+    emit('new_student', data, broadcast=True, namespace='/boss')
 
-@socketio.on('teacher_start_game')
+@socketio.on('teacher_start_game', namespace='/boss')
 def handle_start_game():
-    # Giáo viên bấm Bắt đầu -> Báo cho tất cả điện thoại học sinh đổi màn hình
-    emit('game_started', broadcast=True)
+    emit('game_started', broadcast=True, namespace='/boss')
 
-@socketio.on('teacher_sync_question')
+@socketio.on('teacher_sync_question', namespace='/boss')
 def handle_sync_question(data):
-    # Giáo viên chuyển câu hỏi -> Gửi nội dung câu hỏi về màn hình học sinh
-    emit('sync_boss_question', data, broadcast=True)
+    emit('sync_boss_question', data, broadcast=True, namespace='/boss')
 
-@socketio.on('student_answer')
+@socketio.on('student_answer', namespace='/boss')
 def handle_student_answer(data):
-    # Học sinh bấm đáp án -> Bắn tia laser lên màn hình giáo viên
-    emit('boss_damaged', data, broadcast=True)
+    emit('boss_damaged', data, broadcast=True, namespace='/boss')
