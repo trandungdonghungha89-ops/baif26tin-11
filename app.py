@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import io
 import json
 import os
@@ -26,8 +27,6 @@ with open(BASE_DIR / "escape_questions.json", "r", encoding="utf-8") as f:
 
 app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
-from flask_socketio import SocketIO
-socketio = SocketIO(app, cors_allowed_origins="*")
 app.config["JSON_AS_ASCII"] = False
 
 # Game 4: Code Race – Bài 24
@@ -728,55 +727,631 @@ def escape_bai29_qr():
     bio.seek(0)
     return send_file(bio, mimetype="image/png", max_age=30)
 
+
+
+# ============================================================================
+# GAME 5: DAU TRUONG TRI THUC - 10-12 DOI - FLASK / RENDER
+# Self-contained: all 10 questions and server API are included in app.py.
+# The only new HTML file is templates/team_arena.html.
+# ============================================================================
+import hashlib
+import unicodedata
+from contextlib import contextmanager
+from flask import Blueprint
+
+arena_bp = Blueprint("team_arena", __name__)
+ARENA_BASE_DIR = BASE_DIR
+ARENA_DB_PATH = DB_PATH
+ARENA_QUESTIONS = json.loads(r'''
+[
+  {
+    "number": 1,
+    "difficulty": "Trung bình",
+    "blocks": [
+      {
+        "type": "text",
+        "value": "Để định nghĩa một hàm do người dùng tự tạo trong Python, ta bắt buộc phải sử dụng từ khóa nào sau đây?"
+      }
+    ],
+    "options": [
+      "function",
+      "define",
+      "def",
+      "fun"
+    ],
+    "answer": 2,
+    "explanation": "Từ khóa def được dùng để định nghĩa hàm trong Python."
+  },
+  {
+    "number": 2,
+    "difficulty": "Trung bình",
+    "blocks": [
+      {
+        "type": "text",
+        "value": "Cú pháp gọi một hàm đã được thiết kế sẵn hoặc tự định nghĩa trong Python có dạng tổng quát nào?"
+      }
+    ],
+    "options": [
+      "<tên hàm>[danh sách đối số]",
+      "<tên hàm>(danh sách đối số)",
+      "<danh sách đối số>(tên hàm)",
+      "call <tên hàm>"
+    ],
+    "answer": 1,
+    "explanation": "Cú pháp gọi hàm là <tên hàm>(danh sách đối số). Đối số là dữ liệu được truyền vào khi gọi hàm; tham số được khai báo khi định nghĩa hàm."
+  },
+  {
+    "number": 3,
+    "difficulty": "Trung bình",
+    "blocks": [
+      {
+        "type": "text",
+        "value": "Phát biểu nào sau đây là ĐÚNG khi nói về tham số của hàm trong Python?"
+      }
+    ],
+    "options": [
+      "Một hàm luôn luôn phải có ít nhất một tham số.",
+      "Tham số của hàm được đặt trong cặp dấu ngoặc vuông [ ].",
+      "Hàm có thể có một, nhiều tham số hoặc không có tham số nào.",
+      "Chỉ những hàm do Python thiết kế sẵn mới có tham số."
+    ],
+    "answer": 2,
+    "explanation": "Khi định nghĩa hàm, có thể khai báo không có tham số, một tham số hoặc nhiều tham số. Ví dụ, phần đầu def chao(): khai báo một hàm không có tham số."
+  },
+  {
+    "number": 4,
+    "difficulty": "Khá",
+    "blocks": [
+      {
+        "type": "text",
+        "value": "Khi đang thực thi một hàm, nếu chương trình gặp lệnh \"return\" thì điều gì sẽ xảy ra?"
+      }
+    ],
+    "options": [
+      "Hàm sẽ tiếp tục chạy các lệnh bên dưới lệnh return cho đến hết.",
+      "Hàm sẽ ngay lập tức kết thúc và trả về giá trị (nếu có) cho nơi gọi hàm.",
+      "Chương trình sẽ báo lỗi cú pháp vì lệnh return chỉ được dùng ở cuối chương trình chính.",
+      "Hàm sẽ khởi động lại từ đầu."
+    ],
+    "answer": 1,
+    "explanation": "Lệnh return đóng vai trò kết thúc hàm ngay lập tức và trả giá trị (nếu được chỉ định) về cho nơi gọi hàm."
+  },
+  {
+    "number": 5,
+    "difficulty": "Khá",
+    "blocks": [
+      {
+        "type": "text",
+        "value": "Cho đoạn mã lệnh sau:"
+      },
+      {
+        "type": "code",
+        "value": "def xinchao(ten):\n    print(\"Chào mừng\", ten)"
+      },
+      {
+        "type": "text",
+        "value": "Hàm trên thuộc loại hàm nào và giá trị trả lại là gì nếu ta gọi xinchao(\"Minh\")?"
+      }
+    ],
+    "options": [
+      "Là hàm có trả lại giá trị, giá trị trả lại là xâu \"Chào mừng Minh\".",
+      "Hàm không có lệnh return, in ra \"Chào mừng Minh\" và lời gọi hàm trả về None.",
+      "Là hàm có trả lại giá trị, giá trị trả lại là biến \"ten\".",
+      "Báo lỗi vì thiếu lệnh return ở cuối hàm."
+    ],
+    "answer": 1,
+    "explanation": "Lời gọi xinchao(\"Minh\") hiển thị \"Chào mừng Minh\" nhờ lệnh print. Vì hàm không có lệnh return, lời gọi hàm trả về giá trị None. Kết quả in ra màn hình không phải giá trị trả về."
+  },
+  {
+    "number": 6,
+    "difficulty": "Khá",
+    "blocks": [
+      {
+        "type": "text",
+        "value": "Mục đích chính yếu nhất của việc gom các khối lệnh thành các chương trình con (hàm) là gì?"
+      }
+    ],
+    "options": [
+      "Để máy tính thực thi chương trình với tốc độ phần cứng nhanh hơn.",
+      "Để mã hóa mã nguồn, ngăn người khác đọc được cấu trúc chương trình.",
+      "Để tự động phát hiện mọi lỗi cú pháp trong Python.",
+      "Tránh việc phải viết đi viết lại nhiều lần một khối lệnh, giúp chương trình gọn gàng và dễ quản lý."
+    ],
+    "answer": 3,
+    "explanation": "Sử dụng hàm giúp tránh lặp lại mã lệnh, tiết kiệm công sức và làm chương trình dễ hiểu, dễ gỡ lỗi hơn."
+  },
+  {
+    "number": 7,
+    "difficulty": "Khá",
+    "blocks": [
+      {
+        "type": "text",
+        "value": "Xét đoạn chương trình sau:"
+      },
+      {
+        "type": "code",
+        "value": "def tinh_toan(x, y):\n    return x * y\n    print(\"Đã tính xong\")\n\nket_qua = tinh_toan(3, 4)"
+      },
+      {
+        "type": "text",
+        "value": "Sau khi đoạn chương trình chạy xong, điều gì sẽ xảy ra?"
+      }
+    ],
+    "options": [
+      "Biến ket_qua nhận giá trị 12 và màn hình in ra chữ \"Đã tính xong\".",
+      "Biến ket_qua nhận giá trị 12, màn hình KHÔNG in ra gì vì lệnh print nằm sau return.",
+      "Chương trình báo lỗi vì không được đặt lệnh print bên trong hàm.",
+      "Màn hình in ra \"Đã tính xong\" nhưng biến ket_qua không có giá trị."
+    ],
+    "answer": 1,
+    "explanation": "Khi gặp lệnh return x * y, hàm kết thúc và trả về 12. Câu lệnh print(\"Đã tính xong\") nằm phía sau return sẽ không bao giờ được thực thi (unreachable code)."
+  },
+  {
+    "number": 8,
+    "difficulty": "Khá",
+    "blocks": [
+      {
+        "type": "text",
+        "value": "Nếu muốn viết một hàm nhận vào một số nguyên x và trả về lập phương của số đó, cách viết lệnh return nào sau đây là đúng chuẩn?"
+      }
+    ],
+    "options": [
+      "print(x * x * x)",
+      "return x * x * x",
+      "output(x ** 3)",
+      "return"
+    ],
+    "answer": 1,
+    "explanation": "Để trả về giá trị lập phương, ta cần tính toán (x * x * x hoặc x ** 3) và kết hợp với từ khóa return."
+  },
+  {
+    "number": 9,
+    "difficulty": "Khó",
+    "blocks": [
+      {
+        "type": "text",
+        "value": "Phân tích đoạn chương trình sau:"
+      },
+      {
+        "type": "code",
+        "value": "def kiem_tra(so):\n    if so % 2 == 0:\n        return \"Chẵn\"\n    return \"Lẻ\"\n\na = kiem_tra(5)"
+      },
+      {
+        "type": "text",
+        "value": "Tại sao hàm trên lại hoạt động hợp lệ dù có đến hai lệnh return? Giá trị của biến a là bao nhiêu?"
+      }
+    ],
+    "options": [
+      "Hàm bị lỗi do có hai lệnh return, a không nhận giá trị nào.",
+      "Hàm chạy hợp lệ. Vì 5 không chia hết cho 2, lệnh return đầu tiên bị bỏ qua, hàm chạy đến lệnh return thứ hai. a nhận giá trị \"Lẻ\".",
+      "Hàm chạy hợp lệ. Hàm sẽ trả về cả hai giá trị \"Chẵn\" và \"Lẻ\" cùng lúc.",
+      "Hàm chạy hợp lệ nhưng a nhận giá trị là None vì thiếu khối else."
+    ],
+    "answer": 1,
+    "explanation": "Hàm có thể chứa nhiều lệnh return. Khi gọi kiem_tra(5), điều kiện if sai, chương trình bỏ qua return đầu tiên và thực thi return \"Lẻ\", sau đó hàm kết thúc."
+  },
+  {
+    "number": 10,
+    "difficulty": "Khó",
+    "blocks": [
+      {
+        "type": "text",
+        "value": "Cho đoạn mã Python sau:"
+      },
+      {
+        "type": "code",
+        "value": "def xu_ly_xau(s):\n    dem = 0\n    for k in s:\n        if k == \"h\":\n            dem = dem + 1\n    return dem\n\nso_luong = xu_ly_xau(\"hoc sinh hoc tin hoc\")"
+      },
+      {
+        "type": "text",
+        "value": "Yêu cầu học sinh theo dõi logic của vòng lặp và điều kiện bên trong hàm. Giá trị cuối cùng của biến \"so_luong\" là bao nhiêu?"
+      }
+    ],
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "answer": 3,
+    "explanation": "Vòng lặp duyệt từng kí tự và tăng biến dem mỗi khi gặp kí tự \"h\". Xâu \"hoc sinh hoc tin hoc\" có 4 chữ \"h\": một trong \"hoc\" đầu, một trong \"sinh\", một trong \"hoc\" giữa và một trong \"hoc\" cuối. Do đó so_luong bằng 4."
+  }
+]
+''')
+assert len(ARENA_QUESTIONS) == 10 and all(len(q["options"]) == 4 for q in ARENA_QUESTIONS)
+
+MAX_TEAMS = 12
+QUESTION_SECONDS = 20
+READY_SECONDS = 4  # Cho các mạng có độ trễ khác nhau nhận tín hiệu trước khi bắt đầu.
+ROOM_TTL_SECONDS = 24 * 3600
+
+
+@contextmanager
+def arena_db():
+    conn = sqlite3.connect(ARENA_DB_PATH, timeout=15)
+    try:
+        conn.row_factory = sqlite3.Row
+        conn.execute("PRAGMA journal_mode=WAL")
+        conn.execute("PRAGMA busy_timeout=15000")
+        yield conn
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        conn.close()
+
+
+def init_arena_db():
+    with arena_db() as conn:
+        conn.executescript("""
+            CREATE TABLE IF NOT EXISTS arena_rooms (
+                code TEXT PRIMARY KEY,
+                teacher_hash TEXT NOT NULL,
+                created_at REAL NOT NULL,
+                phase TEXT NOT NULL DEFAULT 'waiting',
+                question_index INTEGER NOT NULL DEFAULT -1,
+                starts_at REAL,
+                ends_at REAL
+            );
+            CREATE TABLE IF NOT EXISTS arena_teams (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                room_code TEXT NOT NULL,
+                name TEXT NOT NULL,
+                name_key TEXT NOT NULL,
+                token_hash TEXT NOT NULL UNIQUE,
+                joined_at REAL NOT NULL,
+                UNIQUE(room_code, name_key)
+            );
+            CREATE TABLE IF NOT EXISTS arena_answers (
+                room_code TEXT NOT NULL,
+                question_index INTEGER NOT NULL,
+                team_id INTEGER NOT NULL,
+                choice INTEGER NOT NULL,
+                received_at REAL NOT NULL,
+                elapsed_ms INTEGER NOT NULL,
+                correct INTEGER NOT NULL,
+                PRIMARY KEY(room_code, question_index, team_id)
+            );
+            CREATE INDEX IF NOT EXISTS arena_teams_room ON arena_teams(room_code);
+            CREATE INDEX IF NOT EXISTS arena_answers_room ON arena_answers(room_code, question_index);
+        """)
+
+
+init_arena_db()
+
+
+def hash_token(token: str) -> str:
+    return hashlib.sha256(token.encode("utf-8")).hexdigest()
+
+
+def arena_get_room(conn, code: str):
+    return conn.execute(
+        "SELECT * FROM arena_rooms WHERE code=? AND created_at>?",
+        (code.upper(), time.time() - ROOM_TTL_SECONDS),
+    ).fetchone()
+
+
+def refresh_room(conn, room):
+    """Chốt pha theo thời gian MÁY CHỦ, cả khi không có trình duyệt nào đang mở."""
+    if room is None:
+        return None
+    now = time.time()
+    if room["phase"] == "countdown" and now >= room["starts_at"]:
+        conn.execute("UPDATE arena_rooms SET phase='answering' WHERE code=? AND phase='countdown'", (room["code"],))
+    if room["phase"] in ("countdown", "answering") and now >= room["ends_at"]:
+        conn.execute("UPDATE arena_rooms SET phase='review' WHERE code=? AND phase IN ('countdown','answering')", (room["code"],))
+    return conn.execute("SELECT * FROM arena_rooms WHERE code=?", (room["code"],)).fetchone()
+
+
+def _error(message, status=400):
+    return jsonify({"ok": False, "error": message}), status
+
+
+def _teacher_authorized(room):
+    token = request.headers.get("X-Arena-Teacher", "")
+    return bool(token and secrets.compare_digest(hash_token(token), room["teacher_hash"]))
+
+
+def _team_for_token(conn, room):
+    token = request.headers.get("X-Arena-Team", "")
+    if not token:
+        return None
+    return conn.execute("SELECT * FROM arena_teams WHERE room_code=? AND token_hash=?",
+                        (room["code"], hash_token(token))).fetchone()
+
+
+def _require_teacher_room(conn, code):
+    room = refresh_room(conn, arena_get_room(conn, code))
+    if room is None:
+        return None, _error("Không tìm thấy phòng hoặc phòng đã hết hạn.", 404)
+    if not _teacher_authorized(room):
+        return None, _error("Không có quyền điều khiển của giáo viên.", 403)
+    return room, None
+
+
+def _make_public_url(endpoint, **kwargs):
+    """Ưu tiên PUBLIC_BASE_URL=https://...onrender.com để QR luôn dùng HTTPS."""
+    relative = url_for(endpoint, **kwargs)
+    base = os.environ.get("PUBLIC_BASE_URL", "").strip().rstrip("/")
+    if base:
+        return base + relative
+    url = url_for(endpoint, _external=True, **kwargs)
+    # Flask/ProxyFix sau Render thường xác định đúng scheme HTTPS; phòng hờ header.
+    if request.headers.get("X-Forwarded-Proto", "").split(",")[0].strip() == "https":
+        url = url.replace("http://", "https://", 1)
+    return url
+
+
+@arena_bp.after_request
+def arena_no_store(response):
+    if request.path.startswith("/api/dau-truong/"):
+        response.headers["Cache-Control"] = "no-store, private"
+    return response
+
+
+@arena_bp.get("/dau-truong")
+def arena_teacher_page():
+    return render_template("team_arena.html", arena_role="teacher")
+
+
+@arena_bp.get("/dau-truong/tham-gia")
+def arena_team_page():
+    return render_template("team_arena.html", arena_role="team")
+
+
+@arena_bp.post("/api/dau-truong/phong")
+def arena_create_room():
+    alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+    token = secrets.token_urlsafe(32)
+    with arena_db() as conn:
+        conn.execute("BEGIN IMMEDIATE")
+        # Dọn phòng cũ để cơ sở dữ liệu không phình to sau nhiều buổi dạy.
+        old_codes = [r["code"] for r in conn.execute("SELECT code FROM arena_rooms WHERE created_at < ?", (time.time() - ROOM_TTL_SECONDS,))]
+        for old_code in old_codes:
+            conn.execute("DELETE FROM arena_answers WHERE room_code=?", (old_code,))
+            conn.execute("DELETE FROM arena_teams WHERE room_code=?", (old_code,))
+            conn.execute("DELETE FROM arena_rooms WHERE code=?", (old_code,))
+        for _ in range(50):
+            code = "".join(secrets.choice(alphabet) for _ in range(6))
+            if not conn.execute("SELECT 1 FROM arena_rooms WHERE code=?", (code,)).fetchone():
+                break
+        else:
+            return _error("Chưa thể tạo mã phòng mới, vui lòng thử lại.", 503)
+        conn.execute("INSERT INTO arena_rooms(code,teacher_hash,created_at) VALUES(?,?,?)",
+                     (code, hash_token(token), time.time()))
+    return jsonify({
+        "ok": True, "code": code, "teacher_token": token,
+        "join_url": _make_public_url("team_arena.arena_team_page", room=code),
+        "qr_url": _make_public_url("team_arena.arena_room_qr", code=code),
+        "question_seconds": QUESTION_SECONDS,
+        "ready_seconds": READY_SECONDS,
+        "max_teams": MAX_TEAMS,
+    })
+
+
+@arena_bp.get("/dau-truong/qr/<code>.png")
+def arena_room_qr(code):
+    code = code.strip().upper()
+    with arena_db() as conn:
+        if not arena_get_room(conn, code):
+            return _error("Không tìm thấy phòng.", 404)
+    target = _make_public_url("team_arena.arena_team_page", room=code)
+    img = qrcode.make(target)
+    buffer = io.BytesIO()
+    img.save(buffer, format="PNG")
+    buffer.seek(0)
+    response = send_file(buffer, mimetype="image/png", max_age=0)
+    response.headers["Cache-Control"] = "no-store"
+    return response
+
+
+@arena_bp.post("/api/dau-truong/<code>/tham-gia")
+def arena_join(code):
+    body = request.get_json(silent=True) or {}
+    raw = str(body.get("name", ""))
+    name = " ".join(raw.split())[:35]
+    if len(name) < 2 or any(ord(c) < 32 for c in name):
+        return _error("Tên đội phải có ít nhất 2 kí tự.")
+    name_key = unicodedata.normalize("NFKC", name).casefold()
+    with arena_db() as conn:
+        conn.execute("BEGIN IMMEDIATE")
+        room = refresh_room(conn, arena_get_room(conn, code))
+        if not room:
+            return _error("Mã phòng không tồn tại hoặc đã hết hạn.", 404)
+        if room["phase"] != "waiting":
+            return _error("Phòng đã bắt đầu, không thể có đội mới tham gia.", 409)
+        count = conn.execute("SELECT COUNT(*) FROM arena_teams WHERE room_code=?", (room["code"],)).fetchone()[0]
+        if count >= MAX_TEAMS:
+            return _error(f"Phòng đã đủ {MAX_TEAMS} đội.", 409)
+        if conn.execute("SELECT 1 FROM arena_teams WHERE room_code=? AND name_key=?", (room["code"], name_key)).fetchone():
+            return _error("Tên đội đã được sử dụng. Hãy chọn tên khác.", 409)
+        token = secrets.token_urlsafe(32)
+        conn.execute("INSERT INTO arena_teams(room_code,name,name_key,token_hash,joined_at) VALUES(?,?,?,?,?)",
+                     (room["code"], name, name_key, hash_token(token), time.time()))
+        return jsonify({"ok": True, "code": room["code"], "name": name, "team_token": token})
+
+
+@arena_bp.post("/api/dau-truong/<code>/tiep-tuc")
+def arena_advance(code):
+    with arena_db() as conn:
+        conn.execute("BEGIN IMMEDIATE")
+        room, err = _require_teacher_room(conn, code)
+        if err:
+            return err
+        if room["phase"] not in ("waiting", "review"):
+            return _error("Chỉ được mở câu mới khi chờ bắt đầu hoặc đã kết thúc câu trước.", 409)
+        if room["phase"] == "waiting":
+            n = conn.execute("SELECT COUNT(*) FROM arena_teams WHERE room_code=?", (room["code"],)).fetchone()[0]
+            if n < 2:
+                return _error("Cần tối thiểu 2 đội để bắt đầu thi đấu.", 409)
+        next_index = room["question_index"] + 1
+        if next_index >= len(ARENA_QUESTIONS):
+            conn.execute("UPDATE arena_rooms SET phase='finished' WHERE code=?", (room["code"],))
+            return jsonify({"ok": True, "phase": "finished"})
+        start_at = time.time() + READY_SECONDS
+        end_at = start_at + QUESTION_SECONDS
+        conn.execute("""UPDATE arena_rooms SET phase='countdown', question_index=?,
+                    starts_at=?, ends_at=? WHERE code=?""",
+                     (next_index, start_at, end_at, room["code"]))
+        return jsonify({"ok": True, "phase": "countdown", "question_number": next_index + 1,
+                        "starts_at_ms": round(start_at * 1000), "ends_at_ms": round(end_at * 1000)})
+
+
+@arena_bp.post("/api/dau-truong/<code>/tra-loi")
+def arena_submit_answer(code):
+    body = request.get_json(silent=True) or {}
+    choice = body.get("choice")
+    if isinstance(choice, bool) or not isinstance(choice, int) or choice not in range(4):
+        return _error("Đáp án phải là A, B, C hoặc D.")
+    with arena_db() as conn:
+        conn.execute("BEGIN IMMEDIATE")
+        room = refresh_room(conn, arena_get_room(conn, code))
+        if room is None:
+            return _error("Không tìm thấy phòng.", 404)
+        team = _team_for_token(conn, room)
+        if team is None:
+            return _error("Thiết bị chưa đăng ký hợp lệ vào phòng.", 403)
+        # Lấy thời gian tại máy chủ, tuyệt đối không tin thời gian do điện thoại gửi lên.
+        now = time.time()
+        if room["phase"] != "answering" or now < room["starts_at"] or now >= room["ends_at"]:
+            return _error("Câu hỏi chưa mở hoặc đã hết 20 giây.", 409)
+        if conn.execute("""SELECT 1 FROM arena_answers WHERE room_code=?
+                        AND question_index=? AND team_id=?""",
+                        (room["code"], room["question_index"], team["id"])).fetchone():
+            return _error("Đội đã gửi đáp án cho câu hỏi này.", 409)
+        elapsed_ms = max(0, round((now - room["starts_at"]) * 1000))
+        is_correct = int(choice == ARENA_QUESTIONS[room["question_index"]]["answer"])
+        conn.execute("""INSERT INTO arena_answers
+                        (room_code,question_index,team_id,choice,received_at,elapsed_ms,correct)
+                        VALUES(?,?,?,?,?,?,?)""",
+                     (room["code"], room["question_index"], team["id"], choice, now, elapsed_ms, is_correct))
+        # Không cho biết đúng/sai trước khi hết giờ.
+        return jsonify({"ok": True, "received": True, "elapsed_ms": elapsed_ms})
+
+
+def _ranking(conn, room):
+    teams = [dict(r) for r in conn.execute(
+        "SELECT id, name FROM arena_teams WHERE room_code=? ORDER BY joined_at,id", (room["code"],))]
+    all_answers = [dict(r) for r in conn.execute(
+        "SELECT team_id,question_index,choice,elapsed_ms,correct FROM arena_answers WHERE room_code=?",
+        (room["code"],))]
+    by_team = {t["id"]: [] for t in teams}
+    by_current = {}
+    for ans in all_answers:
+        by_team[ans["team_id"]].append(ans)
+        if ans["question_index"] == room["question_index"]:
+            by_current[ans["team_id"]] = ans
+
+    totals = []
+    for t in teams:
+        correct_answers = [a for a in by_team[t["id"]] if a["correct"]]
+        totals.append({
+            "name": t["name"], "correct": len(correct_answers),
+            "time_ms": sum(a["elapsed_ms"] for a in correct_answers),
+            "answered": len(by_team[t["id"]]), "_id": t["id"],
+        })
+    totals.sort(key=lambda r: (-r["correct"], r["time_ms"], r["_id"]))
+    for i, row in enumerate(totals, 1):
+        row["rank"] = i
+        row.pop("_id")
+
+    round_rows = []
+    for t in teams:
+        ans = by_current.get(t["id"])
+        status = "timeout" if not ans else ("correct" if ans["correct"] else "wrong")
+        round_rows.append({
+            "name": t["name"], "status": status,
+            "elapsed_ms": ans["elapsed_ms"] if ans else None,
+            "choice": ans["choice"] if ans else None, "_id": t["id"],
+        })
+    # Trả lời ĐÚNG xếp trên. Nếu cùng đúng, ít thời gian hơn xếp trên.
+    # Sai và hết giờ đều không có điểm, vị trí dưới dùng thứ tự tham gia.
+    round_rows.sort(key=lambda r: (0 if r["status"] == "correct" else 1,
+                                   r["elapsed_ms"] if r["status"] == "correct" else 0,
+                                   r["_id"]))
+    for i, row in enumerate(round_rows, 1):
+        row["rank"] = i
+        row.pop("_id")
+    return totals, round_rows
+
+
+@arena_bp.get("/api/dau-truong/<code>/trang-thai")
+def arena_state(code):
+    with arena_db() as conn:
+        room = refresh_room(conn, arena_get_room(conn, code))
+        if room is None:
+            return _error("Không tìm thấy phòng hoặc phòng đã hết hạn.", 404)
+        teacher_requested = bool(request.headers.get("X-Arena-Teacher"))
+        team_requested = bool(request.headers.get("X-Arena-Team"))
+        teacher = teacher_requested and _teacher_authorized(room)
+        team = _team_for_token(conn, room) if team_requested else None
+        if (teacher_requested and not teacher) or (team_requested and team is None):
+            return _error("Phiên đăng nhập không hợp lệ.", 403)
+        authorized = bool(teacher or team)
+        nteams = conn.execute("SELECT COUNT(*) FROM arena_teams WHERE room_code=?", (room["code"],)).fetchone()[0]
+        answered_count = conn.execute("""SELECT COUNT(*) FROM arena_answers WHERE room_code=?
+                           AND question_index=?""", (room["code"], room["question_index"])).fetchone()[0]
+        response = {
+            "ok": True, "code": room["code"], "phase": room["phase"],
+            "server_now_ms": round(time.time() * 1000),
+            "question_number": room["question_index"] + 1,
+            "total_questions": len(ARENA_QUESTIONS),
+            "starts_at_ms": round(room["starts_at"] * 1000) if room["starts_at"] else None,
+            "ends_at_ms": round(room["ends_at"] * 1000) if room["ends_at"] else None,
+            "question_seconds": QUESTION_SECONDS,
+            "ready_seconds": READY_SECONDS,
+            "team_count": nteams,
+            "max_teams": MAX_TEAMS,
+            "answered_count": answered_count if authorized else None,
+            "teacher": bool(teacher),
+            "my_team": team["name"] if team else None,
+        }
+        if authorized and room["phase"] == "waiting":
+            response["teams"] = [r["name"] for r in conn.execute(
+                "SELECT name FROM arena_teams WHERE room_code=? ORDER BY joined_at,id", (room["code"],))]
+
+        if authorized and room["question_index"] >= 0:
+            q = ARENA_QUESTIONS[room["question_index"]]
+            if room["phase"] in ("answering", "review", "finished"):
+                response["question"] = {
+                    "number": q["number"], "difficulty": q["difficulty"],
+                    "blocks": q["blocks"], "options": q["options"],
+                }
+            if team:
+                ans = conn.execute("""SELECT choice,elapsed_ms,correct FROM arena_answers WHERE
+                                     room_code=? AND team_id=? AND question_index=?""",
+                                   (room["code"], team["id"], room["question_index"])).fetchone()
+                response["my_answer"] = ans["choice"] if ans is not None else None
+                response["my_elapsed_ms"] = ans["elapsed_ms"] if ans is not None else None
+        if authorized and room["phase"] in ("review", "finished"):
+            q = ARENA_QUESTIONS[room["question_index"]]
+            correct_count = conn.execute("""SELECT COUNT(*) FROM arena_answers WHERE room_code=?
+                                        AND question_index=? AND correct=1""",
+                                         (room["code"], room["question_index"])).fetchone()[0]
+            choice_counts = [0, 0, 0, 0]
+            for row in conn.execute("""SELECT choice,COUNT(*) n FROM arena_answers
+                                    WHERE room_code=? AND question_index=? GROUP BY choice""",
+                                    (room["code"], room["question_index"])):
+                choice_counts[row["choice"]] = row["n"]
+            response["review"] = {
+                "answer": q["answer"], "explanation": q["explanation"],
+                "correct": correct_count,
+                "wrong": answered_count - correct_count,
+                "timeout": max(0, nteams - answered_count),
+                "choice_counts": choice_counts,
+            }
+            response["leaderboard"], response["round_ranking"] = _ranking(conn, room)
+        return jsonify(response)
+
+
+app.register_blueprint(arena_bp)
+
 @app.get("/health")
 def health():
-    return jsonify({"ok": True, "games": 4, "questions": len(QUESTIONS), "escape_questions": len(ESCAPE_QUESTIONS)})
+    return jsonify({"ok": True, "games": 5, "questions": len(QUESTIONS), "escape_questions": len(ESCAPE_QUESTIONS), "arena_questions": len(ARENA_QUESTIONS)})
 
-# ----- COPY ĐOẠN CODE NÀY VÀ DÁN VÀO CUỐI FILE app.py (Ngay phía trên dòng "if __name__ == '__main__':") -----
 
-@app.route('/boss-teacher')
-def boss_teacher():
-    import json, os
-    file_path = os.path.join(os.path.dirname(__file__), 'boss_questions.json')
-    with open(file_path, 'r', encoding='utf-8') as f:
-        questions = json.load(f)
-    return render_template('boss_teacher.html', questions=questions)
-
-@app.route('/boss_student')
-def boss_student():
-    return render_template('boss_student.html')
-
-@app.route('/api/boss_questions')
-def get_boss_questions():
-    import json, os
-    file_path = os.path.join(os.path.dirname(__file__), 'boss_questions.json')
-    with open(file_path, 'r', encoding='utf-8') as f:
-        questions = json.load(f)
-    from flask import jsonify
-    return jsonify(questions)
-
-from flask_socketio import emit, join_room
-
-# ==========================================
-# CÁC SỰ KIỆN SOCKET.IO (CƠ CHẾ CHUẨN CODE RACE)
-# ==========================================
-@socketio.on('bug_teacher_join')
-def handle_bug_teacher_join():
-    join_room('bug_room') # Giáo viên tạo phòng chung
-
-@socketio.on('bug_student_join')
-def handle_bug_student_join(data):
-    join_room('bug_room') # Học sinh vào chung phòng
-    emit('bug_new_student', data, room='bug_room')
-
-@socketio.on('bug_teacher_start')
-def handle_bug_start_game():
-    emit('bug_game_started', room='bug_room')
-
-@socketio.on('bug_sync_question')
-def handle_bug_sync_question(data):
-    emit('bug_sync_boss_question', data, room='bug_room')
-
-@socketio.on('bug_student_answer')
-def handle_bug_student_answer(data):
-    emit('bug_boss_damaged', data, room='bug_room')
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", "5000"))
+    app.run(host="0.0.0.0", port=port, debug=False)
