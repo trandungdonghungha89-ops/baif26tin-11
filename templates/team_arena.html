@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101b46">
+  <title>Đấu trường tri thức | Hàm trong Python</title>
+  <style>
+:root{
+ --bg:#0a1435;--panel:#14234d;--edge:#ffffff22;--muted:#bdc8e9;
+ --white:#fcfcff;--cyan:#60eaff;--gold:#ffd464;--pink:#fd74bf;--purple:#b794ff;
+}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;scroll-behavior:smooth}
+body{background:radial-gradient(circle at 13% 11%,#273c87 0,transparent 34%),radial-gradient(circle at 94% 28%,#4e2978 0,transparent 31%),linear-gradient(140deg,#07132e,#101b43 58%,#121238);color:var(--white);font-family:"Times New Roman",Times,serif;line-height:1.4;overflow-x:hidden}
+[hidden]{display:none!important}
+.backdrop-orb{position:fixed;pointer-events:none;filter:blur(90px);opacity:.17;border-radius:50%;width:370px;height:370px}.orb-a{background:#64f8f1;left:-180px;bottom:-80px}.orb-b{background:#ff75ae;right:-190px;top:80px}
+.shell{width:min(1340px,96vw);margin:auto;position:relative;z-index:1}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:22px 0 0}.topline-right{display:flex;align-items:center;flex-wrap:wrap;gap:12px}.backlink{color:#d8e8ff;text-decoration:none;font-size:17px}.backlink:hover{text-decoration:underline}.connection-dot{font-size:15px;color:#b7eed6}.connection-dot.warn{color:#ffb4b4}
+.small-button{font:700 16px "Times New Roman",serif;background:#ffffff13;color:#fff;border:1px solid #ffffff44;border-radius:999px;padding:9px 15px;cursor:pointer;transition:.2s}.small-button:hover{background:#ffffff29}
+.brand{text-align:center;padding:22px 10px 26px}.pill{display:inline-flex;gap:6px;align-items:center;border:1px solid #86ddff69;color:#dbf7ff;background:#2081bf30;border-radius:999px;font-size:14px;font-weight:700;letter-spacing:.5px;padding:7px 12px}.brand h1{font-size:clamp(36px,5vw,66px);line-height:1.08;margin:12px 0 9px;letter-spacing:.7px;text-shadow:0 12px 36px #0003}.brand em{font-style:normal;color:var(--gold)}.brand p{margin:0;color:var(--muted);font-size:clamp(16px,1.8vw,22px)}
+.main-layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:19px;align-items:start}.stage{min-width:0}.panel,.question-panel,.side-panel{border:1px solid var(--edge);border-radius:26px;background:linear-gradient(145deg,#1a2b57f2,#101c3df2);box-shadow:0 18px 46px #02081860;backdrop-filter:blur(12px)}.panel{padding:clamp(22px,3vw,36px)}.side-panel{padding:23px 20px}.panel h2{font-size:clamp(27px,3.4vw,40px);line-height:1.15;margin:11px 0 12px}.muted{color:var(--muted);font-size:19px}.tiny{font-size:15px;color:#9eacd2}.welcome-icon{font-size:76px;filter:drop-shadow(0 10px 14px #0005)}.section-caption{font-size:15px;letter-spacing:1.2px;font-weight:700;color:var(--cyan)}.action-button{display:inline-flex;align-items:center;justify-content:center;padding:16px 25px;border-radius:15px;border:0;cursor:pointer;font:700 clamp(16px,1.8vw,22px) "Times New Roman",serif;box-shadow:0 10px 25px #0004;transition:transform .17s,box-shadow .17s;margin:10px 0;max-width:100%}.action-button:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 14px 28px #0007}.action-button:disabled{opacity:.55;cursor:wait}.primary{background:linear-gradient(130deg,#60ecff,#63aaff);color:#092648}.gold{background:linear-gradient(130deg,#ffe38c,#ffac44);color:#362307}.form-stack{display:flex;flex-direction:column;gap:12px;margin-top:22px}.form-stack label{font-weight:700;font-size:17px;letter-spacing:.5px;color:#bceaff}.form-stack input{width:100%;border:1px solid #93baff70;background:#061333a8;color:#fff;border-radius:14px;font:700 22px "Times New Roman",serif;min-height:54px;padding:11px 15px;outline:none}.form-stack input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #60eaff32}.form-stack input::placeholder{color:#b9cae999;font-weight:400}
+.lobby-grid{display:grid;grid-template-columns:250px minmax(0,1fr);gap:25px;margin-top:20px}.qr-box{background:#fff;color:#152746;border-radius:22px;padding:14px;text-align:center;display:flex;align-items:center;flex-direction:column}.qr-box img{width:100%;max-width:220px;height:auto;aspect-ratio:1;background:#fff;object-fit:contain}.qr-box .small-button{background:#eaf4ff;color:#15529b;border-color:#cadff3;font-size:14px}.room-code{font-size:36px;letter-spacing:4px;font-weight:800;margin:0 0 6px}.count-tile{display:flex;align-items:baseline;gap:10px}.count-tile strong{font-size:54px;color:var(--gold)}.count-tile span{color:var(--muted);font-size:18px}.team-chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 18px}.team-chip{background:#ffffff17;border:1px solid #ffffff38;border-radius:12px;padding:7px 10px;font-size:16px;overflow-wrap:anywhere}.waiting-box{padding:18px 0}.waiting-animation{font-size:65px;animation:float 2s ease-in-out infinite}@keyframes float{50%{transform:translateY(-8px)}}
+.center-panel{text-align:center}.countdown-number{font:800 clamp(110px,16vw,190px) "Times New Roman",serif;line-height:1.15;background:linear-gradient(140deg,#fff,#ffd66a,#ffaabb);color:transparent;background-clip:text;text-shadow:none;filter:drop-shadow(0 0 30px #ffc84555)}.question-panel{padding:clamp(18px,3vw,29px)}.question-head{display:flex;justify-content:space-between;align-items:start;gap:16px}.secondary{background:#ffffff18;border-color:#ffffff33}.difficulty{display:inline-block;margin-left:8px;border-radius:9px;padding:8px 10px;background:#ffd46423;color:#ffe3a7;font-size:14px;font-weight:700}.timer{min-width:98px;height:98px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:conic-gradient(var(--cyan) 360deg,#ffffff20 0deg);box-shadow:inset 0 0 0 9px #172750,0 0 30px #5eeaff26}.timer strong{font-size:33px;line-height:1.2}.timer span{font-size:12px;font-weight:700;letter-spacing:2px}.timer.urgent{background:conic-gradient(#ff6a78 var(--sweep),#ffffff20 0deg);animation:pulse 1s ease-in-out infinite}@keyframes pulse{50%{box-shadow:inset 0 0 0 9px #172750,0 0 23px #ff637990}}.question-text{margin:20px 0 23px;font-size:clamp(23px,2.35vw,32px);font-weight:700;line-height:1.36}.question-text p{margin:8px 0 14px}.question-text pre{white-space:pre-wrap;word-break:break-word;font:500 clamp(17px,2vw,24px)/1.45 Consolas,"Courier New",monospace;color:#e8f8ff;background:#06132c;border:1px solid #4e81b573;border-left:5px solid #5ce8e9;border-radius:15px;padding:15px 17px;text-align:left;overflow:auto}.answer-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.answer-choice{display:flex;align-items:center;gap:13px;min-height:85px;text-align:left;background:linear-gradient(145deg,#293b71,#1a2a55);color:#fff;border:2px solid #506c9a;border-radius:15px;padding:13px 15px;font:700 clamp(17px,1.8vw,23px)/1.3 "Times New Roman",serif;cursor:pointer;transition:background .15s,transform .15s,border-color .15s}.answer-choice:not(:disabled):hover{transform:translateY(-2px);border-color:#8be9fe;background:#2b538a}.answer-choice:disabled{cursor:default}.answer-choice .letter{display:grid;place-items:center;flex:none;width:42px;height:42px;background:#ffffff20;border-radius:12px;color:#ffe792;font-size:27px}.answer-choice .option-text{overflow-wrap:anywhere;white-space:pre-wrap}.answer-choice.selected{border-color:#74e8ff;background:#315e7c}.answer-choice.right{border-color:#6df2ab;background:#1f735b!important}.answer-choice.right .letter{background:#35ba7c}.answer-choice.wrong{border-color:#fb8797;background:#7d355c!important}.answer-choice.wrong .letter{background:#c34a76}.answer-status{font-size:18px;color:#d9efff;min-height:28px;margin:14px 0 5px}.question-bottom{margin-top:16px}.progress-track{height:9px;background:#ffffff24;border-radius:999px;overflow:hidden}.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#57ddef,#ffd26c);transition:width .12s linear}.question-bottom .muted{margin-top:12px;text-align:right;font-size:16px}
+.result-panel{margin-top:20px}.correct-answer{font-size:clamp(21px,2.5vw,30px);font-weight:700;color:#a4ffd4;background:#1c826040;border:1px solid #51df9c77;padding:15px;border-radius:15px}.explain{border-left:3px solid var(--gold);padding-left:15px;margin:17px 0}.review-summary{display:flex;flex-wrap:wrap;gap:9px;margin:15px 0}.summary-chip{padding:9px 12px;border:1px solid #ffffff38;background:#ffffff13;border-radius:12px;font-weight:700;font-size:17px}.ranking-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}.ranking-box{padding:14px;border:1px solid #ffffff25;border-radius:17px;background:#0c183793;min-width:0}.ranking-box h3{font-size:22px;margin:4px 0 15px;color:#ffe2a4}.ranking-rows{display:flex;flex-direction:column;gap:8px;max-height:550px;overflow:auto;padding-right:2px}.rank-row{display:grid;grid-template-columns:38px minmax(0,1fr) auto;gap:8px;align-items:center;border:1px solid #ffffff18;background:#ffffff0e;border-radius:10px;padding:8px 9px;font-size:15px}.rank-row.top{background:#88632831;border-color:#f9c76c70}.rank-pos{font-size:21px;color:var(--gold);font-weight:800}.rank-name{min-width:0;overflow-wrap:anywhere;font-weight:700}.rank-detail{font-size:13px;color:#d4dff4;text-align:right}.teacher-only{margin:22px 0 0}.team-only{margin:19px 0 0}.winner-emoji{font-size:83px}.winner-name{font-size:clamp(34px,5vw,66px);font-weight:800;color:var(--gold);text-shadow:0 8px 20px #ffb73d48}.final-board{max-width:660px;margin:20px auto;text-align:left}
+.side-title{font-weight:700;color:var(--cyan);font-size:16px;letter-spacing:1px;padding-bottom:15px}.top-gap{margin-top:30px}.side-info{display:flex;justify-content:space-between;gap:8px;border-top:1px solid #ffffff1c;padding:13px 0;font-size:17px}.side-info span{color:var(--muted)}.side-info strong{text-align:right}.rules{padding-left:19px;font-size:16px;color:#dae3fb}.rules li{margin-bottom:11px}.server-note{border-radius:13px;padding:13px;background:#156f5940;border:1px solid #69f2bb4b;font-size:15px;color:#c7ffe8}footer{font-size:15px;text-align:center;color:#8a9bc6;margin:28px 0 25px}
+.toast{position:fixed;right:20px;bottom:20px;z-index:30;max-width:min(90vw,420px);border:1px solid #9cc9ff;background:#f0f7ff;color:#153458;box-shadow:0 14px 40px #0008;padding:15px 20px;border-radius:15px;font-weight:700}.toast.error{border-color:#ffb0b0;background:#ffebee;color:#9e2633}.confetti{inset:0;position:fixed;pointer-events:none;z-index:25;overflow:hidden}.confetti-piece{position:absolute;top:-20px;width:12px;height:19px;animation:confetti-fall 4.5s linear forwards}@keyframes confetti-fall{to{transform:translateY(115vh) rotate(900deg);opacity:0}}
+@media(max-width:960px){.main-layout{grid-template-columns:1fr}.side-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px 18px}.side-panel .side-title,.side-panel .server-note,.side-panel .rules{grid-column:1/-1}.side-panel .top-gap{margin-top:16px}.lobby-grid{grid-template-columns:230px minmax(0,1fr)}}
+@media(max-width:640px){.shell{width:95vw}.topline{padding:13px 0 0}.topline .backlink{font-size:14px}.connection-dot{font-size:12px}.small-button{padding:8px 10px;font-size:13px}.brand{padding:20px 3px 21px}.brand h1{font-size:33px}.brand p{font-size:15px}.pill{font-size:12px}.panel,.question-panel{border-radius:19px;padding:20px}.lobby-grid{grid-template-columns:1fr}.qr-box{max-width:260px;margin:0 auto}.answer-grid{grid-template-columns:1fr;gap:10px}.answer-choice{min-height:67px;padding:10px 12px;font-size:18px}.answer-choice .letter{width:35px;height:35px;font-size:21px}.question-head{align-items:center}.question-text{font-size:24px;margin-top:18px}.timer{min-width:80px;height:80px}.timer strong{font-size:26px}.ranking-grid{grid-template-columns:1fr}.side-panel{display:block}.difficulty{margin:5px 0 0}.question-bottom .muted{text-align:left}.countdown-number{font-size:115px}}
+/* Ưu tiên câu hỏi và phương án trên màn hình nhỏ: 20 giây là rất ngắn. */
+@media(max-width:640px){
+ body[data-role="team"] .brand{padding:11px 2px 14px}
+ body[data-role="team"] .brand h1{font-size:26px;margin:6px 0}
+ body[data-role="team"] .brand p{font-size:13px}
+ body[data-role="team"] .brand .pill{font-size:11px;padding:5px 9px}
+ body[data-role="team"] .side-panel{display:none!important}
+ body[data-role="team"] .question-panel{padding:16px}
+ body[data-role="team"] .question-text{font-size:21px;margin:10px 0 13px}
+ body[data-role="team"] .question-text p{margin:7px 0}
+ body[data-role="team"] .question-text pre{font-size:15px;padding:10px 11px;line-height:1.36;margin:10px 0}
+ body[data-role="team"] .answer-choice{min-height:58px;font-size:16.5px}
+ body[data-role="team"] .timer{min-width:73px;height:73px}
+ body[data-role="team"] .timer strong{font-size:25px}
+ body[data-role="team"] footer{margin:16px 0 20px}
+}
+
+  </style>
+
+</head>
+<body data-role="{{ arena_role }}">
+  <div class="backdrop-orb orb-a" aria-hidden="true"></div>
+  <div class="backdrop-orb orb-b" aria-hidden="true"></div>
+  <div class="shell">
+    <header class="topline">
+      <a class="backlink" href="/" title="Quay về kho trò chơi">← Kho trò chơi</a>
+      <div class="topline-right">
+        <span id="connection" class="connection-dot">● Đang kết nối</span>
+        <button id="music-toggle" class="small-button" type="button" aria-label="Bật hoặc tắt nhạc nền">♫ Nhạc: Tắt</button>
+      </div>
+    </header>
+
+    <div class="brand" aria-label="Đấu trường tri thức, chủ đề Hàm trong Python">
+      <span class="pill">⚡ BÀI 26 · HÀM TRONG PYTHON · 10 CÂU HỎI</span>
+      <h1>ĐẤU TRƯỜNG <em>TRI THỨC</em></h1>
+      <p>10–12 đội thi đấu trực tiếp • 20 giây mỗi câu • Đúng trước, nhanh sau</p>
+    </div>
+
+    <div class="main-layout">
+      <main class="stage">
+        <section id="teacher-setup" class="panel" hidden>
+          <div class="welcome-icon">🏟️</div>
+          <h2>Sẵn sàng mở đấu trường?</h2>
+          <p class="muted">Tạo một phòng chơi trực tuyến. Mã QR hoạt động với các thiết bị ở những mạng Wi-Fi hoặc 4G/5G khác nhau.</p>
+          <button id="create-room" class="action-button primary" type="button">✦ TẠO PHÒNG THI ĐẤU</button>
+          <p class="tiny">Giữ trang này mở trong khi tổ chức trò chơi.</p>
+        </section>
+
+        <section id="team-setup" class="panel" hidden>
+          <div class="welcome-icon">🏁</div>
+          <h2>Gia nhập đấu trường</h2>
+          <p class="muted">Mỗi bàn dùng một điện thoại. Hãy chọn tên đội dễ nhận biết.</p>
+          <form id="join-form" class="form-stack">
+            <label for="room-field">MÃ PHÒNG</label>
+            <input id="room-field" name="room" minlength="6" maxlength="6" autocomplete="off" placeholder="Ví dụ: ABC234" required>
+            <label for="team-name">TÊN ĐỘI</label>
+            <input id="team-name" name="team" maxlength="35" minlength="2" autocomplete="off" placeholder="Ví dụ: Bàn 01 - Tia Chớp" required>
+            <button class="action-button primary" type="submit">🚀 THAM GIA PHÒNG CHƠI</button>
+          </form>
+        </section>
+
+        <section id="lobby" class="panel" hidden>
+          <div class="section-caption">SẢNH CHỜ THI ĐẤU</div>
+          <h2 id="lobby-title">Chờ các đội tập hợp...</h2>
+          <p id="lobby-description" class="muted"></p>
+          <div id="teacher-lobby" class="lobby-grid" hidden>
+            <div class="qr-box">
+              <img id="qr-image" alt="Mã QR vào phòng đấu trường" width="220" height="220">
+              <div class="room-code" id="room-code">------</div>
+              <button id="copy-link" class="small-button" type="button">⧉ Sao chép đường dẫn</button>
+            </div>
+            <div class="lobby-details">
+              <div class="count-tile"><strong id="team-count">0</strong><span>/ 12 đội đã vào phòng</span></div>
+              <div id="team-list" class="team-chips" aria-live="polite"></div>
+              <button id="start-game" type="button" class="action-button gold">▶ BẮT ĐẦU CÂU 1</button>
+              <p class="tiny">Nên chờ các đội hiển thị đầy đủ trên màn hình rồi mới bắt đầu.</p>
+            </div>
+          </div>
+          <div id="team-lobby" class="waiting-box" hidden>
+            <div class="waiting-animation" aria-hidden="true">⌛</div>
+            <p><strong id="your-team-lobby"></strong> đã vào phòng thành công.</p>
+            <p class="muted">Giáo viên chưa bấm BẮT ĐẦU. Vui lòng chờ và giữ trang này mở.</p>
+            <div id="team-list-small" class="team-chips"></div>
+          </div>
+        </section>
+
+        <section id="countdown" class="panel center-panel" hidden>
+          <div class="section-caption">CÁC ĐỘI VÀO VỊ TRÍ</div>
+          <h2 id="countdown-heading">Chuẩn bị câu hỏi</h2>
+          <div id="countdown-number" class="countdown-number">4</div>
+          <p class="muted">Câu hỏi mở tự động khi đồng hồ chuẩn bị về 0. Mọi đội có 20 giây để trả lời.</p>
+        </section>
+
+        <section id="question-panel" class="question-panel" hidden>
+          <div class="question-head">
+            <div>
+              <span id="question-badge" class="pill secondary">CÂU 1 / 10</span>
+              <span id="difficulty" class="difficulty">TRUNG BÌNH</span>
+            </div>
+            <div id="timer" class="timer" aria-live="off" role="timer">
+              <strong id="timer-digits">20.0</strong>
+              <span>GIÂY</span>
+            </div>
+          </div>
+          <div id="question-content" class="question-text"></div>
+          <div id="answer-options" class="answer-grid" aria-label="Các phương án trả lời"></div>
+          <div id="answer-status" class="answer-status" role="status" aria-live="polite"></div>
+          <div class="question-bottom">
+            <div class="progress-track"><div id="progress-fill" class="progress-fill"></div></div>
+            <div id="answered-meter" class="muted">Đã trả lời: 0/0 đội</div>
+          </div>
+        </section>
+
+        <section id="review-panel" class="panel result-panel" hidden>
+          <div class="section-caption">KẾT QUẢ CÂU VỪA CHƠI</div>
+          <h2>📣 Công bố đáp án và xếp hạng</h2>
+          <div id="correct-answer" class="correct-answer"></div>
+          <p id="explanation" class="muted explain"></p>
+          <div id="review-summary" class="review-summary"></div>
+          <div class="ranking-grid">
+            <div class="ranking-box">
+              <h3>⚡ Xếp hạng câu này</h3>
+              <div id="round-ranking" class="ranking-rows"></div>
+            </div>
+            <div class="ranking-box">
+              <h3>🏆 Tổng sắp tích lũy</h3>
+              <div id="overall-ranking" class="ranking-rows"></div>
+            </div>
+          </div>
+          <button id="next-question" class="action-button primary teacher-only" type="button">▶ CÂU TIẾP THEO</button>
+          <p id="waiting-next" class="muted team-only">⏳ Chờ giáo viên mở câu hỏi tiếp theo...</p>
+        </section>
+
+        <section id="finished-panel" class="panel center-panel" hidden>
+          <div class="winner-emoji">🏆</div>
+          <div class="section-caption">CHUNG CUỘC</div>
+          <h2>ĐẤU TRƯỜNG ĐÃ CÓ NHÀ VÔ ĐỊCH!</h2>
+          <div id="winner-name" class="winner-name"></div>
+          <p id="final-message" class="muted"></p>
+          <div class="ranking-box final-board">
+            <h3>✨ Bảng vàng chung cuộc</h3>
+            <div id="final-ranking" class="ranking-rows"></div>
+          </div>
+          <button id="new-room" class="action-button gold teacher-only" type="button">✦ TẠO PHÒNG CHƠI MỚI</button>
+        </section>
+      </main>
+
+      <aside id="side-panel" class="side-panel" hidden>
+        <div class="side-title">📡 PHÒNG TRỰC TUYẾN</div>
+        <div class="side-info"><span>Mã phòng</span><strong id="side-code">------</strong></div>
+        <div class="side-info"><span>Số đội</span><strong id="side-count">0 / 12</strong></div>
+        <div class="side-info"><span>Vòng đấu</span><strong id="side-question">Chờ mở</strong></div>
+        <div class="side-info"><span>Thiết bị</span><strong id="side-role">Giáo viên</strong></div>
+        <div class="side-title top-gap">📜 LUẬT CHƠI</div>
+        <ol class="rules">
+          <li>Mỗi bàn là một đội, một thiết bị.</li>
+          <li>Mỗi câu chỉ gửi một đáp án.</li>
+          <li>Hết 20 giây chưa trả lời: sai.</li>
+          <li>Ưu tiên <b>số câu đúng</b>, sau đó <b>tổng thời gian các câu đúng</b>.</li>
+          <li>Máy chủ Render ghi nhận thời gian chính thức.</li>
+        </ol>
+        <div class="server-note">🔒 Kết nối qua Internet • Không cần chung Wi-Fi</div>
+      </aside>
+    </div>
+    <footer>Kho trò chơi Tin học · Đấu trường tri thức · Nền tảng Flask + Render</footer>
+  </div>
+  <div id="toast" class="toast" role="alert" aria-live="assertive" hidden></div>
+  <div id="confetti" class="confetti" aria-hidden="true"></div>
+  <script>
+(() => {
+  "use strict";
+  const $ = (id) => document.getElementById(id);
+  const teacher = document.body.dataset.role === "teacher";
+  const urlRoom = new URLSearchParams(location.search).get("room")?.trim().toUpperCase() || "";
+  const ctx = {
+    code: null, token: null, name: "", joinUrl: "", qrUrl: "", state: null,
+    offsetMs: 0, pollActive: false, pollBusy: false, questionKey: null,
+    reviewKey: null, lastPhaseKey: null, selected: null, sending: false,
+    errors: 0,
+  };
+  const letters = ["A", "B", "C", "D"];
+  const phaseName = {waiting: "Sảnh chờ", countdown: "Chuẩn bị", answering: "Đang thi", review: "Công bố", finished: "Kết thúc"};
+
+  class GameMusic {
+    constructor() {
+      this.enabled = localStorage.getItem("arena_music_enabled") === null
+        ? teacher : localStorage.getItem("arena_music_enabled") === "1";
+      this.ctx = null;
+      this.interval = null;
+      this.step = 0;
+    }
+    get hasAudio() { return Boolean(window.AudioContext || window.webkitAudioContext); }
+    async unlock() {
+      if (!this.enabled || !this.hasAudio) return;
+      try {
+        if (!this.ctx) {
+          const Audio = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new Audio();
+        }
+        await this.ctx.resume();
+        if (!this.interval) this.interval = window.setInterval(() => this.tick(), 315);
+      } catch (_) { /* Chế độ trình duyệt không có âm thanh vẫn chơi bình thường. */ }
+    }
+    tick() {
+      if (!this.enabled || !this.ctx || this.ctx.state !== "running") return;
+      const melody = [392, 493.88, 587.33, 493.88, 440, 523.25, 659.25, 523.25,
+                      392, 493.88, 587.33, 784, 659.25, 587.33, 493.88, 440];
+      const tone = melody[this.step % melody.length];
+      this.tone(tone, .24, "sine", .020);
+      if (this.step % 4 === 0) this.tone(tone / 2, .40, "triangle", .016);
+      this.step++;
+    }
+    tone(frequency, duration, type, volume, delay = 0) {
+      if (!this.ctx || !this.enabled) return;
+      const t = this.ctx.currentTime + delay;
+      const oscillator = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      oscillator.type = type;
+      oscillator.frequency.setValueAtTime(frequency, t);
+      gain.gain.setValueAtTime(.0001, t);
+      gain.gain.exponentialRampToValueAtTime(volume, t + .025);
+      gain.gain.exponentialRampToValueAtTime(.0001, t + duration);
+      oscillator.connect(gain).connect(this.ctx.destination);
+      oscillator.start(t);
+      oscillator.stop(t + duration + .035);
+    }
+    cue(kind) {
+      if (!this.enabled || !this.ctx) return;
+      if (kind === "win") {
+        [523, 659, 784, 1047].forEach((n, i) => this.tone(n, .42, "triangle", .08, i * .14));
+      } else if (kind === "success") {
+        this.tone(659, .17, "triangle", .055);
+        this.tone(988, .25, "triangle", .055, .13);
+      } else if (kind === "wrong") {
+        this.tone(260, .23, "sawtooth", .032);
+        this.tone(200, .26, "sawtooth", .030, .15);
+      }
+    }
+    setEnabled(value) {
+      this.enabled = value;
+      localStorage.setItem("arena_music_enabled", value ? "1" : "0");
+      if (value) void this.unlock();
+      if (!value && this.interval) {
+        window.clearInterval(this.interval);
+        this.interval = null;
+      }
+      this.draw();
+    }
+    draw() { $("music-toggle").textContent = this.enabled ? "♫ Nhạc: Bật" : "♫ Nhạc: Tắt"; }
+  }
+  const music = new GameMusic();
+  music.draw();
+
+  function showToast(message, error = false) {
+    const el = $("toast");
+    el.textContent = message;
+    el.classList.toggle("error", error);
+    el.hidden = false;
+    clearTimeout(showToast.pending);
+    showToast.pending = setTimeout(() => { el.hidden = true; }, 4200);
+  }
+  function showOnly(ids) {
+    const all = ["teacher-setup", "team-setup", "lobby", "countdown", "question-panel", "review-panel", "finished-panel"];
+    all.forEach((id) => { $(id).hidden = !ids.includes(id); });
+    $("side-panel").hidden = !ctx.code;
+    document.querySelectorAll(".teacher-only").forEach((el) => { el.hidden = !teacher; });
+    document.querySelectorAll(".team-only").forEach((el) => { el.hidden = teacher; });
+  }
+  function fullJoinUrl() {
+    return ctx.joinUrl || `${location.origin}/dau-truong/tham-gia?room=${encodeURIComponent(ctx.code)}`;
+  }
+  function fullQRUrl() {
+    return ctx.qrUrl || `${location.origin}/dau-truong/qr/${encodeURIComponent(ctx.code)}.png`;
+  }
+  function credentialHeaders() {
+    const headers = {"Accept": "application/json"};
+    if (ctx.token) headers[teacher ? "X-Arena-Teacher" : "X-Arena-Team"] = ctx.token;
+    return headers;
+  }
+  async function requestApi(path, method = "GET", data = undefined) {
+    const headers = credentialHeaders();
+    if (data !== undefined) headers["Content-Type"] = "application/json";
+    const res = await fetch(path, {
+      method, headers, cache: "no-store", credentials: "same-origin",
+      body: data === undefined ? undefined : JSON.stringify(data),
+    });
+    let value;
+    try { value = await res.json(); } catch (_) { value = {error: `Máy chủ đang lỗi (${res.status}).`}; }
+    if (!res.ok || value.ok === false) {
+      const ex = new Error(value.error || `Lỗi kết nối (${res.status})`);
+      ex.status = res.status;
+      throw ex;
+    }
+    return value;
+  }
+  function apiPath(suffix) { return `/api/dau-truong/${encodeURIComponent(ctx.code)}/${suffix}`; }
+  function connectDot(ok) {
+    const el = $("connection");
+    el.classList.toggle("warn", !ok);
+    el.textContent = ok ? "● Đã đồng bộ Render" : "● Mất kết nối · đang thử lại";
+  }
+  function saveSession() {
+    if (teacher) {
+      localStorage.setItem("arena_teacher_session", JSON.stringify({
+        code: ctx.code, token: ctx.token, joinUrl: ctx.joinUrl, qrUrl: ctx.qrUrl,
+      }));
+    } else if (ctx.code) {
+      localStorage.setItem(`arena_team_${ctx.code}`, JSON.stringify({token: ctx.token, name: ctx.name}));
+    }
+  }
+  function forgetSession() {
+    if (teacher) localStorage.removeItem("arena_teacher_session");
+    else if (ctx.code) localStorage.removeItem(`arena_team_${ctx.code}`);
+    ctx.code = null; ctx.token = null; ctx.name = ""; ctx.state = null;
+    ctx.lastPhaseKey = null; ctx.questionKey = null; ctx.reviewKey = null;
+    ctx.pollActive = false;
+  }
+  function showInitial() {
+    showOnly([teacher ? "teacher-setup" : "team-setup"]);
+    connectDot(true);
+    $("connection").textContent = "● Sẵn sàng kết nối";
+    if (!teacher && urlRoom) $("room-field").value = urlRoom;
+  }
+  function startPolling() {
+    if (ctx.pollActive) return;
+    ctx.pollActive = true;
+    void pollState();
+  }
+  async function pollState() {
+    if (!ctx.pollActive || !ctx.code) return;
+    if (ctx.pollBusy) {
+      setTimeout(pollState, 350);
+      return;
+    }
+    ctx.pollBusy = true;
+    try {
+      const start = Date.now();
+      const state = await requestApi(apiPath("trang-thai"));
+      const finish = Date.now();
+      // Midpoint RTT approximation, không dùng đồng hồ của điện thoại để chấm điểm.
+      const estimated = state.server_now_ms - ((start + finish) / 2);
+      ctx.offsetMs = ctx.state ? .7 * ctx.offsetMs + .3 * estimated : estimated;
+      ctx.errors = 0;
+      connectDot(true);
+      renderState(state);
+    } catch (error) {
+      ctx.errors++;
+      connectDot(false);
+      if ([403, 404].includes(error.status)) {
+        forgetSession();
+        showInitial();
+        showToast("Phòng đã hết hạn hoặc phiên đăng nhập không hợp lệ. Vui lòng vào lại.", true);
+      } else if (ctx.errors === 2) {
+        showToast("Đang mất kết nối Internet. Hệ thống sẽ tự thử lại; đồng hồ vẫn chạy trên Render.", true);
+      }
+    } finally {
+      ctx.pollBusy = false;
+      if (ctx.pollActive) window.setTimeout(pollState, teacher ? 850 : 1100);
+    }
+  }
+  function adjustSide(state) {
+    $("side-code").textContent = state.code;
+    $("side-count").textContent = `${state.team_count} / ${state.max_teams}`;
+    $("side-question").textContent = state.question_number > 0
+      ? `${state.question_number} / ${state.total_questions} · ${phaseName[state.phase]}`
+      : "Chờ bắt đầu";
+    $("side-role").textContent = teacher ? "Giáo viên" : (state.my_team || ctx.name || "Đội chơi");
+  }
+  function renderTeamChips(containerId, teams) {
+    const target = $(containerId);
+    target.replaceChildren();
+    (teams || []).forEach((name, i) => {
+      const span = document.createElement("span");
+      span.className = "team-chip";
+      span.textContent = `🎯 ${i + 1}. ${name}`;
+      target.appendChild(span);
+    });
+  }
+  function renderLobby(state) {
+    $("teacher-lobby").hidden = !teacher;
+    $("team-lobby").hidden = teacher;
+    $("lobby-title").textContent = teacher ? "Mời các đội quét mã vào phòng" : "Đã gia nhập thành công!";
+    $("lobby-description").textContent = `${state.team_count}/${state.max_teams} đội đã có mặt trong phòng ${state.code}`;
+    if (teacher) {
+      $("room-code").textContent = ctx.code;
+      if ($("qr-image").dataset.room !== ctx.code) {
+        $("qr-image").src = fullQRUrl();
+        $("qr-image").dataset.room = ctx.code;
+      }
+      $("team-count").textContent = state.team_count;
+      renderTeamChips("team-list", state.teams);
+      $("start-game").disabled = state.team_count < 2;
+    } else {
+      $("your-team-lobby").textContent = state.my_team || ctx.name;
+      renderTeamChips("team-list-small", state.teams);
+    }
+  }
+  function questionSetup(question) {
+    if (!question) return;
+    const key = question.number;
+    if (ctx.questionKey === key) return;
+    ctx.questionKey = key;
+    ctx.selected = null;
+    ctx.sending = false;
+    $("question-badge").textContent = `CÂU ${question.number} / 10`;
+    $("difficulty").textContent = question.difficulty.toUpperCase();
+    const content = $("question-content");
+    content.replaceChildren();
+    question.blocks.forEach((block) => {
+      const node = document.createElement(block.type === "code" ? "pre" : "p");
+      node.textContent = block.value;
+      content.appendChild(node);
+    });
+    const options = $("answer-options");
+    options.replaceChildren();
+    question.options.forEach((option, i) => {
+      const button = document.createElement("button");
+      button.className = "answer-choice";
+      button.type = "button";
+      button.dataset.index = String(i);
+      button.setAttribute("aria-label", `Đáp án ${letters[i]}: ${option}`);
+      const letter = document.createElement("span"); letter.className = "letter"; letter.textContent = letters[i];
+      const text = document.createElement("span"); text.className = "option-text"; text.textContent = option;
+      button.append(letter, text);
+      button.addEventListener("click", () => void submitAnswer(i));
+      options.appendChild(button);
+    });
+  }
+  function answerStyles(state) {
+    const isOpen = state.phase === "answering";
+    const your = state.my_answer ?? ctx.selected;
+    const review = state.review;
+    $("answer-options").querySelectorAll("button").forEach((button) => {
+      const i = Number(button.dataset.index);
+      button.classList.toggle("selected", !teacher && your === i);
+      button.classList.toggle("right", Boolean(review && review.answer === i));
+      button.classList.toggle("wrong", Boolean(review && !teacher && your === i && i !== review.answer));
+      button.disabled = teacher || !isOpen || your !== null && your !== undefined || ctx.sending;
+    });
+    const message = $("answer-status");
+    if (teacher) {
+      message.textContent = isOpen ? "👩‍🏫 Màn hình hiển thị cùng câu hỏi với tất cả các đội." : "✅ Kết thúc lượt trả lời.";
+    } else if (review) {
+      message.textContent = your === null || your === undefined
+        ? "⌛ Đội không trả lời trong 20 giây – tính sai."
+        : (your === review.answer ? "🎉 Đội trả lời chính xác!" : "❌ Đội trả lời chưa đúng.");
+    } else if (your !== null && your !== undefined) {
+      const time = state.my_elapsed_ms !== null && state.my_elapsed_ms !== undefined
+        ? ` (${formatTime(state.my_elapsed_ms)})` : "";
+      message.textContent = `✅ Đã ghi nhận đáp án ${letters[your]}${time}. Chờ hết giờ để xem kết quả.`;
+    } else {
+      message.textContent = "Chọn đáp án đúng nhất. Mỗi đội chỉ được gửi một lần!";
+    }
+  }
+  async function submitAnswer(i) {
+    if (teacher || ctx.sending || !ctx.state || ctx.state.phase !== "answering"
+        || ctx.selected !== null || ctx.state.my_answer !== null) return;
+    ctx.sending = true;
+    ctx.selected = i;
+    answerStyles(ctx.state);
+    $("answer-status").textContent = `Đang gửi phương án ${letters[i]} lên máy chủ...`;
+    try {
+      const result = await requestApi(apiPath("tra-loi"), "POST", {choice: i});
+      $("answer-status").textContent = `✅ Render đã nhận đáp án ${letters[i]} (${formatTime(result.elapsed_ms)}).`;
+    } catch (error) {
+      ctx.selected = null;
+      showToast(error.message, true);
+      if (ctx.state) answerStyles(ctx.state);
+    } finally {
+      ctx.sending = false;
+    }
+  }
+  function formatTime(ms) { return `${(ms / 1000).toFixed(2)} giây`; }
+  function makeRankRow(row, overall = false) {
+    const div = document.createElement("div");
+    div.className = "rank-row" + (row.rank <= 3 ? " top" : "");
+    const pos = document.createElement("span"); pos.className = "rank-pos";
+    pos.textContent = row.rank === 1 ? "🥇" : row.rank === 2 ? "🥈" : row.rank === 3 ? "🥉" : String(row.rank);
+    const name = document.createElement("span"); name.className = "rank-name"; name.textContent = row.name;
+    const detail = document.createElement("span"); detail.className = "rank-detail";
+    if (overall) {
+      detail.textContent = `${row.correct} đúng · ${formatTime(row.time_ms)}`;
+    } else {
+      detail.textContent = row.status === "correct" ? `✓ ${formatTime(row.elapsed_ms)}`
+        : row.status === "wrong" ? "✕ Sai" : "⌛ Hết giờ";
+    }
+    div.append(pos, name, detail);
+    return div;
+  }
+  function renderRanks(id, rows, overall = false) {
+    const target = $(id);
+    target.replaceChildren();
+    (rows || []).forEach((row) => target.appendChild(makeRankRow(row, overall)));
+  }
+  function renderReview(state) {
+    const key = `${state.code}/${state.question_number}`;
+    if (ctx.reviewKey === key) return;
+    ctx.reviewKey = key;
+    const correct = state.review.answer;
+    $("correct-answer").textContent = `✅ ĐÁP ÁN: ${letters[correct]}. ${state.question.options[correct]}`;
+    $("explanation").textContent = state.review.explanation;
+    $("review-summary").replaceChildren();
+    [[`✅ ${state.review.correct} đội đúng`], [`❌ ${state.review.wrong} đội sai`], [`⌛ ${state.review.timeout} đội không trả lời`]]
+      .forEach(([label]) => {
+        const el = document.createElement("span"); el.className = "summary-chip";
+        el.textContent = label; $("review-summary").appendChild(el);
+      });
+    renderRanks("round-ranking", state.round_ranking);
+    renderRanks("overall-ranking", state.leaderboard, true);
+    $("next-question").textContent = state.question_number >= 10 ? "🏆 CÔNG BỐ CHUNG CUỘC" : "▶ MỞ CÂU TIẾP THEO";
+  }
+  function confetti() {
+    const c = $("confetti");
+    c.replaceChildren();
+    const colors = ["#ffcd64", "#5ae8fb", "#f67ac7", "#96f2c0", "#c6a6fc"];
+    for (let i = 0; i < 95; i++) {
+      const span = document.createElement("span");
+      span.className = "confetti-piece";
+      span.style.left = `${Math.random() * 100}vw`;
+      span.style.background = colors[i % colors.length];
+      span.style.animationDelay = `${Math.random() * 2.8}s`;
+      span.style.transform = `rotate(${Math.random() * 360}deg)`;
+      c.appendChild(span);
+    }
+    setTimeout(() => c.replaceChildren(), 6500);
+  }
+  function renderFinished(state) {
+    const champion = state.leaderboard?.[0];
+    $("winner-name").textContent = champion?.name || "Chưa có đội chiến thắng";
+    $("final-message").textContent = champion
+      ? `Với ${champion.correct}/10 câu đúng và ${formatTime(champion.time_ms)} tổng thời gian trả lời đúng. Xin chúc mừng!`
+      : "Chưa có kết quả xếp hạng.";
+    renderRanks("final-ranking", state.leaderboard, true);
+  }
+  function renderState(state) {
+    const oldKey = ctx.lastPhaseKey;
+    const key = `${state.phase}:${state.question_number}`;
+    ctx.state = state;
+    adjustSide(state);
+    if (state.phase === "waiting") {
+      showOnly(["lobby"]); renderLobby(state);
+    } else if (state.phase === "countdown") {
+      showOnly(["countdown"]);
+      $("countdown-heading").textContent = `Chuẩn bị CÂU ${state.question_number}/10`;
+    } else if (state.phase === "answering") {
+      showOnly(["question-panel"]);
+      questionSetup(state.question); answerStyles(state);
+    } else if (state.phase === "review") {
+      showOnly(["question-panel", "review-panel"]);
+      questionSetup(state.question); answerStyles(state); renderReview(state);
+    } else if (state.phase === "finished") {
+      showOnly(["finished-panel"]);
+      renderFinished(state);
+    }
+    if (oldKey !== key) {
+      ctx.lastPhaseKey = key;
+      if (oldKey !== null && state.phase === "review") {
+        if (!teacher) music.cue(state.my_answer === state.review.answer ? "success" : "wrong");
+        else music.cue("success");
+        setTimeout(() => $("review-panel").scrollIntoView({behavior: "smooth", block: "start"}), 180);
+      }
+      if (oldKey !== null && state.phase === "finished") {
+        music.cue("win"); confetti();
+        setTimeout(() => $("finished-panel").scrollIntoView({behavior: "smooth", block: "start"}), 200);
+      }
+      if (state.phase === "answering") {
+        setTimeout(() => $("question-panel").scrollIntoView({behavior: "smooth", block: "start"}), 140);
+      }
+    }
+  }
+  function tickClock() {
+    const s = ctx.state;
+    if (!s) return;
+    const serverNow = Date.now() + ctx.offsetMs;
+    if (s.phase === "countdown") {
+      $("countdown-number").textContent = Math.max(0, Math.ceil((s.starts_at_ms - serverNow) / 1000));
+    }
+    if (["answering", "review"].includes(s.phase)) {
+      const left = s.phase === "review" ? 0 : Math.max(0, (s.ends_at_ms - serverNow) / 1000);
+      $("timer-digits").textContent = left.toFixed(1);
+      const angle = Math.max(0, Math.min(360, left / s.question_seconds * 360));
+      $("timer").style.background = `conic-gradient(${left <= 5 ? "#ff6a78" : "#60eaff"} ${angle}deg,#ffffff20 ${angle}deg)`;
+      $("timer").classList.toggle("urgent", left <= 5 && left > 0 && s.phase === "answering");
+      $("progress-fill").style.width = `${Math.max(0,Math.min(100, 100 - left / s.question_seconds * 100))}%`;
+      $("answered-meter").textContent = `Đã gửi đáp án: ${s.answered_count}/${s.team_count} đội`;
+    }
+  }
+  async function createRoom() {
+    const button = $("create-room"); button.disabled = true;
+    void music.unlock();
+    try {
+      const result = await requestApi("/api/dau-truong/phong", "POST", {});
+      ctx.code = result.code; ctx.token = result.teacher_token;
+      ctx.joinUrl = result.join_url; ctx.qrUrl = result.qr_url;
+      ctx.state = null; ctx.lastPhaseKey = null; ctx.reviewKey = null; ctx.questionKey = null;
+      saveSession();
+      startPolling();
+    } catch (error) {
+      showToast(error.message, true);
+    } finally { button.disabled = false; }
+  }
+  async function joinRoom(event) {
+    event.preventDefault();
+    const code = $("room-field").value.trim().toUpperCase();
+    const name = $("team-name").value.trim().replace(/\s+/g, " ");
+    if (code.length !== 6 || name.length < 2) return showToast("Nhập mã phòng gồm 6 kí tự và tên đội.", true);
+    const button = $("join-form").querySelector("button[type=submit]");
+    button.disabled = true;
+    try {
+      ctx.code = code; ctx.token = null; ctx.name = name;
+      const result = await requestApi(apiPath("tham-gia"), "POST", {name});
+      ctx.token = result.team_token; ctx.name = result.name;
+      ctx.state = null; ctx.questionKey = null; ctx.reviewKey = null; ctx.lastPhaseKey = null;
+      saveSession();
+      void music.unlock();
+      startPolling();
+    } catch (error) {
+      ctx.code = null;
+      showToast(error.message, true);
+    } finally { button.disabled = false; }
+  }
+  async function advance() {
+    if (!teacher || !ctx.code) return;
+    const button = ctx.state?.phase === "waiting" ? $("start-game") : $("next-question");
+    button.disabled = true;
+    void music.unlock();
+    try {
+      await requestApi(apiPath("tiep-tuc"), "POST", {});
+      $("review-panel").hidden = true;
+    } catch (error) { showToast(error.message, true); }
+    finally { button.disabled = false; }
+  }
+  function startNewRoom() {
+    if (!confirm("Tạo phòng mới? Phòng hiện tại vẫn lưu kết quả nhưng sẽ không còn được điều khiển trên thiết bị này.")) return;
+    forgetSession();
+    $("qr-image").dataset.room = "";
+    showInitial();
+    window.scrollTo({top: 0, behavior: "smooth"});
+  }
+  function restore() {
+    showInitial();
+    if (teacher) {
+      try {
+        const saved = JSON.parse(localStorage.getItem("arena_teacher_session") || "null");
+        if (saved?.code && saved?.token) {
+          ctx.code = saved.code; ctx.token = saved.token;
+          ctx.joinUrl = saved.joinUrl; ctx.qrUrl = saved.qrUrl;
+          startPolling();
+        }
+      } catch (_) { /* Dữ liệu lưu bị lỗi, giáo viên tạo phòng mới. */ }
+    } else {
+      try {
+        const saved = JSON.parse(localStorage.getItem(`arena_team_${urlRoom}`) || "null");
+        if (saved?.token && urlRoom) {
+          ctx.code = urlRoom; ctx.token = saved.token; ctx.name = saved.name;
+          startPolling();
+        }
+      } catch (_) { /* Có thể nhập tên mới nếu chưa vào phòng. */ }
+    }
+  }
+  $("music-toggle").addEventListener("click", () => music.setEnabled(!music.enabled));
+  $("create-room").addEventListener("click", () => void createRoom());
+  $("join-form").addEventListener("submit", joinRoom);
+  $("start-game").addEventListener("click", () => void advance());
+  $("next-question").addEventListener("click", () => void advance());
+  $("new-room").addEventListener("click", startNewRoom);
+  $("copy-link").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(fullJoinUrl()); showToast("Đã sao chép link tham gia phòng."); }
+    catch (_) { showToast(`Link tham gia: ${fullJoinUrl()}`); }
+  });
+  window.setInterval(tickClock, 100);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden && ctx.pollActive) void music.unlock(); });
+  restore();
+})();
+
+  </script>
+</body>
+</html>
