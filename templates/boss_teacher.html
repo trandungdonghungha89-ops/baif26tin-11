@@ -9,49 +9,36 @@
     <style>
         body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: white; overflow-y: auto; text-align: center; }
         .header { padding: 10px; background: #1e293b; border-bottom: 2px solid #334155; }
-        
-        /* LOBBY AREA */
         #lobby-area { display: flex; justify-content: center; gap: 50px; margin-top: 50px; align-items: flex-start;}
         .qr-section { background: white; padding: 20px; border-radius: 15px; color: black; display: flex; flex-direction: column; align-items: center;}
         .player-list-container { width: 400px; background: #1e293b; padding: 20px; border-radius: 15px; text-align: left; height: 300px; overflow-y: auto; border: 2px solid #334155;}
         .player-tag { display: inline-block; background: #3b82f6; padding: 8px 15px; margin: 5px; border-radius: 20px; font-weight: bold; }
         .start-btn { padding: 15px 40px; font-size: 24px; background: #10b981; color: white; border: none; border-radius: 10px; cursor: pointer; margin-top: 30px; font-weight: bold;}
         .start-btn:hover { background: #059669; }
-
-        /* GAME AREA */
         #game-area { display: none; flex-direction: column;}
         .boss-area { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 35vh; position: relative; }
         .boss-sprite { font-size: 100px; transition: transform 0.1s; user-select: none; }
         .shake { animation: shake 0.5s; }
         @keyframes shake { 0% { transform: translate(1px, 1px) rotate(0deg); } 10% { transform: translate(-1px, -2px) rotate(-1deg); } 20% { transform: translate(-3px, 0px) rotate(1deg); } 30% { transform: translate(3px, 2px) rotate(0deg); } 40% { transform: translate(1px, -1px) rotate(1deg); } 50% { transform: translate(-1px, 2px) rotate(-1deg); } 60% { transform: translate(-3px, 1px) rotate(0deg); } 70% { transform: translate(3px, 1px) rotate(-1deg); } 80% { transform: translate(-1px, -1px) rotate(1deg); } 90% { transform: translate(1px, 2px) rotate(0deg); } 100% { transform: translate(1px, -2px) rotate(-1deg); } }
-        
         .hp-container { width: 60%; background: #334155; border-radius: 20px; margin-top: 10px; border: 3px solid #475569; overflow: hidden; position: relative; }
         .hp-bar { height: 40px; background: linear-gradient(90deg, #ef4444, #f97316); width: 100%; transition: width 0.3s ease-out; }
         .hp-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: bold; font-size: 20px; text-shadow: 1px 1px 2px black; }
-
         .question-area { padding: 20px; background: #1e293b; min-height: 45vh; display: flex; flex-direction: column; align-items: center; border-top: 4px solid #334155;}
         .timer-display { font-size: 30px; font-weight: bold; color: #fbbf24; margin-bottom: 10px; background: #334155; padding: 10px 30px; border-radius: 20px; border: 2px solid #fbbf24;}
         .question-text { font-size: 28px; text-align: center; margin-bottom: 20px; max-width: 900px; line-height: 1.4; color: #38bdf8; font-weight: bold;}
         .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 80%; max-width: 900px; }
         .option { background: #334155; padding: 15px 20px; border-radius: 10px; font-size: 22px; border: 2px solid #475569; text-align: left; }
         .correct-opt { border-color: #10b981; background: #064e3b; }
-        
         .controls { margin-top: 20px; padding-bottom: 40px;}
         .next-btn { padding: 15px 30px; font-size: 20px; cursor: pointer; background: #3b82f6; color: white; border: none; border-radius: 8px; font-weight: bold;}
-        
         .laser { position: absolute; color: #10b981; font-weight: bold; font-size: 24px; animation: flyUp 0.8s forwards; opacity: 0; pointer-events: none; z-index: 10;}
         @keyframes flyUp { 0% { top: 100%; opacity: 1; transform: scale(1); } 100% { top: 20%; opacity: 0; transform: scale(1.5); } }
-        
         #game-over { display: none; flex-direction: column; align-items: center; justify-content: center; height: 80vh; }
         .victory-title { font-size: 60px; color: #fbbf24; text-shadow: 0 0 20px rgba(251, 191, 36, 0.5); }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h2>👾 CHIẾN DỊCH DIỆT BUG 👾</h2>
-    </div>
-
-    <!-- LOBBY SCREEN -->
+    <div class="header"><h2>👾 CHIẾN DỊCH DIỆT BUG 👾</h2></div>
     <div id="lobby-area">
         <div class="qr-section">
             <div id="qrcode"></div>
@@ -66,7 +53,6 @@
     </div>
     <button class="start-btn" id="btn-start" onclick="startGame()">BẮT ĐẦU TRÒ CHƠI 🚀</button>
 
-    <!-- GAME SCREEN -->
     <div id="game-area">
         <div class="boss-area">
             <div class="boss-sprite" id="boss">🐛</div>
@@ -75,7 +61,6 @@
                 <div class="hp-text"><span id="current-hp">1000</span> / 1000 HP</div>
             </div>
         </div>
-
         <div class="question-area">
             <div class="timer-display">⏳ <span id="timer">20</span>s</div>
             <div class="question-text" id="q-text">Đang tải câu hỏi...</div>
@@ -85,9 +70,7 @@
                 <div class="option" id="opt-2">C. </div>
                 <div class="option" id="opt-3">D. </div>
             </div>
-            <div class="controls">
-                <button class="next-btn" onclick="nextQuestion()">Câu tiếp theo ⏭️</button>
-            </div>
+            <div class="controls"><button class="next-btn" onclick="nextQuestion()">Câu tiếp theo ⏭️</button></div>
         </div>
     </div>
 
@@ -98,8 +81,7 @@
     </div>
 
     <script>
-        // SỬ DỤNG KẾT NỐI CHUẨN, ƯU TIÊN WEBSOCKET ĐỂ VÀO GAME NHANH CHÓNG
-        const socket = io({transports: ['websocket', 'polling']});
+        const socket = io();
         let questions = [];
         let currentQIndex = -1;
         let maxHP = 1000;
@@ -107,17 +89,19 @@
         let studentCount = 0;
         let timerInterval;
 
-        // Sinh mã QR
         const gameUrl = window.location.origin + "/boss_student";
         new QRCode(document.getElementById("qrcode"), { text: gameUrl, width: 200, height: 200 });
 
-        // Tải danh sách câu hỏi
         fetch('/api/boss_questions')
             .then(res => res.json())
             .then(data => { questions = data; })
             .catch(err => console.error("Lỗi tải câu hỏi:", err));
 
-        // Nhận tín hiệu học sinh vào phòng
+        // Báo cho máy chủ biết Giáo viên đã mở màn hình (Tạo phòng)
+        socket.on('connect', function() {
+            socket.emit('bug_teacher_join');
+        });
+
         socket.on('bug_new_student', function(data) {
             studentCount++;
             document.getElementById('student-count').innerText = studentCount;
@@ -125,17 +109,15 @@
             list.innerHTML += `<div class="player-tag">${data.name}</div>`;
         });
 
-        // Bắt đầu game
         function startGame() {
             document.getElementById('lobby-area').style.display = 'none';
             document.getElementById('btn-start').style.display = 'none';
             document.getElementById('game-area').style.display = 'flex';
             
-            socket.emit('bug_teacher_start'); // Báo cho học sinh
+            socket.emit('bug_teacher_start'); 
             nextQuestion();
         }
 
-        // Chuyển câu hỏi
         function nextQuestion() {
             currentQIndex++;
             if (currentQIndex >= questions.length || currentHP <= 0) {
@@ -153,13 +135,11 @@
                 optDiv.classList.remove('correct-opt');
             }
 
-            // Đồng bộ câu hỏi sang màn hình học sinh
             socket.emit('bug_sync_question', {
                 question: q.question,
                 options: q.options,
                 correct_index: q.correct_index
             });
-
             startTimer();
         }
 
@@ -182,20 +162,15 @@
             document.getElementById(`opt-${q.correct_index}`).classList.add('correct-opt');
         }
 
-        // Nhận tín hiệu học sinh trả lời
         socket.on('bug_boss_damaged', function(data) {
             if (data.is_correct) {
-                // Tạo hiệu ứng laser bay lên
                 let laser = document.createElement('div');
                 laser.className = 'laser';
                 laser.innerText = "⚡ " + data.student_name;
-                
-                // Random vị trí bắn
                 laser.style.left = (20 + Math.random() * 60) + "%";
                 document.querySelector('.boss-area').appendChild(laser);
                 setTimeout(() => laser.remove(), 800);
 
-                // Trừ máu boss
                 let damage = Math.floor(maxHP / questions.length);
                 currentHP -= damage;
                 if(currentHP < 0) currentHP = 0;
@@ -203,10 +178,9 @@
                 document.getElementById('current-hp').innerText = currentHP;
                 document.getElementById('hp-bar').style.width = (currentHP / maxHP * 100) + "%";
 
-                // Rung Boss
                 let boss = document.getElementById('boss');
                 boss.classList.remove('shake');
-                void boss.offsetWidth; // reset animation
+                void boss.offsetWidth;
                 boss.classList.add('shake');
             }
         });
