@@ -1159,8 +1159,8 @@ def arena_join(code):
         room = refresh_room(conn, arena_get_room(conn, code))
         if not room:
             return _error("Mã phòng không tồn tại hoặc đã hết hạn.", 404)
-        if room["phase"] != "waiting":
-            return _error("Phòng đã bắt đầu, không thể có đội mới tham gia.", 409)
+        # Late-arriving teams may join while the lesson is underway.
+        # Joining never resets the current question or its server deadline.
         count = conn.execute("SELECT COUNT(*) FROM arena_teams WHERE room_code=?", (room["code"],)).fetchone()[0]
         if count >= MAX_TEAMS:
             return _error(f"Phòng đã đủ {MAX_TEAMS} đội.", 409)
@@ -1181,10 +1181,7 @@ def arena_advance(code):
             return err
         if room["phase"] not in ("waiting", "review"):
             return _error("Chỉ được mở câu mới khi chờ bắt đầu hoặc đã kết thúc câu trước.", 409)
-        if room["phase"] == "waiting":
-            n = conn.execute("SELECT COUNT(*) FROM arena_teams WHERE room_code=?", (room["code"],)).fetchone()[0]
-            if n < 2:
-                return _error("Cần tối thiểu 2 đội để bắt đầu thi đấu.", 409)
+        # No minimum team count: the teacher decides when to begin.
         next_index = room["question_index"] + 1
         if next_index >= len(ARENA_QUESTIONS):
             conn.execute("UPDATE arena_rooms SET phase='finished' WHERE code=?", (room["code"],))
