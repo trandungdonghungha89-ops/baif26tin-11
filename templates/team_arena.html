@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#101b46">
-  <title>Đấu trường tri thức | Hàm trong Python</title>
+  <title>TR&#431;&#7900;NG THPT &#272;&#212;NG H&#431;NG H&#192; | KHO GAME TIN H&#7884;C C&#212; DUNG | GAME 5</title>
   <style>
 :root{
  --bg:#0a1435;--panel:#14234d;--edge:#ffffff22;--muted:#bdc8e9;
@@ -43,6 +43,52 @@ body{background:radial-gradient(circle at 13% 11%,#273c87 0,transparent 34%),rad
  body[data-role="team"] footer{margin:16px 0 20px}
 }
 
+
+/* School branding matches the repository home page without shrinking game controls. */
+.school-identity{position:relative;isolation:isolate;overflow:hidden;
+ width:min(980px,100%);margin:0 auto 22px;padding:17px 30px 19px;
+ border-radius:24px;border:1px solid #8ce7ff8a;
+ background:linear-gradient(120deg,#143c76,#304e9e 48%,#583c93);
+ box-shadow:0 16px 40px #0005, inset 0 1px 0 #ffffff33}
+.school-identity:before,.school-identity:after{content:"";position:absolute;z-index:-1;pointer-events:none;
+ width:160px;height:160px;border:2px solid #9debff45;border-radius:34px;transform:rotate(35deg)}
+.school-identity:before{left:-85px;top:-105px}.school-identity:after{right:-90px;bottom:-105px}
+.school-identity-top{display:block;color:#b7f5ff;font-weight:900;font-size:clamp(18px,2.35vw,29px);
+ line-height:1.3;letter-spacing:1px;text-shadow:0 3px 12px #0005}
+.school-identity-main{display:block;color:#ffe7a0;font-size:clamp(21px,3.2vw,40px);
+ font-weight:900;line-height:1.3;letter-spacing:.9px;text-shadow:0 5px 14px #0006}
+.persistent-qr{margin:19px 0 7px;padding:14px 12px 16px;
+ border-radius:20px;background:linear-gradient(145deg,#214375,#423a8c);
+ border:1px solid #8bdcff70;text-align:center;box-shadow:0 9px 24px #0004}
+.persistent-qr-title{font-size:16px;letter-spacing:.8px;color:#bafaff;font-weight:900;margin:0 0 11px}
+.persistent-qr-inner{background:#fff;border-radius:15px;padding:9px;
+ display:flex;align-items:center;flex-direction:column;max-width:200px;margin:0 auto}
+.persistent-qr-inner img{width:min(100%,180px);height:auto;aspect-ratio:1;object-fit:contain;background:#fff}
+.side-qr-code{color:#213969;font-size:26px;line-height:1.35;letter-spacing:3px}
+.persistent-qr p{color:#e4ecff;font-size:15px;line-height:1.4;margin:11px 1px 8px}
+.persistent-qr .small-button{font-size:13px;padding:9px 10px;white-space:normal}
+@media(max-width:640px){.school-identity{padding:9px 13px 11px;margin-bottom:11px;border-radius:16px}
+.school-identity-top{font-size:clamp(14px,3.65vw,18px);letter-spacing:0}
+.school-identity-main{font-size:clamp(17px,4.55vw,22px);letter-spacing:0}
+body[data-role="team"] .brand{padding:9px 2px 13px}
+body[data-role="team"] .school-identity{padding:7px 9px;margin-bottom:9px}
+body[data-role="team"] .school-identity-top{font-size:13px}
+body[data-role="team"] .school-identity-main{font-size:17px}
+body[data-role="teacher"] .persistent-qr{max-width:310px;margin:18px auto 4px}}
+
+/* Optional large QR for students scanning from the back of the classroom. */
+.qr-zoom-modal{position:fixed;inset:0;z-index:50;background:#06102de8;
+ display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(10px)}
+.qr-zoom-box{width:min(470px,100%);max-height:95vh;overflow:auto;
+ display:flex;flex-direction:column;align-items:center;text-align:center;
+ background:linear-gradient(145deg,#203f77,#382f70);border:2px solid #82eaff;
+ border-radius:25px;box-shadow:0 24px 90px #000a;padding:17px 20px 12px}
+.qr-zoom-title{font-size:clamp(20px,2.4vw,27px);color:#ffe6a2;font-weight:900;margin:5px 0 12px}
+.qr-zoom-box img{width:min(340px,80vw);height:auto;aspect-ratio:1;
+ border-radius:14px;background:#fff;padding:10px}
+.qr-zoom-box strong{font-size:36px;letter-spacing:5px;color:#bdfcff}
+.qr-zoom-help{font-size:17px;color:#e2efff;margin:4px 0 9px}
+.qr-zoom-box .action-button{margin:4px 0 0}
   </style>
 
 </head>
@@ -59,9 +105,13 @@ body{background:radial-gradient(circle at 13% 11%,#273c87 0,transparent 34%),rad
     </header>
 
     <div class="brand" aria-label="Đấu trường tri thức, chủ đề Hàm trong Python">
+      <div class="school-identity" aria-label="TR&#431;&#7900;NG THPT &#272;&#212;NG H&#431;NG H&#192; - KHO GAME TIN H&#7884;C C&#212; DUNG">
+        <span class="school-identity-top">TR&#431;&#7900;NG THPT &#272;&#212;NG H&#431;NG H&#192;</span>
+        <strong class="school-identity-main">KHO GAME TIN H&#7884;C C&#212; DUNG</strong>
+      </div>
       <span class="pill">⚡ BÀI 26 · HÀM TRONG PYTHON · 10 CÂU HỎI</span>
       <h1>ĐẤU TRƯỜNG <em>TRI THỨC</em></h1>
-      <p>10–12 đội thi đấu trực tiếp • 20 giây mỗi câu • Đúng trước, nhanh sau</p>
+      <p>T&#7889;i &#273;a 12 &#273;&#7897;i tham gia &#8226; 20 gi&#226;y m&#7895;i c&#226;u &#8226; Gi&#225;o vi&#234;n t&#7921; ch&#7885;n th&#7901;i &#273;i&#7875;m b&#7855;t &#273;&#7847;u</p>
     </div>
 
     <div class="main-layout">
@@ -77,7 +127,7 @@ body{background:radial-gradient(circle at 13% 11%,#273c87 0,transparent 34%),rad
         <section id="team-setup" class="panel" hidden>
           <div class="welcome-icon">🏁</div>
           <h2>Gia nhập đấu trường</h2>
-          <p class="muted">Mỗi bàn dùng một điện thoại. Hãy chọn tên đội dễ nhận biết.</p>
+          <p class="muted">M&#7895;i b&#224;n d&#249;ng m&#7897;t &#273;i&#7879;n tho&#7841;i. C&#243; th&#7875; qu&#233;t QR v&#224;o ph&#242;ng ngay c&#7843; khi tr&#242; ch&#417;i &#273;&#227; b&#7855;t &#273;&#7847;u; th&#7901;i gian c&#226;u h&#7887;i kh&#244;ng &#273;&#432;&#7907;c &#273;&#7863;t l&#7841;i.</p>
           <form id="join-form" class="form-stack">
             <label for="room-field">MÃ PHÒNG</label>
             <input id="room-field" name="room" minlength="6" maxlength="6" autocomplete="off" placeholder="Ví dụ: ABC234" required>
@@ -101,7 +151,7 @@ body{background:radial-gradient(circle at 13% 11%,#273c87 0,transparent 34%),rad
               <div class="count-tile"><strong id="team-count">0</strong><span>/ 12 đội đã vào phòng</span></div>
               <div id="team-list" class="team-chips" aria-live="polite"></div>
               <button id="start-game" type="button" class="action-button gold">▶ BẮT ĐẦU CÂU 1</button>
-              <p class="tiny">Nên chờ các đội hiển thị đầy đủ trên màn hình rồi mới bắt đầu.</p>
+              <p class="tiny">Gi&#225;o vi&#234;n c&#243; th&#7875; b&#7845;m B&#7854;T &#272;&#7846;U ngay c&#7843; khi &#273;ang c&#243; 0 &#273;&#7897;i. M&#227; QR v&#7851;n hi&#7875;n th&#7883; trong su&#7889;t cu&#7897;c thi &#273;&#7875; c&#225;c &#273;&#7897;i v&#224;o sau.</p>
             </div>
           </div>
           <div id="team-lobby" class="waiting-box" hidden>
@@ -179,8 +229,19 @@ body{background:radial-gradient(circle at 13% 11%,#273c87 0,transparent 34%),rad
         <div class="side-info"><span>Số đội</span><strong id="side-count">0 / 12</strong></div>
         <div class="side-info"><span>Vòng đấu</span><strong id="side-question">Chờ mở</strong></div>
         <div class="side-info"><span>Thiết bị</span><strong id="side-role">Giáo viên</strong></div>
+        <div id="persistent-qr" class="persistent-qr teacher-only" hidden>
+          <div class="persistent-qr-title">M&#195; QR THAM GIA</div>
+          <div class="persistent-qr-inner">
+            <img id="side-qr-image" src="" alt="Qu&#233;t QR &#273;&#7875; tham gia &#273;&#7897;i ch&#417;i" width="180" height="180">
+            <strong id="side-qr-code" class="side-qr-code">------</strong>
+          </div>
+          <p>&#272;&#7897;i m&#7899;i v&#7851;n qu&#233;t m&#227; v&#224; v&#224;o thi khi c&#226;u h&#7887;i &#273;ang di&#7877;n ra. Th&#7901;i gian kh&#244;ng b&#7855;t &#273;&#7847;u l&#7841;i.</p>
+          <button id="zoom-qr-button" class="small-button" type="button" aria-haspopup="dialog">&#10529; PH&#211;NG TO QR</button>
+          <button id="copy-link-side" class="small-button" type="button">SAO CH&#201;P LINK THAM GIA</button>
+        </div>
         <div class="side-title top-gap">📜 LUẬT CHƠI</div>
         <ol class="rules">
+          <li>Gi&#225;o vi&#234;n &#273;&#432;&#7907;c b&#7855;t &#273;&#7847;u khi c&#243; 0 &#273;&#7897;i; &#273;&#7897;i c&#243; th&#7875; tham gia mu&#7897;n qua QR.</li>
           <li>Mỗi bàn là một đội, một thiết bị.</li>
           <li>Mỗi câu chỉ gửi một đáp án.</li>
           <li>Hết 20 giây chưa trả lời: sai.</li>
@@ -191,6 +252,15 @@ body{background:radial-gradient(circle at 13% 11%,#273c87 0,transparent 34%),rad
       </aside>
     </div>
     <footer>Kho trò chơi Tin học · Đấu trường tri thức · Nền tảng Flask + Render</footer>
+  </div>
+  <div id="qr-zoom-modal" class="qr-zoom-modal" role="dialog" aria-modal="true" aria-label="M&#195; QR ph&#243;ng to" hidden>
+    <div class="qr-zoom-box">
+      <p class="qr-zoom-title">M&#195; QR THAM GIA PH&#210;NG</p>
+      <img id="qr-zoom-image" src="" alt="M&#227; QR ph&#243;ng to &#273;&#7875; c&#225;c &#273;&#7897;i qu&#233;t" width="340" height="340">
+      <strong id="qr-zoom-code">------</strong>
+      <p class="qr-zoom-help">C&#225;c &#273;&#7897;i c&#243; th&#7875; qu&#233;t m&#227; v&#224; v&#224;o thi ngay, k&#7875; c&#7843; khi gi&#225;o vi&#234;n &#273;&#227; b&#7855;t &#273;&#7847;u.</p>
+      <button id="qr-zoom-close" class="action-button gold" type="button">&#10005; &#272;&#211;NG M&#195; QR</button>
+    </div>
   </div>
   <div id="toast" class="toast" role="alert" aria-live="assertive" hidden></div>
   <div id="confetti" class="confetti" aria-hidden="true"></div>
@@ -393,6 +463,20 @@ body{background:radial-gradient(circle at 13% 11%,#273c87 0,transparent 34%),rad
       ? `${state.question_number} / ${state.total_questions} · ${phaseName[state.phase]}`
       : "Chờ bắt đầu";
     $("side-role").textContent = teacher ? "Giáo viên" : (state.my_team || ctx.name || "Đội chơi");
+    if (teacher && ctx.code) {
+      const qr = $("side-qr-image");
+      if (qr.dataset.room !== ctx.code) {
+        qr.src = fullQRUrl();
+        qr.dataset.room = ctx.code;
+      }
+      $("side-qr-code").textContent = state.code;
+      const largeQr = $("qr-zoom-image");
+      if (largeQr.dataset.room !== ctx.code) {
+        largeQr.src = fullQRUrl();
+        largeQr.dataset.room = ctx.code;
+      }
+      $("qr-zoom-code").textContent = state.code;
+    }
   }
   function renderTeamChips(containerId, teams) {
     const target = $(containerId);
@@ -417,7 +501,6 @@ body{background:radial-gradient(circle at 13% 11%,#273c87 0,transparent 34%),rad
       }
       $("team-count").textContent = state.team_count;
       renderTeamChips("team-list", state.teams);
-      $("start-game").disabled = state.team_count < 2;
     } else {
       $("your-team-lobby").textContent = state.my_team || ctx.name;
       renderTeamChips("team-list-small", state.teams);
@@ -521,7 +604,7 @@ body{background:radial-gradient(circle at 13% 11%,#273c87 0,transparent 34%),rad
     (rows || []).forEach((row) => target.appendChild(makeRankRow(row, overall)));
   }
   function renderReview(state) {
-    const key = `${state.code}/${state.question_number}`;
+    const key = `${state.code}/${state.question_number}/${state.team_count}/${state.answered_count}`;
     if (ctx.reviewKey === key) return;
     ctx.reviewKey = key;
     const correct = state.review.answer;
@@ -692,9 +775,19 @@ body{background:radial-gradient(circle at 13% 11%,#273c87 0,transparent 34%),rad
   $("start-game").addEventListener("click", () => void advance());
   $("next-question").addEventListener("click", () => void advance());
   $("new-room").addEventListener("click", startNewRoom);
-  $("copy-link").addEventListener("click", async () => {
+  async function copyJoinLink() {
     try { await navigator.clipboard.writeText(fullJoinUrl()); showToast("Đã sao chép link tham gia phòng."); }
     catch (_) { showToast(`Link tham gia: ${fullJoinUrl()}`); }
+  }
+  $("copy-link").addEventListener("click", () => void copyJoinLink());
+  $("copy-link-side").addEventListener("click", () => void copyJoinLink());
+  $("zoom-qr-button").addEventListener("click", () => { $("qr-zoom-modal").hidden = false; });
+  $("qr-zoom-close").addEventListener("click", () => { $("qr-zoom-modal").hidden = true; });
+  $("qr-zoom-modal").addEventListener("click", (event) => {
+    if (event.target === $("qr-zoom-modal")) $("qr-zoom-modal").hidden = true;
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") $("qr-zoom-modal").hidden = true;
   });
   window.setInterval(tickClock, 100);
   document.addEventListener("visibilitychange", () => { if (!document.hidden && ctx.pollActive) void music.unlock(); });
