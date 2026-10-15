@@ -7,24 +7,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
     <style>
         body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: white; display: flex; flex-direction: column; height: 100vh; text-align: center; }
-        
         #login-screen, #waiting-screen { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; padding: 20px; }
         input { padding: 15px; font-size: 18px; width: 80%; max-width: 300px; border-radius: 8px; border: none; text-align: center; margin-bottom: 20px; }
         .btn-primary { padding: 15px 40px; font-size: 18px; background: #3b82f6; color: white; border: none; border-radius: 8px; width: 80%; max-width: 300px; font-weight: bold; cursor: pointer;}
-        
         #waiting-screen { display: none; }
-        
         #game-screen { display: none; flex-direction: column; height: 100%; position: relative; padding: 10px;}
         .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #1e293b; border-radius: 10px; margin-bottom: 10px;}
         .student-name-tag { font-weight: bold; color: #38bdf8; }
         .timer-tag { font-weight: bold; color: #fbbf24; background: #334155; padding: 5px 15px; border-radius: 20px;}
-        
         .question-box { background: #334155; padding: 15px; border-radius: 10px; font-size: 18px; font-weight: bold; margin-bottom: 15px; line-height: 1.4;}
-        
         .btn-grid { display: grid; grid-template-columns: 1fr; gap: 10px; flex-grow: 1; padding-bottom: 20px;}
         .answer-btn { border: none; border-radius: 12px; font-size: 18px; font-weight: bold; color: white; cursor: pointer; padding: 20px; text-align: left; transition: transform 0.1s;}
         .answer-btn:active { transform: scale(0.95); }
-        
         #overlay { display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.95); justify-content: center; align-items: center; flex-direction: column; z-index: 10; padding: 20px;}
     </style>
 </head>
@@ -45,18 +39,13 @@
             <div class="student-name-tag" id="my-name-display">Tên</div>
             <div class="timer-tag">⏳ <span id="student-timer">20</span>s</div>
         </div>
-        
-        <div class="question-box" id="student-q-text">
-            Chờ giáo viên nạp câu hỏi...
-        </div>
-
+        <div class="question-box" id="student-q-text">Chờ giáo viên nạp câu hỏi...</div>
         <div class="btn-grid">
             <button class="answer-btn" style="background: #ef4444;" id="btn-0" onclick="submitAnswer(0)">A.</button>
             <button class="answer-btn" style="background: #3b82f6;" id="btn-1" onclick="submitAnswer(1)">B.</button>
             <button class="answer-btn" style="background: #eab308;" id="btn-2" onclick="submitAnswer(2)">C.</button>
             <button class="answer-btn" style="background: #22c55e;" id="btn-3" onclick="submitAnswer(3)">D.</button>
         </div>
-        
         <div id="overlay">
             <h2 id="overlay-msg">Hãy nhìn lên bảng! 👀</h2>
             <p>Đợi câu hỏi tiếp theo...</p>
@@ -64,8 +53,7 @@
     </div>
 
     <script>
-        // SỬ DỤNG KẾT NỐI CHUẨN, ƯU TIÊN WEBSOCKET ĐỂ VÀO GAME NHANH CHÓNG
-        const socket = io({transports: ['websocket', 'polling']});
+        const socket = io();
         let myName = "";
         let currentCorrectIndex = -1;
         let hasAnswered = false;
@@ -77,35 +65,29 @@
             myName = nameInput;
             document.getElementById('my-name-display').innerText = myName;
             
-            // Báo cho Server biết học sinh đã vào (sự kiện đã đổi tên)
             socket.emit('bug_student_join', { name: myName });
             
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('waiting-screen').style.display = 'flex';
         }
 
-        // Khi giáo viên bấm Bắt đầu
         socket.on('bug_game_started', function() {
             document.getElementById('waiting-screen').style.display = 'none';
             document.getElementById('game-screen').style.display = 'flex';
             document.getElementById('overlay').style.display = 'flex'; 
         });
 
-        // Khi giáo viên bấm Câu tiếp theo (đồng bộ câu hỏi về máy học sinh)
         socket.on('bug_sync_boss_question', function(data) {
             currentCorrectIndex = data.correct_index;
             hasAnswered = false;
-            
             document.getElementById('overlay').style.display = 'none'; 
             
-            // Cập nhật giao diện điện thoại
             document.getElementById('student-q-text').innerText = data.question;
             document.getElementById('btn-0').innerText = "A. " + data.options[0];
             document.getElementById('btn-1').innerText = "B. " + data.options[1];
             document.getElementById('btn-2').innerText = "C. " + data.options[2];
             document.getElementById('btn-3').innerText = "D. " + data.options[3];
 
-            // Bắt đầu đếm ngược trên điện thoại
             startStudentTimer();
         });
 
@@ -113,15 +95,12 @@
             let time = 20;
             document.getElementById('student-timer').innerText = time;
             clearInterval(timerInterval);
-            
             timerInterval = setInterval(() => {
                 time--;
                 document.getElementById('student-timer').innerText = time;
                 if (time <= 0) {
                     clearInterval(timerInterval);
-                    if (!hasAnswered) {
-                        submitAnswer(-1); // Hết giờ -> Báo sai (-1)
-                    }
+                    if (!hasAnswered) { submitAnswer(-1); }
                 }
             }, 1000);
         }
@@ -130,10 +109,8 @@
             if (hasAnswered) return;
             hasAnswered = true;
             clearInterval(timerInterval);
-
             const isCorrect = (selectedIndex === currentCorrectIndex);
             
-            // Gửi đáp án lên Server
             socket.emit('bug_student_answer', {
                 student_name: myName,
                 answer: selectedIndex,
