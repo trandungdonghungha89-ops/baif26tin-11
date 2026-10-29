@@ -1,0 +1,422 @@
+[
+  {
+    "number": 1,
+    "lesson": 1,
+    "level": "NB",
+    "prompt": "Một phần mềm quản lí sự kiện cho phép người tham gia điền thông tin vào biểu mẫu điện tử. Hoạt động nào sau đây thuộc bước tiếp nhận dữ liệu?",
+    "options": [
+      "Tổng hợp số người tham gia theo từng khối lớp.",
+      "Xuất danh sách những người chưa đăng kí.",
+      "Ghi nhận các thông tin được nhập từ biểu mẫu.",
+      "Sắp xếp danh sách theo mã số người tham gia."
+    ],
+    "answer": 2,
+    "explanation": "Bước tiếp nhận dữ liệu là ghi nhận nội dung người dùng nhập vào biểu mẫu; tổng hợp, sắp xếp hay xuất danh sách là những thao tác khác."
+  },
+  {
+    "number": 2,
+    "lesson": 1,
+    "level": "NB",
+    "prompt": "Trong hệ thống lưu trữ dữ liệu của máy tính, một byte tương ứng với bao nhiêu bit?",
+    "options": [
+      "8 bit.",
+      "16 bit.",
+      "32 bit.",
+      "64 bit."
+    ],
+    "answer": 0,
+    "explanation": "Một byte gồm 8 bit, nên chọn A."
+  },
+  {
+    "number": 3,
+    "lesson": 1,
+    "level": "NB",
+    "prompt": "Đặc điểm nào sau đây thể hiện trực tiếp ưu điểm về khả năng truyền thông của thiết bị số?",
+    "options": [
+      "Thực hiện nhiều phép tính liên tiếp với tốc độ cao.",
+      "Lưu trữ lượng lớn tệp trong bộ nhớ có kích thước nhỏ.",
+      "Tìm kiếm nhanh một tệp đã lưu theo tên hoặc nội dung.",
+      "Truyền dữ liệu nhanh chóng giữa các thiết bị được kết nối."
+    ],
+    "answer": 3,
+    "explanation": "Khả năng truyền thông thể hiện ở việc truyền dữ liệu nhanh giữa các thiết bị được kết nối."
+  },
+  {
+    "number": 4,
+    "lesson": 1,
+    "level": "TH",
+    "prompt": "Một cơ sở dữ liệu có giá trị 12 trong cột “Số lượng đơn hàng”. Một cơ sở dữ liệu khác cũng chứa giá trị 12 nhưng trong cột “Số phòng học”. Nhận xét nào sau đây đúng nhất?",
+    "options": [
+      "Hai giá trị có cùng cách biểu diễn nên luôn mang cùng thông tin.",
+      "Cần dựa vào ngữ cảnh và tên trường dữ liệu để hiểu đúng thông tin.",
+      "Chỉ cần biết giá trị số là có thể xác định đầy đủ ý nghĩa của dữ liệu.",
+      "Chuyển hai giá trị thành kiểu văn bản sẽ làm cho ý nghĩa của chúng giống nhau."
+    ],
+    "answer": 1,
+    "explanation": "Cùng giá trị số 12 nhưng ngữ cảnh và tên trường dữ liệu khác nhau thì ý nghĩa thông tin cũng khác nhau."
+  },
+  {
+    "number": 5,
+    "lesson": 1,
+    "level": "TH",
+    "prompt": "Ban tổ chức một hoạt động ngoại khóa thông báo cùng một hướng dẫn di chuyển bằng sơ đồ và bằng bản ghi âm lời nói. Điều này thể hiện đặc điểm nào của thông tin và dữ liệu?",
+    "options": [
+      "Chỉ dữ liệu âm thanh mới truyền tải đầy đủ thông tin về hoạt động.",
+      "Các dữ liệu có hình thức khác nhau bắt buộc mang những thông tin khác nhau.",
+      "Một thông tin có thể được thể hiện bằng những dạng dữ liệu khác nhau.",
+      "Dữ liệu hình ảnh chỉ có ý nghĩa sau khi chuyển thành dữ liệu âm thanh."
+    ],
+    "answer": 2,
+    "explanation": "Cùng một hướng dẫn có thể biểu diễn bằng sơ đồ hình ảnh hoặc bằng lời nói trong bản ghi âm."
+  },
+  {
+    "number": 6,
+    "lesson": 1,
+    "level": "VD thấp",
+    "prompt": "Một thẻ nhớ còn đúng 2 GB dung lượng trống. Một nhóm nghiên cứu cần lưu ba bộ dữ liệu lần lượt có kích thước 1 GB, 700 MB và 400 MB. Biết 1 GB = 1024 MB. Kết luận nào sau đây chính xác?",
+    "options": [
+      "Không đủ dung lượng, còn thiếu 76 MB.",
+      "Đủ dung lượng, còn thừa 76 MB.",
+      "Không đủ dung lượng, còn thiếu 52 MB.",
+      "Đủ dung lượng, còn thừa 24 MB."
+    ],
+    "answer": 0,
+    "explanation": "Dung lượng cần lưu: 1024 + 700 + 400 = 2124 MB; dung lượng trống: 2 × 1024 = 2048 MB. Thiếu 76 MB."
+  },
+  {
+    "number": 7,
+    "lesson": 2,
+    "level": "NB",
+    "prompt": "Trong các thiết bị được mô tả dưới đây, thiết bị nào thể hiện rõ đặc trưng của một thiết bị thông minh?",
+    "options": [
+      "Thùng rác hiển thị mức đầy do nhân viên nhập thủ công.",
+      "Thùng rác tự nén khi đầy và gửi trạng thái qua mạng.",
+      "Thùng rác phát âm báo theo thời điểm được đặt sẵn.",
+      "Thùng rác bật đèn cảnh báo bằng một công tắc cơ."
+    ],
+    "answer": 1,
+    "explanation": "Thiết bị thông minh có khả năng xử lí/tự động phản hồi và kết nối mạng, như thùng rác tự nén khi đầy và gửi trạng thái."
+  },
+  {
+    "number": 8,
+    "lesson": 2,
+    "level": "NB",
+    "prompt": "Một mạng lưới gồm nhiều cảm biến và thiết bị được kết nối để tự động thu thập, trao đổi dữ liệu. Công nghệ nào là nền tảng trực tiếp của mô hình này?",
+    "options": [
+      "Dữ liệu lớn (Big Data).",
+      "Trí tuệ nhân tạo (AI).",
+      "Ngôn ngữ lập trình bậc cao.",
+      "Internet vạn vật (IoT)."
+    ],
+    "answer": 3,
+    "explanation": "IoT là mạng các thiết bị, cảm biến có khả năng kết nối, thu thập và trao đổi dữ liệu qua mạng."
+  },
+  {
+    "number": 9,
+    "lesson": 2,
+    "level": "TH",
+    "prompt": "Một máy đo độ mặn thông thường chỉ hiển thị kết quả. Phiên bản nâng cấp có thể tự điều chỉnh van cấp nước theo kết quả đo và gửi trạng thái về hệ thống quản lí. Điểm khác biệt quan trọng nhất của phiên bản nâng cấp là gì?",
+    "options": [
+      "Thiết bị sử dụng màn hình có độ phân giải cao hơn.",
+      "Thiết bị có thể biểu diễn các kết quả đo bằng số thập phân.",
+      "Thiết bị có khả năng xử lí, phản hồi tự chủ và kết nối trao đổi dữ liệu.",
+      "Thiết bị chuyển toàn bộ quá trình ra quyết định sang người quản lí."
+    ],
+    "answer": 2,
+    "explanation": "Phiên bản nâng cấp vừa tự xử lí dữ liệu cảm biến để điều chỉnh van, vừa gửi trạng thái qua mạng."
+  },
+  {
+    "number": 10,
+    "lesson": 2,
+    "level": "TH",
+    "prompt": "Trong một nhà máy, mô hình sản phẩm được thiết kế trên máy tính, robot tiến hành lắp ráp, cảm biến liên tục gửi dữ liệu để hệ thống tự điều chỉnh quá trình sản xuất. Đặc trưng nào của cuộc Cách mạng công nghiệp lần thứ tư được thể hiện rõ nhất?",
+    "options": [
+      "Kết hợp hệ thống số với quá trình sản xuất trong thế giới vật lí.",
+      "Gia tăng số lượng robot nhưng giữ nguyên cách tổ chức thông tin.",
+      "Chỉ số hóa bản thiết kế mà không thay đổi hoạt động sản xuất.",
+      "Chủ yếu cải thiện việc trao đổi thông báo giữa các công nhân."
+    ],
+    "answer": 0,
+    "explanation": "Đây là sự kết hợp giữa môi trường số và quá trình sản xuất vật lí, đặc trưng của Công nghiệp 4.0."
+  },
+  {
+    "number": 11,
+    "lesson": 2,
+    "level": "TH",
+    "prompt": "Một doanh nghiệp phát triển nhiều phần mềm quản lí khác nhau nhưng muốn sử dụng chung nguồn dữ liệu, đồng thời hỗ trợ cập nhật, tìm kiếm và truy xuất dữ liệu có tổ chức. Thành tựu nào của tin học phù hợp nhất với yêu cầu này?",
+    "options": [
+      "Trình biên dịch của ngôn ngữ lập trình bậc cao.",
+      "Hệ quản trị cơ sở dữ liệu.",
+      "Phần mềm thiết kế bài trình chiếu.",
+      "Hệ điều hành dành cho thiết bị di động."
+    ],
+    "answer": 1,
+    "explanation": "Hệ quản trị cơ sở dữ liệu hỗ trợ nhiều ứng dụng dùng chung nguồn dữ liệu và quản lí việc cập nhật, tìm kiếm, truy xuất."
+  },
+  {
+    "number": 12,
+    "lesson": 2,
+    "level": "VD thấp",
+    "prompt": "Một nhà kính cần có hệ thống tự điều chỉnh rèm che theo cường độ ánh sáng và cho phép người quản lí theo dõi trạng thái từ xa. Phương án triển khai nào đáp ứng đầy đủ yêu cầu và thể hiện ứng dụng IoT?",
+    "options": [
+      "Dùng rèm kéo tay và lưu kết quả quan sát vào sổ ghi chép.",
+      "Cho rèm hoạt động theo lịch cố định, không thu thập dữ liệu môi trường.",
+      "Dùng cảm biến phát cảnh báo để người quản lí trực tiếp đến kéo rèm.",
+      "Kết hợp cảm biến, bộ điều khiển rèm tự động và kết nối truyền dữ liệu."
+    ],
+    "answer": 3,
+    "explanation": "Phương án D gồm cảm biến, bộ điều khiển rèm tự động và kết nối dữ liệu nên đáp ứng cả hai yêu cầu."
+  },
+  {
+    "number": 13,
+    "lesson": 3,
+    "level": "NB",
+    "prompt": "Trong một hệ thống đo đạc, giá trị chiều dài được ghi nhận là 2,75 m và cần sử dụng để thực hiện các phép tính. Phần giá trị 2,75 phù hợp nhất với kiểu dữ liệu nào?",
+    "options": [
+      "Số thực.",
+      "Văn bản.",
+      "Lôgic.",
+      "Hình ảnh."
+    ],
+    "answer": 0,
+    "explanation": "Giá trị 2,75 được dùng để tính toán là dữ liệu số thực."
+  },
+  {
+    "number": 14,
+    "lesson": 3,
+    "level": "NB",
+    "prompt": "Bảng mã ASCII ban đầu sử dụng 7 bit để biểu diễn mã của mỗi kí tự. Số mã khác nhau có thể biểu diễn là bao nhiêu?",
+    "options": [
+      "64.",
+      "127.",
+      "128.",
+      "256."
+    ],
+    "answer": 2,
+    "explanation": "Bảng mã dùng 7 bit tạo được 2⁷ = 128 mã khác nhau."
+  },
+  {
+    "number": 15,
+    "lesson": 3,
+    "level": "TH",
+    "prompt": "Một thư viện số muốn sử dụng chung một hệ thống để lưu và tìm kiếm tên tài liệu bằng tiếng Việt, tiếng Nhật và tiếng Anh. Vì sao việc sử dụng Unicode phù hợp hơn so với bảng mã ASCII mở rộng?",
+    "options": [
+      "Unicode luôn sử dụng ít byte hơn cho mọi kí tự trong các ngôn ngữ.",
+      "Unicode cung cấp một tiêu chuẩn mã kí tự chung cho nhiều hệ chữ viết.",
+      "Unicode tự động quy định phông chữ hiển thị riêng cho từng ngôn ngữ.",
+      "Unicode bắt buộc mọi kí tự của các ngôn ngữ đều sử dụng đúng một byte."
+    ],
+    "answer": 1,
+    "explanation": "Unicode định nghĩa hệ mã kí tự chung bao phủ nhiều ngôn ngữ và hệ chữ viết, không giới hạn ở ASCII."
+  },
+  {
+    "number": 16,
+    "lesson": 3,
+    "level": "TH",
+    "prompt": "Hai chuỗi văn bản có cùng 10 kí tự nhưng khi mã hóa bằng UTF-8 lại có thể chiếm dung lượng khác nhau. Nguyên nhân nào giải thích đúng hiện tượng này?",
+    "options": [
+      "Mỗi chuỗi luôn chiếm đúng 10 byte vì có 10 kí tự.",
+      "Mỗi chuỗi luôn chiếm đúng 20 byte vì dùng Unicode.",
+      "Dung lượng chỉ thay đổi khi chuỗi có chữ cái in hoa.",
+      "Số byte mã hóa phụ thuộc vào những kí tự cụ thể trong chuỗi."
+    ],
+    "answer": 3,
+    "explanation": "Trong UTF-8, độ dài mã hóa có thể khác nhau giữa các kí tự; vì thế hai chuỗi có cùng số kí tự vẫn có thể khác số byte."
+  },
+  {
+    "number": 17,
+    "lesson": 3,
+    "level": "TH",
+    "prompt": "Một hệ thống được thiết kế để cấp mã riêng cho 300 biểu tượng khác nhau. Người thiết kế đề xuất sử dụng đúng 8 bit cho mã của mỗi biểu tượng. Vì sao đề xuất này không đáp ứng được yêu cầu?",
+    "options": [
+      "Với 8 bit chỉ tạo được tối đa 256 mã khác nhau.",
+      "Bảng mã 8 bit chỉ biểu diễn được các chữ cái Latin.",
+      "Một thiết bị dùng 8 bit chỉ lưu được tối đa 256 byte.",
+      "Mỗi biểu tượng bắt buộc phải được biểu diễn bằng nhiều byte."
+    ],
+    "answer": 0,
+    "explanation": "Với 8 bit, số mã phân biệt tối đa là 2⁸ = 256, không đủ cho 300 biểu tượng."
+  },
+  {
+    "number": 18,
+    "lesson": 3,
+    "level": "VD thấp",
+    "prompt": "Một chuỗi thông báo có 24 kí tự Latin không dấu (bao gồm cả dấu cách) và 6 kí tự “đ”, không có kí tự nào khác. Biết các kí tự Latin không dấu được mã hóa bằng 1 byte/kí tự, còn kí tự “đ” được mã hóa bằng 2 byte/kí tự trong UTF-8. Không tính các dữ liệu phụ khác. Dung lượng cần thiết để lưu nội dung chuỗi là bao nhiêu?",
+    "options": [
+      "30 byte.",
+      "32 byte.",
+      "36 byte.",
+      "48 byte."
+    ],
+    "answer": 2,
+    "explanation": "Dung lượng UTF-8: 24 × 1 + 6 × 2 = 36 byte (không tính dữ liệu phụ)."
+  },
+  {
+    "number": 19,
+    "lesson": 4,
+    "level": "NB",
+    "prompt": "Trong hệ nhị phân, một chữ số 1 nằm ở hàng thứ tư tính từ phải sang trái (hàng ngoài cùng bên phải là hàng thứ nhất). Chữ số đó có giá trị bằng bao nhiêu?",
+    "options": [
+      "4.",
+      "8.",
+      "16.",
+      "32."
+    ],
+    "answer": 1,
+    "explanation": "Hàng thứ tư từ phải sang trái của hệ nhị phân có trọng số 2³ = 8."
+  },
+  {
+    "number": 20,
+    "lesson": 4,
+    "level": "NB",
+    "prompt": "Điểm chung của ba phương pháp mã hóa số nguyên có dấu gồm mã dấu - lượng, mã bù 1 và mã bù 2 được giới thiệu trong bài học là gì?",
+    "options": [
+      "Đều mã hóa số âm bằng cách đảo tất cả các bit.",
+      "Đều dành hai bit cuối cùng để biểu diễn dấu.",
+      "Đều dùng cùng một dãy bit cho số dương và số âm.",
+      "Đều sử dụng bit ngoài cùng bên trái để biểu diễn dấu."
+    ],
+    "answer": 3,
+    "explanation": "Cả ba cách biểu diễn đã học đều sử dụng bit ngoài cùng bên trái để thể hiện dấu của số nguyên."
+  },
+  {
+    "number": 21,
+    "lesson": 4,
+    "level": "TH",
+    "prompt": "Một bộ điều khiển dành đúng 1 byte để lưu một số nguyên không dấu. Vì sao không thể lưu nguyên vẹn giá trị 260 trong vùng nhớ này?",
+    "options": [
+      "Giá trị lớn nhất biểu diễn được bằng 8 bit không dấu là 255.",
+      "Số 260 chứa chữ số 0 nên không thể chuyển sang hệ nhị phân.",
+      "Hệ nhị phân không biểu diễn được các số nguyên chia hết cho 2.",
+      "Một byte chỉ có khả năng biểu diễn 8 giá trị số nguyên khác nhau."
+    ],
+    "answer": 0,
+    "explanation": "Số nguyên không dấu 8 bit biểu diễn từ 0 đến 2⁸ − 1 = 255, nên không lưu nguyên vẹn được 260."
+  },
+  {
+    "number": 22,
+    "lesson": 4,
+    "level": "VD thấp",
+    "prompt": "Một bộ đếm ghi nhận giá trị 74 trong hệ thập phân. Biểu diễn nhị phân tương ứng của giá trị này là",
+    "options": [
+      "1001100₂.",
+      "1001001₂.",
+      "1001010₂.",
+      "1010010₂."
+    ],
+    "answer": 2,
+    "explanation": "74 = 64 + 8 + 2 = 2⁶ + 2³ + 2¹, tương ứng 1001010₂."
+  },
+  {
+    "number": 23,
+    "lesson": 4,
+    "level": "VD cao",
+    "prompt": "Một thiết bị có bộ đếm lưu giá trị ban đầu là 101011₂. Sau mỗi lần ghi nhận sự kiện, bộ đếm tăng thêm 1011₂. Thiết bị liên tiếp ghi nhận 3 sự kiện. Giả sử không xảy ra tràn số. Giá trị cuối cùng của bộ đếm được biểu diễn trong hệ nhị phân là",
+    "options": [
+      "1000100₂.",
+      "1001100₂.",
+      "1011100₂.",
+      "1100100₂."
+    ],
+    "answer": 1,
+    "explanation": "101011₂ = 43; 1011₂ = 11; sau 3 lần tăng: 43 + 3 × 11 = 76 = 1001100₂."
+  },
+  {
+    "number": 24,
+    "lesson": 4,
+    "level": "VD cao",
+    "prompt": "Một chương trình thực hiện hai phép tính liên tiếp trên một số nguyên dương x:\n- Bước 1: Nhân x với 101₂.\n- Bước 2: Cộng kết quả nhận được với 11₂.\nKết quả cuối cùng của chương trình là 1011101₂. Giả sử các phép tính chính xác và không xảy ra tràn số. Giá trị của x trong hệ nhị phân là",
+    "options": [
+      "10000₂.",
+      "10011₂.",
+      "10100₂.",
+      "10010₂."
+    ],
+    "answer": 3,
+    "explanation": "1011101₂ = 93; 101₂ = 5 và 11₂ = 3. Suy ra 5x + 3 = 93, x = 18 = 10010₂."
+  },
+  {
+    "number": 25,
+    "lesson": 5,
+    "level": "NB",
+    "prompt": "Phép toán lôgic nào cho kết quả bằng 1 khi và chỉ khi hai đầu vào có giá trị khác nhau?",
+    "options": [
+      "XOR.",
+      "AND.",
+      "OR.",
+      "NOT."
+    ],
+    "answer": 0,
+    "explanation": "XOR cho kết quả 1 khi đúng một trong hai đầu vào bằng 1, tức hai đầu vào khác nhau."
+  },
+  {
+    "number": 26,
+    "lesson": 5,
+    "level": "TH",
+    "prompt": "Một nền tảng gửi thông báo cho học sinh đã đăng kí câu lạc bộ Nghệ thuật hoặc câu lạc bộ Khoa học. Học sinh đăng kí cả hai câu lạc bộ vẫn được nhận thông báo. Phép toán lôgic nào mô tả đúng nhất điều kiện nhận thông báo?",
+    "options": [
+      "XOR.",
+      "AND.",
+      "OR.",
+      "NOT."
+    ],
+    "answer": 2,
+    "explanation": "OR đúng khi ít nhất một điều kiện đúng, kể cả khi cả hai câu lạc bộ đều được đăng kí."
+  },
+  {
+    "number": 27,
+    "lesson": 5,
+    "level": "VD thấp",
+    "prompt": "Một hệ thống kiểm soát truy cập sử dụng biểu thức lôgic:\nP AND (NOT Q OR R)\nTrong đó:\n- P = 1: Người dùng đã được xác minh.\n- Q = 1: Quyền truy cập đã hết hạn.\n- R = 1: Người dùng được gia hạn đặc biệt.\nTrường hợp nào sau đây hệ thống cho phép truy cập?",
+    "options": [
+      "P = 1, Q = 1, R = 0.",
+      "P = 0, Q = 0, R = 1.",
+      "P = 0, Q = 1, R = 1.",
+      "P = 1, Q = 1, R = 1."
+    ],
+    "answer": 3,
+    "explanation": "Với P = 1, Q = 1, R = 1: NOT Q = 0; (NOT Q OR R) = 1; toàn biểu thức bằng 1."
+  },
+  {
+    "number": 28,
+    "lesson": 5,
+    "level": "VD cao",
+    "prompt": "Một hệ thống làm mát tự động được thiết kế với các điều kiện sau:\n- M = 1: Máy đang vận hành.\n- A = 1: Cảm biến thứ nhất báo vượt ngưỡng.\n- B = 1: Cảm biến thứ hai báo vượt ngưỡng.\n- C = 1: Hệ thống đang bảo trì.\nBộ phận làm mát chỉ được kích hoạt khi máy đang vận hành, đúng một trong hai cảm biến báo vượt ngưỡng và hệ thống không trong chế độ bảo trì.\nĐiều kiện kích hoạt: M AND (A XOR B) AND NOT C.\nTrạng thái nào sau đây làm bộ phận làm mát được kích hoạt?",
+    "options": [
+      "M = 1, A = 1, B = 1, C = 0.",
+      "M = 1, A = 0, B = 1, C = 0.",
+      "M = 1, A = 1, B = 0, C = 1.",
+      "M = 0, A = 0, B = 1, C = 0."
+    ],
+    "answer": 1,
+    "explanation": "Chỉ phương án B có M = 1, A XOR B = 1 và C = 0; vì vậy M AND (A XOR B) AND NOT C bằng 1."
+  },
+  {
+    "number": 29,
+    "lesson": 5,
+    "level": "VD cao",
+    "prompt": "Một hệ thống kiểm soát cửa kho yêu cầu đồng thời các điều kiện:\n- Người dùng phải có thẻ quản trị hợp lệ (P).\n- Người dùng phải nhập đúng mã bảo mật (Q) hoặc xác thực vân tay thành công (R).\n- Hệ thống không được ở trạng thái khóa khẩn cấp (S).\nBiểu thức lôgic nào mô tả chính xác điều kiện mở cửa kho?",
+    "options": [
+      "(P AND Q) OR (R AND NOT S).",
+      "P AND (Q OR R OR S).",
+      "P AND (Q OR R) AND NOT S.",
+      "(P OR Q) AND R AND NOT S."
+    ],
+    "answer": 2,
+    "explanation": "Phải đồng thời có P, ít nhất một trong Q hoặc R, và không có trạng thái khóa S: P AND (Q OR R) AND NOT S."
+  },
+  {
+    "number": 30,
+    "lesson": 5,
+    "level": "VD cao",
+    "prompt": "Một bộ xử lí thực hiện phép toán lôgic trên hai dãy 8 bit:\nX = 10101010, Y = 11001100.\nDãy bit kết quả K được xác định theo biểu thức:\nK = (X AND Y) OR (X XOR Y).\nCác phép toán được thực hiện trên từng cặp bit tương ứng. Dãy bit K nhận được là",
+    "options": [
+      "11101110.",
+      "01100110.",
+      "10001000.",
+      "11100110."
+    ],
+    "answer": 0,
+    "explanation": "Từng vị trí bit, (X AND Y) OR (X XOR Y) tương đương X OR Y. Với X = 10101010 và Y = 11001100, kết quả 11101110."
+  }
+]
