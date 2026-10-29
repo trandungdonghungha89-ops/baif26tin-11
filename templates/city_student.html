@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#102b59">
+  <title>Tham gia Game 6 · Biệt đội giải cứu thành phố số</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='city_game.css') }}">
+  <script src="{{ url_for('static', filename='city_game.js') }}" defer></script>
+</head>
+<body class="city-body student-body" data-role="team">
+  <div class="ambient ambient-one" aria-hidden="true"></div><div class="ambient ambient-two" aria-hidden="true"></div>
+  <div class="student-shell">
+    <header class="student-header"><div class="brand"><span class="brand-mark">🌆</span><span><strong>THÀNH PHỐ SỐ</strong><small>BIỆT ĐỘI GIẢI CỨU</small></span></div><span class="connect-status" id="connectStatus">● CHƯA KẾT NỐI</span></header>
+    <div id="notice" class="notice" role="alert" hidden></div>
+
+    <section id="joinPane" class="glass-panel join-panel">
+      <div class="student-hero-icon">🚀</div>
+      <div class="eyebrow">THƯ MỜI BIỆT ĐỘI CÔNG NGHỆ</div>
+      <h1>Giải cứu thành phố số!</h1>
+      <p>Nhập tên đội, chọn biểu tượng và sẵn sàng nhận nhiệm vụ. Mỗi đội chỉ cần một thiết bị.</p>
+      <form id="joinForm">
+        <label class="field-label" for="roomInput">Mã phòng</label><input id="roomInput" type="text" maxlength="6" placeholder="VD: AB7K29" required autocomplete="off">
+        <label class="field-label" for="teamName">Tên biệt đội</label><input id="teamName" type="text" maxlength="36" placeholder="VD: Biệt đội Sao Băng" required autocomplete="off">
+        <div class="field-label">Chọn biểu tượng</div>
+        <div id="iconPicker" class="icon-picker" role="group" aria-label="Chọn biểu tượng đội"></div>
+        <button class="btn btn-main btn-block" id="joinBtn" type="submit">⚡ THAM GIA NHIỆM VỤ</button>
+      </form>
+    </section>
+
+    <section id="teamGame" hidden>
+      <div class="glass-panel team-hud"><div class="team-hud-id"><span id="teamIcon" class="team-avatar">🚀</span><div><small>BIỆT ĐỘI</small><strong id="teamTitle">—</strong></div></div><div class="team-hud-score"><small>ĐIỂM CỦA ĐỘI</small><strong id="myScore">0</strong></div></div>
+      <div class="glass-panel team-progress"><div class="team-progress-head"><span id="teamStation">TRẠM 1</span><strong id="teamQuestion">CÂU 0/30</strong></div><div class="tiny-progress"><div id="teamProgressFill"></div></div><div class="team-progress-footer"><span id="teamEnergy">⚡ 0 năng lượng</span><span id="boostStatus">×2 CÒN 1 THẺ</span></div></div>
+      <div class="glass-panel team-stage"><div class="team-clockbar"><span id="teamPhaseLabel">ĐANG CHỜ</span><span class="team-clock">⏱ <b class="js-clock">--:--</b></span></div><div id="teamStageContent" class="team-stage-content" aria-live="polite"></div></div>
+    </section>
+    <footer class="city-footer">Mỗi câu trả lời đúng đều giúp thành phố hồi sinh!</footer>
+  </div>
+</body>
+</html>

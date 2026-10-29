@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#102b59">
+  <title>Game 6 · Biệt đội giải cứu thành phố số</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='city_game.css') }}">
+  <script src="{{ url_for('static', filename='city_game.js') }}" defer></script>
+</head>
+<body class="city-body teacher-body" data-role="teacher">
+  <div class="ambient ambient-one" aria-hidden="true"></div><div class="ambient ambient-two" aria-hidden="true"></div>
+  <div class="city-shell">
+    <header class="city-header">
+      <a class="brand" href="/" aria-label="Về kho trò chơi"><span class="brand-mark">🌆</span><span><strong>THÀNH PHỐ SỐ</strong><small>GAME 06 · DIGITAL CITY RESCUE</small></span></a>
+      <div class="header-actions">
+        <span class="header-pill"><span class="pulse-dot"></span> BẢNG ĐIỀU KHIỂN GIÁO VIÊN</span>
+        <button id="soundBtn" class="btn btn-quiet" type="button" aria-pressed="true">🔊 Âm thanh: Bật</button>
+      </div>
+    </header>
+
+    <div id="notice" role="alert" class="notice" hidden></div>
+
+    <section id="setup" class="entry-layout">
+      <div class="hero-intro">
+        <div class="eyebrow">NHIỆM VỤ ĐẶC BIỆT · TIN HỌC 10</div>
+        <h1>BIỆT ĐỘI GIẢI CỨU <em>THÀNH PHỐ SỐ</em></h1>
+        <p>12 biệt đội · 5 trạm công nghệ · 30 thử thách. Thi đấu để dẫn đầu, hợp tác để thắp sáng cả thành phố!</p>
+        <div class="hero-counters"><span>⚡ Thẻ chiến thuật ×2</span><span>🏆 Bảng xếp hạng</span><span>🔒 Chung kết bí mật</span></div>
+        <div class="hero-skyline" aria-hidden="true"><div>🏢</div><div>🏭</div><div>📡</div><div>🏙️</div><div>💠</div></div>
+      </div>
+      <form id="createForm" class="glass-panel setup-panel">
+        <div class="panel-heading"><div><small>BƯỚC 01</small><h2>Thiết lập phòng chỉ huy</h2></div><span class="panel-emoji">🕹️</span></div>
+        <p>Đồng hồ được tính trên máy chủ. Có thể điều chỉnh thời gian cho từng mức độ trước khi tạo phòng.</p>
+        <div class="duration-grid">
+          <label>Nhận biết <input name="NB" type="number" min="10" max="180" value="20" required><small>giây/câu</small></label>
+          <label>Thông hiểu <input name="TH" type="number" min="10" max="180" value="25" required><small>giây/câu</small></label>
+          <label>VD thấp <input name="VD thấp" type="number" min="10" max="180" value="40" required><small>giây/câu</small></label>
+          <label>VD cao <input name="VD cao" type="number" min="10" max="180" value="60" required><small>giây/câu</small></label>
+        </div>
+        <div class="rule-card"><span>💡</span><span>Điểm theo độ khó · Không loại đội · Mỗi đội có 1 thẻ ×2 · Mục tiêu chung: 60% năng lượng</span></div>
+        <button class="btn btn-main btn-block" type="submit" id="createBtn">🚀 TẠO PHÒNG VÀ PHÁT MÃ QR</button>
+        <small class="subtle">Trò chơi này hoạt động độc lập, không sửa đổi 5 game cũ.</small>
+      </form>
+    </section>
+
+    <section id="gameArea" class="game-layout" hidden>
+      <main class="game-primary">
+        <section id="lobby" class="glass-panel lobby" hidden>
+          <div class="panel-heading"><div><small>PHÒNG CHỜ CỦA CÁC BIỆT ĐỘI</small><h2>Triệu tập lực lượng giải cứu</h2></div><span class="room-tag">MÃ PHÒNG <strong id="roomCode">------</strong></span></div>
+          <div class="lobby-content">
+            <div class="qr-card"><img id="qrImage" alt="Mã QR để đội quét tham gia trò chơi"><span>📱 QUÉT ĐỂ THAM GIA</span><a id="joinLink" href="#" target="_blank" rel="noopener">Mở đường dẫn tham gia</a></div>
+            <div class="lobby-teams"><div class="block-title"><span>🧑‍🚀 ĐỘI ĐÃ KẾT NỐI</span><strong id="lobbyCount">0/12</strong></div><div id="teamGrid" class="team-grid"></div><p class="muted">Khi đủ đội, giáo viên bấm “Bắt đầu nhiệm vụ”.</p></div>
+          </div>
+        </section>
+
+        <section id="playStage" class="glass-panel play-stage" hidden>
+          <div class="question-topbar"><div id="stageKicker" class="stage-kicker">TRẠM CÔNG NGHỆ</div><span id="stageNumber" class="stage-number">CÂU —/30</span><span id="clockPill" class="clock-pill">⏱ <b class="js-clock">--:--</b></span></div>
+          <div id="stageContent" class="stage-content" aria-live="polite"></div>
+        </section>
+
+        <div class="teacher-toolbar glass-panel">
+          <div id="phaseLabel" class="phase-label">ĐANG CHỜ TẠO PHÒNG</div>
+          <div class="toolbar-buttons">
+            <button id="retryBtn" type="button" class="btn btn-outline" hidden>↻ Làm lại câu</button>
+            <button id="primaryBtn" type="button" class="btn btn-main" hidden>Tiếp tục →</button>
+            <button id="exportBtn" type="button" class="btn btn-gold" hidden>↓ Xuất CSV kết quả</button>
+          </div>
+        </div>
+      </main>
+
+      <aside class="game-sidebar">
+        <section class="glass-panel sidebar-box" id="mapPanel">
+          <div class="block-title"><span>🗺️ BẢN ĐỒ THÀNH PHỐ</span><span id="mapDone" class="mini-badge">0/5</span></div>
+          <div id="districtList" class="district-list"></div>
+        </section>
+        <section class="glass-panel sidebar-box">
+          <div class="block-title"><span>⚡ NĂNG LƯỢNG CHUNG</span><strong id="energyLabel">0/0</strong></div>
+          <div class="energy-track"><div id="energyFill" class="energy-fill"></div></div>
+          <div class="energy-details"><span id="energyPercent">0% mục tiêu</span><span id="teamCounter">0 đội</span></div>
+          <p class="muted" id="energyMessage">Mỗi câu đúng giúp thành phố thêm 1 năng lượng.</p>
+        </section>
+        <section class="glass-panel sidebar-box ranking-box">
+          <div class="block-title"><span>🏆 BẢNG XẾP HẠNG</span><span id="rankStatus" class="mini-badge">CHỜ</span></div>
+          <div id="rankingContent" class="ranking-content"><div class="locked-rank">🔒 Bảng xếp hạng sẽ hiện sau mỗi trạm.</div></div>
+        </section>
+      </aside>
+    </section>
+    <footer class="city-footer">KHO TRÒ CHƠI TIN HỌC · GAME 6 · CHUNG SỨC KIẾN TẠO TRI THỨC</footer>
+  </div>
+</body>
+</html>
