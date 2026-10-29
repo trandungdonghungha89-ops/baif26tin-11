@@ -728,7 +728,6 @@ def escape_bai29_qr():
     return send_file(bio, mimetype="image/png", max_age=30)
 
 
-
 # ============================================================================
 # GAME 5: DAU TRUONG TRI THUC - 10-12 DOI - FLASK / RENDER
 # Self-contained: all 10 questions and server API are included in app.py.
@@ -1159,8 +1158,8 @@ def arena_join(code):
         room = refresh_room(conn, arena_get_room(conn, code))
         if not room:
             return _error("Mã phòng không tồn tại hoặc đã hết hạn.", 404)
-        # Late-arriving teams may join while the lesson is underway.
-        # Joining never resets the current question or its server deadline.
+        if room["phase"] != "waiting":
+            return _error("Phòng đã bắt đầu, không thể có đội mới tham gia.", 409)
         count = conn.execute("SELECT COUNT(*) FROM arena_teams WHERE room_code=?", (room["code"],)).fetchone()[0]
         if count >= MAX_TEAMS:
             return _error(f"Phòng đã đủ {MAX_TEAMS} đội.", 409)
@@ -1181,7 +1180,10 @@ def arena_advance(code):
             return err
         if room["phase"] not in ("waiting", "review"):
             return _error("Chỉ được mở câu mới khi chờ bắt đầu hoặc đã kết thúc câu trước.", 409)
-        # No minimum team count: the teacher decides when to begin.
+        if room["phase"] == "waiting":
+            n = conn.execute("SELECT COUNT(*) FROM arena_teams WHERE room_code=?", (room["code"],)).fetchone()[0]
+            if n < 2:
+                return _error("Cần tối thiểu 2 đội để bắt đầu thi đấu.", 409)
         next_index = room["question_index"] + 1
         if next_index >= len(ARENA_QUESTIONS):
             conn.execute("UPDATE arena_rooms SET phase='finished' WHERE code=?", (room["code"],))
@@ -1344,9 +1346,13 @@ def arena_state(code):
 
 app.register_blueprint(arena_bp)
 
+# GAME 6: Biet doi giai cuu thanh pho so - module rieng
+from game6_city import city_bp
+app.register_blueprint(city_bp)
+
 @app.get("/health")
 def health():
-    return jsonify({"ok": True, "games": 5, "questions": len(QUESTIONS), "escape_questions": len(ESCAPE_QUESTIONS), "arena_questions": len(ARENA_QUESTIONS)})
+    return jsonify({"ok": True, "games": 6, "questions": len(QUESTIONS), "escape_questions": len(ESCAPE_QUESTIONS), "arena_questions": len(ARENA_QUESTIONS)})
 
 
 if __name__ == "__main__":
