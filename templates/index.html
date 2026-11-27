@@ -10,8 +10,9 @@
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:"Times New Roman",Times,serif;color:var(--ink)}
 body{min-height:100dvh;background:radial-gradient(circle at 12% 18%,#dff7ff 0 12%,transparent 28%),radial-gradient(circle at 88% 8%,#efe3ff 0 10%,transparent 26%),linear-gradient(145deg,#f8fdff,#eef3ff 55%,#fff8e7);overflow-x:hidden}
 body:before,body:after{content:"";position:fixed;width:240px;height:240px;border-radius:50%;filter:blur(4px);opacity:.38;pointer-events:none}body:before{left:-70px;bottom:-80px;background:#9be7c4}body:after{right:-80px;top:100px;background:#f6d77b}
-.wrap{width:min(1180px,94vw);margin:auto;padding:28px 0 36px;position:relative;z-index:1}.hero{text-align:center;padding:20px 16px 10px}.badge{display:inline-flex;gap:8px;align-items:center;background:#ffffffc7;border:1px solid #d7e7f7;border-radius:999px;padding:8px 16px;font-weight:700;box-shadow:0 8px 25px #5b86aa16}.hero h1{font-size:clamp(34px,5.5vw,64px);margin:16px 0 10px;line-height:1;background:linear-gradient(90deg,#2355ad,#7b4acb,#d98f20);-webkit-background-clip:text;color:transparent}.hero p{font-size:clamp(18px,2vw,24px);margin:0 auto;max-width:850px;line-height:1.45;color:#405b74}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px;margin-top:28px}.card{position:relative;overflow:hidden;background:#ffffffdd;border:1px solid #dce8f4;border-radius:28px;padding:26px;box-shadow:var(--shadow);min-height:365px;display:flex;flex-direction:column;transition:.22s}.card:hover{transform:translateY(-4px);box-shadow:0 24px 60px rgba(39,71,122,.22)}.card:before{content:"";position:absolute;inset:auto -50px -80px auto;width:190px;height:190px;border-radius:50%;background:var(--accent);opacity:.16}.icon{width:74px;height:74px;border-radius:22px;display:grid;place-items:center;font-size:42px;background:linear-gradient(145deg,#fff,#f4f7ff);border:1px solid #dbe4f2;box-shadow:0 10px 25px #59799f1a}.card h2{font-size:clamp(27px,3vw,38px);margin:18px 0 8px}.card p{font-size:20px;line-height:1.45;color:#49627a;margin:0 0 14px}.features{display:grid;gap:8px;font-size:18px;color:#294760;margin:8px 0 22px}.features span{display:flex;gap:9px;align-items:flex-start}.actions{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:0;border-radius:16px;padding:13px 20px;font:700 19px "Times New Roman",Times,serif;cursor:pointer;transition:.2s}.btn:hover{transform:translateY(-2px)}.btn.primary{background:linear-gradient(180deg,#4b91f7,#2569d8);color:#fff;box-shadow:0 10px 24px #2f80ed3a}.btn.gold{background:linear-gradient(180deg,#ffe36d,#ffad25);color:#3a2500;box-shadow:0 10px 24px #ffb22d44}.footer{text-align:center;margin-top:24px;color:#61758a;font-size:17px}.tag{position:absolute;right:18px;top:18px;padding:7px 11px;border-radius:999px;background:#eff6ff;color:#2d66ae;font-weight:700;font-size:15px;border:1px solid #d8e6f6}
+.wrap{width:min(1180px,94vw);margin:auto;padding:28px 0 36px;position:relative;z-index:1}.hero{text-align:center;padding:20px 16px 10px}.badge{display:inline-flex;gap:8px;align-items:center;background:#ffffffc7;border:1px solid #d7e7f7;border-radius:999px;padding:8px 16px;font-weight:700;box-shadow:0 8px 25px #5b86aa16}.hero h1{font-size:clamp(34px,5.5vw,64px);margin:16px 0 10px;line-height:1;background:linear-gradient(90deg,#2355ad,#7b4acb,#d98f20);-webkit-background-clip:text;color:transparent}.hero p{font-size:clamp(18px,2vw,24px);margin:0 auto;max-width:850px;line-height:1.45;color:#405b74}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:22px;margin-top:28px}.card{position:relative;overflow:hidden;background:#ffffffdd;border:1px solid #dce8f4;border-radius:28px;padding:26px;box-shadow:var(--shadow);min-height:365px;display:flex;flex-direction:column;transition:.22s}.card:hover{transform:translateY(-4px);box-shadow:0 24px 60px rgba(39,71,122,.22)}.card:before{content:"";position:absolute;inset:auto -50px -80px auto;width:190px;height:190px;border-radius:50%;background:var(--accent);opacity:.16}.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:10px;min-width:0}.game-avatar{width:118px;height:118px;flex:0 0 118px;border-radius:26px;overflow:hidden;background:linear-gradient(145deg,#fff,#eef6ff);border:2px solid #dce8f4;box-shadow:0 10px 26px rgba(43,76,120,.16)}.game-avatar img{display:block;width:100%;height:100%;object-fit:cover}.card h2{font-size:clamp(27px,3vw,38px);margin:18px 0 8px}.card p{font-size:20px;line-height:1.45;color:#49627a;margin:0 0 14px}.features{display:grid;gap:8px;font-size:18px;color:#294760;margin:8px 0 22px}.features span{display:flex;gap:9px;align-items:flex-start}.actions{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:0;border-radius:16px;padding:13px 20px;font:700 19px "Times New Roman",Times,serif;cursor:pointer;transition:.2s}.btn:hover{transform:translateY(-2px)}.btn.primary{background:linear-gradient(180deg,#4b91f7,#2569d8);color:#fff;box-shadow:0 10px 24px #2f80ed3a}.btn.gold{background:linear-gradient(180deg,#ffe36d,#ffad25);color:#3a2500;box-shadow:0 10px 24px #ffb22d44}.footer{text-align:center;margin-top:24px;color:#61758a;font-size:17px}.tag{position:static;max-width:calc(100% - 132px);padding:7px 11px;border-radius:999px;background:#eff6ff;color:#2d66ae;font-weight:700;font-size:15px;line-height:1.25;text-align:center;border:1px solid #d8e6f6;overflow-wrap:anywhere}
 @media(max-width:820px){.grid{grid-template-columns:1fr}.card{min-height:auto}.wrap{padding-top:18px}.hero p{font-size:18px}}
+@media(max-width:430px){.card{padding:20px}.game-avatar{width:104px;height:104px;flex-basis:104px;border-radius:22px}.tag{max-width:calc(100% - 118px);font-size:14px}.card h2{font-size:30px}}
 
 /* Dòng tên giáo viên trên trang chủ: nhỏ hơn tiêu đề và tự co giãn theo màn hình. */
 .hero .teacher-credit{font-size:clamp(18px,2.6vw,28px);font-weight:700;line-height:1.3;letter-spacing:.025em;color:#365a81;margin:0 auto 12px}
@@ -27,8 +28,10 @@ body:before,body:after{content:"";position:fixed;width:240px;height:240px;border
   </section>
   <main class="grid">
     <article class="card" style="--accent:#58d5ef">
-      <div class="tag">Bài 26 · Lập trình</div>
-      <div class="icon">🧩</div>
+      <div class="card-top">
+        <div class="game-avatar"><img src="/static/game_icons/insertion_sort.png" alt="Biểu tượng game Ghép chương trình Insertion Sort"></div>
+        <div class="tag">Bài 26 · Lập trình</div>
+      </div>
       <h2>Ghép chương trình Insertion Sort</h2>
       <p>Sắp xếp các câu lệnh Python để hoàn thiện chương trình sắp xếp chèn trong 120 giây.</p>
       <div class="features">
@@ -43,8 +46,10 @@ body:before,body:after{content:"";position:fixed;width:240px;height:240px;border
 
 
     <article class="card" style="--accent:#9be7c4">
-      <div class="tag">Bài 29 · Nhận biết lỗi chương trình</div>
-      <div class="icon">🔐</div>
+      <div class="card-top">
+        <div class="game-avatar"><img src="/static/game_icons/escape_room.png" alt="Biểu tượng game Escape Room nhận biết lỗi chương trình"></div>
+        <div class="tag">Bài 29 · Nhận biết lỗi chương trình</div>
+      </div>
       <h2>Escape Room – Phòng thoát hiểm Tin học</h2>
       <p>Học sinh quét mã vào phòng, trả lời lần lượt từng câu trong 20 giây và chỉ những bạn trả lời đúng mới được đi tiếp.</p>
       <div class="features">
@@ -57,8 +62,10 @@ body:before,body:after{content:"";position:fixed;width:240px;height:240px;border
     </article>
 
     <article class="card" style="--accent:#ffbf3f">
-      <div class="tag">Bài 26 · Trắc nghiệm</div>
-      <div class="icon">🏆</div>
+      <div class="card-top">
+        <div class="game-avatar"><img src="/static/game_icons/millionaire.png" alt="Biểu tượng game Ai Là Triệu Phú Tin học"></div>
+        <div class="tag">Bài 26 · Trắc nghiệm</div>
+      </div>
       <h2>Ai Là Triệu Phú</h2>
       <p>10 câu hỏi về phương pháp làm mịn dần với giao diện gameshow, mốc điểm và ba quyền trợ giúp.</p>
       <div class="features">
@@ -71,8 +78,10 @@ body:before,body:after{content:"";position:fixed;width:240px;height:240px;border
     </article>
 
     <article class="card" style="--accent:#5ac8fa">
-      <div class="tag">Bài 24 · Độ phức tạp thuật toán</div>
-      <div class="icon">🚀</div>
+      <div class="card-top">
+        <div class="game-avatar"><img src="/static/game_icons/code_race.png" alt="Biểu tượng game Code Race đường đua lập trình"></div>
+        <div class="tag">Bài 24 · Độ phức tạp thuật toán</div>
+      </div>
       <h2>Code Race – Đường đua lập trình</h2>
       <p>10 câu hỏi tăng dần độ khó. Trả lời đúng để xe tiến lên, kích hoạt TURBO và chinh phục bảng xếp hạng.</p>
       <div class="features">
@@ -85,8 +94,10 @@ body:before,body:after{content:"";position:fixed;width:240px;height:240px;border
     </article>
 
     <article class="card" style="--accent:#b794ff">
-      <div class="tag">Bài 26 · Hàm trong Python</div>
-      <div class="icon">⚡</div>
+      <div class="card-top">
+        <div class="game-avatar"><img src="/static/game_icons/team_arena.png" alt="Biểu tượng game Đấu trường tri thức cuộc đua 20 giây"></div>
+        <div class="tag">Bài 26 · Hàm trong Python</div>
+      </div>
       <h2>Đấu trường tri thức – Cuộc đua 20 giây</h2>
       <p>10 câu hỏi từ dễ đến khó. Từ 10 đến 12 bàn thi đấu trực tiếp, mỗi bàn một đội và một điện thoại.</p>
       <div class="features">
@@ -100,8 +111,10 @@ body:before,body:after{content:"";position:fixed;width:240px;height:240px;border
     </article>
 
     <article class="card" style="--accent:#65e5cb">
-      <div class="tag">Tin học 10 · Ôn tập Bài 1–5</div>
-      <div class="icon">🌆</div>
+      <div class="card-top">
+        <div class="game-avatar"><img src="/static/game_icons/city_rescue.png" alt="Biểu tượng game Biệt đội giải cứu thành phố số"></div>
+        <div class="tag">Tin học 10 · Ôn tập Bài 1–5</div>
+      </div>
       <h2>Biệt đội giải cứu thành phố số</h2>
       <p>12 đội hợp sức khôi phục 5 hệ thống công nghệ, cùng tranh tài qua 30 câu hỏi và vòng chung kết bí mật.</p>
       <div class="features">
